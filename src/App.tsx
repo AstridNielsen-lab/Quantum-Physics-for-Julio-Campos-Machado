@@ -15,6 +15,7 @@ import CrystalsPage from './pages/CrystalsPage';
 import MaterialsPage from './pages/MaterialsPage';
 import EnginePage from './pages/EnginePage';
 import MissionPage from './pages/MissionPage';
+import VoltageMultiplierPage from './pages/VoltageMultiplierPage';
 import SplashScreen from './components/SplashScreen';
 import ChatBot from './components/ChatBot';
 import SEO from './components/SEO';
@@ -61,12 +62,20 @@ function App() {
                           elétricas e de massa dos materiais afetam a locomoção no espaço-tempo,
                           desenvolvendo tecnologias inovadoras para viagens interestelares.
                         </p>
-                        <a
-                          href="/about"
-                          className="inline-block mt-4 px-6 py-2 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold"
-                        >
-                          Saiba Mais
-                        </a>
+                        <div className="flex gap-4">
+                          <a
+                            href="/about"
+                            className="inline-block mt-4 px-6 py-2 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold"
+                          >
+                            Saiba Mais
+                          </a>
+                          <a
+                            href="/voltage-multiplier"
+                            className="inline-block mt-4 px-6 py-2 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold"
+                          >
+                            Simulador de Tensão
+                          </a>
+                        </div>
                       </div>
                       <div className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-6 rounded-xl border border-violet-500/20">
                         <h3 className="text-xl font-semibold mb-4 text-violet-400">
@@ -156,6 +165,7 @@ function App() {
           <Route path="/materials" element={<MaterialsPage />} />
           <Route path="/engine" element={<EnginePage />} />
           <Route path="/mission" element={<MissionPage />} />
+          <Route path="/voltage-multiplier" element={<VoltageMultiplierPage />} />
         </Routes>
       </div>
     </>
