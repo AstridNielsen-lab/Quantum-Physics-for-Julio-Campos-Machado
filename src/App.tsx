@@ -15,6 +15,7 @@ import CrystalsPage from './pages/CrystalsPage';
 import MaterialsPage from './pages/MaterialsPage';
 import EnginePage from './pages/EnginePage';
 import MissionPage from './pages/MissionPage';
+import BlogPage from './pages/BlogPage';
 import VoltageMultiplierPage from './pages/VoltageMultiplierPage';
 import SplashScreen from './components/SplashScreen';
 import ChatBot from './components/ChatBot';
@@ -68,6 +69,12 @@ function App() {
                             className="inline-block mt-4 px-6 py-2 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold"
                           >
                             Saiba Mais
+                          </a>
+                          <a
+                            href="/blog"
+                            className="inline-block mt-4 px-6 py-2 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold"
+                          >
+                            Blog Técnico
                           </a>
                           <a
                             href="/voltage-multiplier"
@@ -165,6 +172,7 @@ function App() {
           <Route path="/materials" element={<MaterialsPage />} />
           <Route path="/engine" element={<EnginePage />} />
           <Route path="/mission" element={<MissionPage />} />
+          <Route path="/blog" element={<BlogPage />} />
           <Route path="/voltage-multiplier" element={<VoltageMultiplierPage />} />
         </Routes>
       </div>
