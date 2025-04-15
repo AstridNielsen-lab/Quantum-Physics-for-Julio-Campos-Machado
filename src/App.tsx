@@ -16,6 +16,7 @@ import MaterialsPage from './pages/MaterialsPage';
 import EnginePage from './pages/EnginePage';
 import MissionPage from './pages/MissionPage';
 import SplashScreen from './components/SplashScreen';
+import ChatBot from './components/ChatBot';
 
 function App() {
   const [showContent, setShowContent] = useState(false);
@@ -144,6 +145,7 @@ function App() {
                   <p>© 2024 Julio Campos Machado - Todos os direitos reservados</p>
                 </div>
               </footer>
+              <ChatBot />
             </div>
           } />
           <Route path="/about" element={<AboutPage />} />
