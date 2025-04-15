@@ -17,6 +17,7 @@ import EnginePage from './pages/EnginePage';
 import MissionPage from './pages/MissionPage';
 import SplashScreen from './components/SplashScreen';
 import ChatBot from './components/ChatBot';
+import SEO from './components/SEO';
 
 function App() {
   const [showContent, setShowContent] = useState(false);
@@ -24,13 +25,14 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowContent(true);
-    }, 3000); // Wait for splash screen + fade out
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <>
+      <SEO />
       <SplashScreen />
       <div className={`transition-opacity duration-500 ${showContent ? 'opacity-100' : 'opacity-0'}`}>
         <Routes>
