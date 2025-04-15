@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowLeft, Zap, Settings, RefreshCw, Volume2, VolumeX } from 'lucide-react';
+import { ArrowLeft, Zap, Settings, RefreshCw, Volume2, VolumeX, AlertTriangle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import * as Tone from 'tone';
 import Navigation from '../components/Navigation';
@@ -9,11 +9,38 @@ const VoltageMultiplierPage = () => {
   const [frequency, setFrequency] = useState(60);
   const [stages, setStages] = useState(4);
   const [audioEnabled, setAudioEnabled] = useState(false);
+  const [audioPermission, setAudioPermission] = useState<PermissionState>('prompt');
+  const [showPermissionDialog, setShowPermissionDialog] = useState(false);
+  const [browserSupported, setBrowserSupported] = useState(true);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [voltageReadings, setVoltageReadings] = useState<number[]>([]);
   const oscillatorsRef = useRef<Tone.Oscillator[]>([]);
   const animationFrameRef = useRef<number>();
   
+  // Check browser support and permissions on mount
+  useEffect(() => {
+    // Check if the browser supports the Web Audio API
+    if (typeof AudioContext === 'undefined' && typeof webkitAudioContext === 'undefined') {
+      setBrowserSupported(false);
+      return;
+    }
+
+    // Check if the browser supports the Permissions API
+    if ('permissions' in navigator) {
+      navigator.permissions.query({ name: 'microphone' as PermissionName })
+        .then(permissionStatus => {
+          setAudioPermission(permissionStatus.state);
+          permissionStatus.onchange = () => {
+            setAudioPermission(permissionStatus.state);
+          };
+        })
+        .catch(() => {
+          // Fallback for browsers that don't support permission queries
+          setAudioPermission('prompt');
+        });
+    }
+  }, []);
+
   useEffect(() => {
     // Initialize audio oscillators
     if (audioEnabled && oscillatorsRef.current.length === 0) {
@@ -34,8 +61,34 @@ const VoltageMultiplierPage = () => {
     };
   }, [audioEnabled]);
 
+  const requestAudioPermission = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      stream.getTracks().forEach(track => track.stop()); // Stop the stream since we only needed permission
+      setAudioPermission('granted');
+      setShowPermissionDialog(false);
+      toggleAudio();
+    } catch (error) {
+      console.error('Error requesting audio permission:', error);
+      setAudioPermission('denied');
+    }
+  };
+
   const toggleAudio = async () => {
+    if (!browserSupported) {
+      alert('Seu navegador não suporta os recursos de áudio necessários.');
+      return;
+    }
+
     if (!audioEnabled) {
+      if (audioPermission === 'prompt') {
+        setShowPermissionDialog(true);
+        return;
+      } else if (audioPermission === 'denied') {
+        alert('Permissão de áudio negada. Por favor, habilite o acesso ao áudio nas configurações do seu navegador.');
+        return;
+      }
+
       await Tone.start();
       setAudioEnabled(true);
       oscillatorsRef.current.forEach(osc => osc.start());
@@ -177,6 +230,8 @@ const VoltageMultiplierPage = () => {
             <button
               onClick={toggleAudio}
               className="p-3 bg-violet-600 hover:bg-violet-700 rounded-full transition-colors"
+              title={!browserSupported ? "Áudio não suportado neste navegador" : ""}
+              disabled={!browserSupported}
             >
               {audioEnabled ? (
                 <Volume2 className="w-6 h-6" />
@@ -185,6 +240,43 @@ const VoltageMultiplierPage = () => {
               )}
             </button>
           </div>
+
+          {!browserSupported && (
+            <div className="mb-8 p-4 bg-yellow-500/20 border border-yellow-500/40 rounded-lg flex items-center gap-3">
+              <AlertTriangle className="text-yellow-500 w-6 h-6 flex-shrink-0" />
+              <p className="text-yellow-200">
+                Seu navegador não suporta os recursos de áudio necessários para a simulação sonora.
+                O visualizador continuará funcionando normalmente.
+              </p>
+            </div>
+          )}
+
+          {/* Permission Dialog */}
+          {showPermissionDialog && (
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+              <div className="bg-[#1a1a2e] p-6 rounded-xl border border-violet-500/20 max-w-md">
+                <h3 className="text-xl font-semibold mb-4">Permissão de Áudio Necessária</h3>
+                <p className="text-gray-300 mb-6">
+                  Para experimentar a simulação sonora, precisamos da sua permissão para usar o áudio.
+                  Isso nos permitirá criar uma experiência interativa mais rica.
+                </p>
+                <div className="flex justify-end gap-4">
+                  <button
+                    onClick={() => setShowPermissionDialog(false)}
+                    className="px-4 py-2 text-gray-400 hover:text-white transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={requestAudioPermission}
+                    className="px-4 py-2 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors"
+                  >
+                    Permitir Áudio
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-6">
