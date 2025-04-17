@@ -17,6 +17,7 @@ import EnginePage from './pages/EnginePage';
 import MissionPage from './pages/MissionPage';
 import BlogPage from './pages/BlogPage';
 import VoltageMultiplierPage from './pages/VoltageMultiplierPage';
+import HexagonalGridPage from './pages/HexagonalGridPage';
 import SplashScreen from './components/SplashScreen';
 import ChatBot from './components/ChatBot';
 import SEO from './components/SEO';
@@ -81,6 +82,12 @@ function App() {
                             className="inline-block mt-4 px-6 py-2 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold"
                           >
                             Simulador de Tensão
+                          </a>
+                          <a
+                            href="/hexagonal-grid"
+                            className="inline-block mt-4 px-6 py-2 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold"
+                          >
+                            Malha Hexagonal
                           </a>
                         </div>
                       </div>
@@ -174,6 +181,7 @@ function App() {
           <Route path="/mission" element={<MissionPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/voltage-multiplier" element={<VoltageMultiplierPage />} />
+          <Route path="/hexagonal-grid" element={<HexagonalGridPage />} />
         </Routes>
       </div>
     </>

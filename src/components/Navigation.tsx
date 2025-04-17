@@ -11,6 +11,7 @@ const Navigation = () => {
     { href: '#materials', label: 'Materiais' },
     { href: '#engine', label: 'Motor Quântico' },
     { href: '#mission', label: 'Missão' },
+    { href: '/hexagonal-grid', label: 'Malha Hexagonal' },
     { href: '#contact', label: 'Contato' },
   ];
 
