@@ -19,6 +19,7 @@ import BlogPage from './pages/BlogPage';
 import VoltageMultiplierPage from './pages/VoltageMultiplierPage';
 import HexagonalGridPage from './pages/HexagonalGridPage';
 import ThermalMeshPage from './pages/ThermalMeshPage';
+import QuantumPropulsionPage from './pages/QuantumPropulsionPage';
 import SplashScreen from './components/SplashScreen';
 import ChatBot from './components/ChatBot';
 import ConceptChat from './components/ConceptChat';
@@ -77,11 +78,11 @@ function App() {
                               Simulador de Tensão
                             </a>
                             <a
-                              href="/blog"
+                              href="/quantum-propulsion"
                               className="flex items-center justify-center gap-2 px-6 py-3 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold w-full"
                             >
-                              <FileText className="w-5 h-5" />
-                              Blog Técnico
+                              <Rocket className="w-5 h-5" />
+                              Navegação Quântica
                             </a>
                           </div>
                           <div className="space-y-4">
@@ -256,6 +257,7 @@ function App() {
           <Route path="/voltage-multiplier" element={<VoltageMultiplierPage />} />
           <Route path="/hexagonal-grid" element={<HexagonalGridPage />} />
           <Route path="/thermal-mesh" element={<ThermalMeshPage />} />
+          <Route path="/quantum-propulsion" element={<QuantumPropulsionPage />} />
         </Routes>
       </div>
     </>
