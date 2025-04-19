@@ -11,6 +11,7 @@ const Navigation = () => {
     { href: '#materials', label: 'Materiais' },
     { href: '#engine', label: 'Motor Quântico' },
     { href: '#mission', label: 'Missão' },
+    { href: '/thermal-mesh', label: 'Malha Antitérmica' },
     { href: '/hexagonal-grid', label: 'Malha Hexagonal' },
     { href: '#contact', label: 'Contato' },
   ];
@@ -29,7 +30,7 @@ const Navigation = () => {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-gray-300 hover:text-violet-400 transition-colors"
+                className="text-gray-300  hover:text-violet-400 transition-colors"
               >
                 {link.label}
               </a>

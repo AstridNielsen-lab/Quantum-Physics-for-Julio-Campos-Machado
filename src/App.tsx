@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Atom, Brain, Contact, Download, ExternalLink, TestTube, Rocket, Send, Stars, Zap } from 'lucide-react';
+import { Atom, Brain, Contact, Download, ExternalLink, TestTube, Rocket, Send, Stars, Zap, Bot, FileText, Users, Globe, Thermometer } from 'lucide-react';
 import ContactForm from './components/ContactForm';
 import Hero from './components/Hero';
 import Navigation from './components/Navigation';
@@ -18,8 +18,10 @@ import MissionPage from './pages/MissionPage';
 import BlogPage from './pages/BlogPage';
 import VoltageMultiplierPage from './pages/VoltageMultiplierPage';
 import HexagonalGridPage from './pages/HexagonalGridPage';
+import ThermalMeshPage from './pages/ThermalMeshPage';
 import SplashScreen from './components/SplashScreen';
 import ChatBot from './components/ChatBot';
+import ConceptChat from './components/ConceptChat';
 import SEO from './components/SEO';
 
 function App() {
@@ -47,12 +49,12 @@ function App() {
                 <Hero />
                 
                 <section id="about" className="py-20 px-4 md:px-8">
-                  <div className="max-w-6xl mx-auto">
+                  <div className="max-w-6xl mx-auto flex flex-col items-center">
                     <h2 className="text-3xl md:text-4xl font-bold mb-8 flex items-center gap-3">
                       <Brain className="text-violet-400" />
                       Sobre o Projeto
                     </h2>
-                    <div className="grid md:grid-cols-2 gap-8">
+                    <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-4xl mx-auto">
                       <div className="space-y-4">
                         <p className="text-gray-300">
                           O projeto "Quantum Doors e Cristais Isocovalentes" representa uma revolução
@@ -64,31 +66,100 @@ function App() {
                           elétricas e de massa dos materiais afetam a locomoção no espaço-tempo,
                           desenvolvendo tecnologias inovadoras para viagens interestelares.
                         </p>
-                        <div className="flex gap-4">
-                          <a
-                            href="/about"
-                            className="inline-block mt-4 px-6 py-2 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold"
-                          >
-                            Saiba Mais
-                          </a>
-                          <a
-                            href="/blog"
-                            className="inline-block mt-4 px-6 py-2 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold"
-                          >
-                            Blog Técnico
-                          </a>
-                          <a
-                            href="/voltage-multiplier"
-                            className="inline-block mt-4 px-6 py-2 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold"
-                          >
-                            Simulador de Tensão
-                          </a>
-                          <a
-                            href="/hexagonal-grid"
-                            className="inline-block mt-4 px-6 py-2 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold"
-                          >
-                            Malha Hexagonal
-                          </a>
+                        
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+                          <div className="space-y-4">
+                            <a
+                              href="/voltage-multiplier"
+                              className="flex items-center justify-center gap-2 px-6 py-3 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold w-full"
+                            >
+                              <Zap className="w-5 h-5" />
+                              Simulador de Tensão
+                            </a>
+                            <a
+                              href="/blog"
+                              className="flex items-center justify-center gap-2 px-6 py-3 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold w-full"
+                            >
+                              <FileText className="w-5 h-5" />
+                              Blog Técnico
+                            </a>
+                          </div>
+                          <div className="space-y-4">
+                            <a
+                              href="/thermal-mesh"
+                              className="flex items-center justify-center gap-2 px-6 py-3 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold w-full"
+                            >
+                              <Thermometer className="w-5 h-5" />
+                              Malha Antitérmica
+                            </a>
+                            <a
+                              href="/hexagonal-grid"
+                              className="flex items-center justify-center gap-2 px-6 py-3 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold w-full"
+                            >
+                              <Atom className="w-5 h-5" />
+                              Malha Hexagonal
+                            </a>
+                          </div>
+                        </div>
+
+                        <div className="pt-8 border-t border-violet-500/20 space-y-4">
+                          <h3 className="text-xl font-semibold text-violet-400">
+                            Interaja com o Projeto
+                          </h3>
+                          
+                          <div className="grid grid-cols-1 gap-4">
+                            <a
+                              href="https://character.ai/chat/r2V7YMoEfqe6V_e3UGYAlhj5UKHTQClxkjY9TJSYOK4"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 rounded-lg transition-colors text-white font-semibold"
+                            >
+                              <Bot className="w-5 h-5" />
+                              Converse com Einstein-Tesla Quantum AI
+                            </a>
+                            
+                            <a
+                              href="https://www.chatpdf.com/pt/c/TBSw8VehAxGvWOXiNjPZV"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 rounded-lg transition-colors text-white font-semibold"
+                            >
+                              <FileText className="w-5 h-5" />
+                              Converse com o Documento do Projeto
+                            </a>
+                          </div>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
+                            <a
+                              href="https://chatgpt.com/.../677119ee-bf70-8013-8e35-2faecbe3e2f3"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center gap-2 px-4 py-2 bg-violet-900/50 hover:bg-violet-900/70 rounded-lg transition-colors text-white"
+                            >
+                              <Brain className="w-4 h-4" />
+                              Projetos
+                            </a>
+                            
+                            <a
+                              href="https://discord.gg/cgD28qgrUT"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center gap-2 px-4 py-2 bg-violet-900/50 hover:bg-violet-900/70 rounded-lg transition-colors text-white"
+                            >
+                              <Bot className="w-4 h-4" />
+                              Discord
+                            </a>
+                            
+                            <a
+                              href="https://radiotatuapefm.wixsite.com/disparattechno"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center gap-2 px-4 py-2 bg-violet-900/50 hover:bg-violet-900/70 rounded-lg transition-colors text-white"
+                            >
+                              <Globe className="w-4 h-4" />
+                              Site
+                            </a>
+                          </div>
                         </div>
                       </div>
                       <div className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-6 rounded-xl border border-violet-500/20">
@@ -109,6 +180,8 @@ function App() {
                             <span>Desenvolvimento de motores quânticos de dobra espacial</span>
                           </li>
                         </ul>
+
+                        <ConceptChat />
                       </div>
                     </div>
                   </div>
@@ -182,6 +255,7 @@ function App() {
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/voltage-multiplier" element={<VoltageMultiplierPage />} />
           <Route path="/hexagonal-grid" element={<HexagonalGridPage />} />
+          <Route path="/thermal-mesh" element={<ThermalMeshPage />} />
         </Routes>
       </div>
     </>

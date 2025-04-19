@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowLeft, Zap, Settings, RefreshCw, Volume2, VolumeX, AlertTriangle, Thermometer, Atom, Layers } from 'lucide-react';
+import { ArrowLeft, Zap, Settings, RefreshCw, Volume2, VolumeX, AlertTriangle, Thermometer, Atom, Layers, BrainCircuit as Circuit } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import * as Tone from 'tone';
 import Navigation from '../components/Navigation';
 
 interface Element {
-  symbol: string;
   name: string;
+  symbol: string;
   electrons: number;
   temperature: number;
   shells: number[];
@@ -24,11 +24,16 @@ const VoltageMultiplierPage = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const atomCanvasRef = useRef<HTMLCanvasElement>(null);
   const quantumZonesCanvasRef = useRef<HTMLCanvasElement>(null);
+  const circuitCanvasRef = useRef<HTMLCanvasElement>(null);
+  const circuit3DCanvasRef = useRef<HTMLCanvasElement>(null);
   const atomAnimationRef = useRef<number>();
   const quantumAnimationRef = useRef<number>();
+  const circuitAnimationRef = useRef<number>();
+  const circuit3DAnimationRef = useRef<number>();
   const [voltageReadings, setVoltageReadings] = useState<number[]>([]);
   const oscillatorsRef = useRef<Tone.Oscillator[]>([]);
   const animationFrameRef = useRef<number>();
+  const [rotationAngle, setRotationAngle] = useState(0);
 
   const elements: Element[] = [
     { symbol: 'H', name: 'Hidrogênio', electrons: 1, temperature: 14.01, shells: [1] },
@@ -506,6 +511,323 @@ const VoltageMultiplierPage = () => {
     quantumAnimationRef.current = requestAnimationFrame(drawQuantumZones);
   };
 
+  const drawCircuitAnimation = () => {
+    const canvas = circuitCanvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const width = canvas.width;
+    const height = canvas.height;
+    const time = Date.now() / 1000;
+
+    ctx.fillStyle = '#1a1a2e';
+    ctx.fillRect(0, 0, width, height);
+
+    const hexSize = 40;
+    const hexHeight = hexSize * Math.sqrt(3);
+    const hexWidth = hexSize * 2;
+    
+    ctx.strokeStyle = '#ffffff22';
+    ctx.lineWidth = 1;
+
+    for (let row = 0; row < 8; row++) {
+      for (let col = 0; col < 8; col++) {
+        const x = col * hexWidth * 0.75 + (row % 2) * (hexWidth * 0.375);
+        const y = row * hexHeight * 0.5;
+        
+        ctx.beginPath();
+        for (let i = 0; i < 6; i++) {
+          const angle = i * Math.PI / 3;
+          const px = x + hexSize * Math.cos(angle);
+          const py = y + hexSize * Math.sin(angle);
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+        ctx.stroke();
+      }
+    }
+
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const circleRadius = 100;
+
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
+    ctx.strokeStyle = '#a855f7';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    const points = [];
+    const pointCount = 6;
+    for (let i = 0; i < pointCount; i++) {
+      const angle = (i * Math.PI * 2) / pointCount;
+      points.push({
+        x: centerX + Math.cos(angle) * circleRadius * 0.6,
+        y: centerY + Math.sin(angle) * circleRadius * 0.6
+      });
+    }
+
+    points.forEach((point, i) => {
+      const nextPoint = points[(i + 1) % points.length];
+      
+      ctx.beginPath();
+      ctx.moveTo(point.x, point.y);
+      ctx.lineTo(nextPoint.x, nextPoint.y);
+      ctx.strokeStyle = '#22d3ee';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      const midX = (point.x + nextPoint.x) / 2;
+      const midY = (point.y + nextPoint.y) / 2;
+      const angle = Math.atan2(nextPoint.y - point.y, nextPoint.x - point.x);
+      
+      ctx.save();
+      ctx.translate(midX, midY);
+      ctx.rotate(angle);
+      
+      ctx.beginPath();
+      ctx.moveTo(-5, -8);
+      ctx.lineTo(-5, 8);
+      ctx.moveTo(5, -8);
+      ctx.lineTo(5, 8);
+      ctx.strokeStyle = '#ec4899';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      
+      ctx.restore();
+    });
+
+    const flowPoints = 6;
+    for (let i = 0; i < flowPoints; i++) {
+      const angle = time * 2 + (i * Math.PI * 2) / flowPoints;
+      const x = centerX + Math.cos(angle) * circleRadius;
+      const y = centerY + Math.sin(angle) * circleRadius;
+
+      ctx.beginPath();
+      ctx.arc(x, y, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#22d3ee';
+      ctx.fill();
+
+      ctx.save();
+      ctx.filter = 'blur(4px)';
+      ctx.globalAlpha = 0.5;
+      ctx.beginPath();
+      ctx.arc(x, y, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#22d3ee';
+      ctx.fill();
+      ctx.restore();
+    }
+
+    ctx.font = '14px monospace';
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.fillText('5V/20A', centerX - circleRadius - 40, centerY);
+    ctx.fillText('17kV', centerX + circleRadius + 40, centerY);
+
+    const stageInfo = [
+      { stage: 1, c: 'C', r: '10Ω' },
+      { stage: 2, c: '33', r: '56Ω' },
+      { stage: 3, c: '100', r: '5Ω' }
+    ];
+
+    ctx.textAlign = 'left';
+    stageInfo.forEach((info, i) => {
+      const y = centerY + circleRadius + 30 + i * 20;
+      ctx.fillText(`Stage ${info.stage}: ${info.c} ${info.r}`, centerX - 60, y);
+    });
+
+    const particleCount = 20;
+    for (let i = 0; i < particleCount; i++) {
+      const t = time * 2 + i * (Math.PI * 2 / particleCount);
+      const radius = circleRadius * (0.8 + Math.sin(t * 3) * 0.2);
+      const x = centerX + Math.cos(t) * radius;
+      const y = centerY + Math.sin(t) * radius;
+
+      ctx.beginPath();
+      ctx.arc(x, y, 2, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(236, 72, 153, ${0.5 + Math.sin(t) * 0.5})`;
+      ctx.fill();
+    }
+
+    circuitAnimationRef.current = requestAnimationFrame(drawCircuitAnimation);
+  };
+
+  const draw3DCircuit = () => {
+    const canvas = circuit3DCanvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const width = canvas.width;
+    const height = canvas.height;
+    const time = Date.now() / 1000;
+
+    ctx.fillStyle = '#1a1a2e';
+    ctx.fillRect(0, 0, width, height);
+
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const baseRadius = 120;
+    const verticalScale = 0.3;
+    
+    const gridLayers = 5;
+    const gridSpacing = 40;
+    
+    for (let layer = 0; layer < gridLayers; layer++) {
+      const depth = layer * gridSpacing;
+      const scale = 1 - depth * 0.001;
+      const opacity = 1 - depth * 0.1;
+      
+      for (let i = 0; i < 6; i++) {
+        const angle = (i * Math.PI) / 3 + rotationAngle;
+        const nextAngle = ((i + 1) * Math.PI) / 3 + rotationAngle;
+        
+        const x1 = centerX + Math.cos(angle) * baseRadius * scale;
+        
+        const y1 = centerY + Math.sin(angle) * baseRadius * scale * verticalScale;
+        const x2 = centerX + Math.cos(nextAngle) * baseRadius * scale;
+        const y2 = centerY + Math.sin(nextAngle) * baseRadius * scale * verticalScale;
+        
+        ctx.beginPath();
+        ctx.moveTo(x1, y1 - depth);
+        ctx.lineTo(x2, y2 - depth);
+        ctx.strokeStyle = `rgba(168, 85, 247, ${opacity * 0.2})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    }
+
+    const vertices = [];
+    for (let i = 0; i < 6; i++) {
+      const angle = (i * Math.PI) / 3 + rotationAngle;
+      vertices.push({
+        x: centerX + Math.cos(angle) * baseRadius,
+        y: centerY + Math.sin(angle) * baseRadius * verticalScale,
+        angle: angle
+      });
+    }
+
+    const centerPoint = { x: centerX, y: centerY };
+    vertices.forEach((vertex, i) => {
+      const sourceRadius = 15;
+      const sourceAngle = vertex.angle;
+      const sourceX = vertex.x + Math.cos(sourceAngle) * sourceRadius;
+      const sourceY = vertex.y + Math.sin(sourceAngle) * sourceRadius * verticalScale;
+
+      const flowPhase = (time * 2 + i * Math.PI / 3) % (Math.PI * 2);
+      const flowPoints = 5;
+      
+      for (let j = 0; j < flowPoints; j++) {
+        const t = (j / flowPoints + flowPhase) % 1;
+        const flowX = vertex.x * (1 - t) + centerPoint.x * t;
+        const flowY = vertex.y * (1 - t) + centerPoint.y * t;
+        
+        ctx.beginPath();
+        ctx.arc(flowX, flowY, 3, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(34, 211, 238, ${(1 - t) * 0.8})`;
+        ctx.fill();
+      }
+
+      const capAngle = Math.atan2(centerPoint.y - vertex.y, centerPoint.x - vertex.x);
+      const capDist = 40;
+      const capX = vertex.x + Math.cos(capAngle) * capDist;
+      const capY = vertex.y + Math.sin(capAngle) * capDist;
+
+      ctx.save();
+      ctx.translate(capX, capY);
+      ctx.rotate(capAngle);
+      
+      const plateLength = 12;
+      const plateGap = 6;
+      
+      ctx.shadowColor = '#ec4899';
+      ctx.shadowBlur = 10;
+      
+      ctx.beginPath();
+      ctx.moveTo(-plateLength, -plateGap);
+      ctx.lineTo(plateLength, -plateGap);
+      ctx.moveTo(-plateLength, plateGap);
+      ctx.lineTo(plateLength, plateGap);
+      ctx.strokeStyle = '#ec4899';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      
+      ctx.restore();
+
+      const diodeAngle = Math.atan2(centerPoint.y - capY, centerPoint.x - capX);
+      const diodeDist = 30;
+      const diodeX = capX + Math.cos(diodeAngle) * diodeDist;
+      const diodeY = capY + Math.sin(diodeAngle) * diodeDist;
+
+      ctx.save();
+      ctx.translate(diodeX, diodeY);
+      ctx.rotate(diodeAngle);
+      
+      ctx.shadowColor = '#22d3ee';
+      ctx.shadowBlur = 10;
+      
+      ctx.beginPath();
+      ctx.moveTo(-8, -8);
+      ctx.lineTo(8, 0);
+      ctx.lineTo(-8, 8);
+      ctx.closePath();
+      ctx.strokeStyle = '#22d3ee';
+      ctx.stroke();
+      
+      ctx.restore();
+    });
+
+    const pulseScale = 1 + Math.sin(time * 4) * 0.2;
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 10 * pulseScale, 0, Math.PI * 2);
+    ctx.fillStyle = '#a855f7';
+    ctx.fill();
+
+    ctx.save();
+    ctx.filter = 'blur(8px)';
+    ctx.globalAlpha = 0.5;
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 10 * pulseScale, 0, Math.PI * 2);
+    ctx.fillStyle = '#a855f7';
+    ctx.fill();
+    ctx.restore();
+
+    ctx.font = '14px monospace';
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    
+    vertices.forEach((vertex) => {
+      const labelX = vertex.x + Math.cos(vertex.angle) * 30;
+      const labelY = vertex.y + Math.sin(vertex.angle) * 30 * verticalScale;
+      ctx.fillText('V₁', labelX, labelY);
+    });
+
+    ctx.fillText('V₀', centerX, centerY - 25);
+
+    const stageInfo = [
+      { stage: 1, value: '10Ω' },
+      { stage: 2, value: '33µF/56Ω' },
+      { stage: 3, value: '100µF/5Ω' }
+    ];
+
+    ctx.textAlign = 'left';
+    stageInfo.forEach((info, i) => {
+      const y = height - 80 + i * 20;
+      ctx.fillText(`Stage ${info.stage}: ${info.value}`, 20, y);
+    });
+
+    ctx.fillText('Input: 5V/20A', 20, 40);
+    ctx.fillText('Output: 17kV', width - 120, 40);
+
+    setRotationAngle(rotationAngle + 0.002);
+
+    circuit3DAnimationRef.current = requestAnimationFrame(draw3DCircuit);
+  };
+
   useEffect(() => {
     calculateVoltages();
   }, [inputVoltage, frequency, stages, selectedElement]);
@@ -533,6 +855,24 @@ const VoltageMultiplierPage = () => {
       }
     };
   }, [selectedElement]);
+
+  useEffect(() => {
+    drawCircuitAnimation();
+    return () => {
+      if (circuitAnimationRef.current) {
+        cancelAnimationFrame(circuitAnimationRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    draw3DCircuit();
+    return () => {
+      if (circuit3DAnimationRef.current) {
+        cancelAnimationFrame(circuit3DAnimationRef.current);
+      }
+    };
+  }, [rotationAngle]);
 
   return (
     <div className="min-h-screen bg-[#020617] text-white">
@@ -735,6 +1075,31 @@ const VoltageMultiplierPage = () => {
             </div>
 
             <div className="space-y-6">
+              <div className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-6 rounded-xl border border-violet-500/20">
+                <h2 className="text-xl font-semibold mb-6">Circuito Multiplicador 2D</h2>
+                <canvas
+                  ref={circuitCanvasRef}
+                  width={600}
+                  height={600}
+                  className="w-full bg-[#1a1a2e] rounded-lg"
+                />
+              </div>
+
+              <div className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-6 rounded-xl border border-violet-500/20">
+                <h2 className="text-xl font-semibold mb-6">Visualização 3D do Circuito</h2>
+                <canvas
+                  ref={circuit3DCanvasRef}
+                  width={600}
+                  height={600}
+                  className="w-full bg-[#1a1a2e] rounded-lg"
+                />
+                <div className="mt-4 text-sm text-gray-400">
+                  <p>• Visualização tridimensional com rotação automática</p>
+                  <p>• Fluxo de energia animado entre componentes</p>
+                  <p>• Indicadores de tensão e corrente em tempo real</p>
+                </div>
+              </div>
+
               <div className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-6 rounded-xl border border-violet-500/20">
                 <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
                   <Atom className="text-violet-400" />
