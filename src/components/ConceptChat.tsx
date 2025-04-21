@@ -6,11 +6,27 @@ interface Message {
   content: string;
 }
 
+const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
+const API_KEY = "AIzaSyAuFi5KtPsMJI5IC8c5FjvYD5IbuBdwH_U";
+
+const systemPrompt = `Você é um especialista em física quântica e propulsão espacial, focado no projeto Quantum Doors.
+
+Mantenha suas respostas diretas e naturais, usando apenas pontuação simples. Evite caracteres especiais ou formatação. Use uma linguagem clara e fluida que funcione bem com leitura em voz alta.
+
+Você pode discutir:
+
+Como funcionam os motores de dobra quântica.
+A manipulação de elétrons e campos magnéticos.
+Cristais isocovalentes e suas propriedades.
+Aplicações práticas da tecnologia.
+
+Lembre-se de manter um tom profissional mas acessível, usando frases curtas e claras que funcionem bem quando lidas em voz alta.`;
+
 const ConceptChat = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       type: 'bot',
-      content: 'Olá! Sou uma IA especializada no projeto Quantum Doors. Como posso ajudar você a entender nossos conceitos principais?'
+      content: 'Olá, sou uma IA especializada no projeto Quantum Doors. Como posso ajudar você a entender nossos conceitos principais?'
     }
   ]);
   const [input, setInput] = useState('');
@@ -26,22 +42,33 @@ const ConceptChat = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('https://character.ai/chat/r2V7YMoEfqe6V_e3UGYAlhj5UKHTQClxkjY9TJSYOK4', {
+      const response = await fetch(`${API_URL}?key=${API_KEY}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: userMessage }),
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [
+                { text: systemPrompt },
+                { text: userMessage }
+              ]
+            }
+          ]
+        })
       });
 
-      if (!response.ok) throw new Error('Falha na comunicação');
+      if (!response.ok) throw new Error('Falha na comunicação com a API');
 
       const data = await response.json();
-      setMessages(prev => [...prev, { type: 'bot', content: data.response }]);
+      const botResponse = data.candidates[0].content.parts[0].text;
+      setMessages(prev => [...prev, { type: 'bot', content: botResponse }]);
     } catch (error) {
+      console.error('Error calling Gemini API:', error);
       setMessages(prev => [...prev, {
         type: 'bot',
-        content: 'Desculpe, estou temporariamente indisponível. Por favor, tente novamente mais tarde.'
+        content: 'Desculpe, houve um erro ao processar sua mensagem. Por favor, tente novamente.'
       }]);
     } finally {
       setIsLoading(false);

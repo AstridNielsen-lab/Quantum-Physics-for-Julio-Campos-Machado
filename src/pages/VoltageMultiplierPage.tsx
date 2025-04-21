@@ -529,7 +529,7 @@ const VoltageMultiplierPage = () => {
     const hexHeight = hexSize * Math.sqrt(3);
     const hexWidth = hexSize * 2;
     
-    ctx.strokeStyle = '#ffffff22';
+    ctx.strokeStyle = '#ffffff11';
     ctx.lineWidth = 1;
 
     for (let row = 0; row < 8; row++) {
@@ -552,7 +552,7 @@ const VoltageMultiplierPage = () => {
 
     const centerX = width / 2;
     const centerY = height / 2;
-    const circleRadius = 100;
+    const circleRadius = 120;
 
     ctx.beginPath();
     ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
@@ -600,30 +600,21 @@ const VoltageMultiplierPage = () => {
       ctx.restore();
     });
 
-    const flowPoints = 6;
-    for (let i = 0; i < flowPoints; i++) {
-      const angle = time * 2 + (i * Math.PI * 2) / flowPoints;
-      const x = centerX + Math.cos(angle) * circleRadius;
-      const y = centerY + Math.sin(angle) * circleRadius;
+    points.forEach((point, i) => {
+      const angle = (i * Math.PI * 2) / pointCount;
+      const labelX = centerX + Math.cos(angle) * (circleRadius * 1.2);
+      const labelY = centerY + Math.sin(angle) * (circleRadius * 1.2);
+      
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '14px monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('V₁', labelX, labelY);
+    });
 
-      ctx.beginPath();
-      ctx.arc(x, y, 4, 0, Math.PI * 2);
-      ctx.fillStyle = '#22d3ee';
-      ctx.fill();
-
-      ctx.save();
-      ctx.filter = 'blur(4px)';
-      ctx.globalAlpha = 0.5;
-      ctx.beginPath();
-      ctx.arc(x, y, 4, 0, Math.PI * 2);
-      ctx.fillStyle = '#22d3ee';
-      ctx.fill();
-      ctx.restore();
-    }
-
-    ctx.font = '14px monospace';
     ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'center';
+    ctx.fillText('V₀', centerX, centerY);
+
     ctx.fillText('5V/20A', centerX - circleRadius - 40, centerY);
     ctx.fillText('17kV', centerX + circleRadius + 40, centerY);
 
@@ -635,8 +626,8 @@ const VoltageMultiplierPage = () => {
 
     ctx.textAlign = 'left';
     stageInfo.forEach((info, i) => {
-      const y = centerY + circleRadius + 30 + i * 20;
-      ctx.fillText(`Stage ${info.stage}: ${info.c} ${info.r}`, centerX - 60, y);
+      const y = height - 80 + i * 20;
+      ctx.fillText(`Stage ${info.stage}: ${info.c} ${info.r}`, 20, y);
     });
 
     const particleCount = 20;
@@ -687,7 +678,6 @@ const VoltageMultiplierPage = () => {
         const nextAngle = ((i + 1) * Math.PI) / 3 + rotationAngle;
         
         const x1 = centerX + Math.cos(angle) * baseRadius * scale;
-        
         const y1 = centerY + Math.sin(angle) * baseRadius * scale * verticalScale;
         const x2 = centerX + Math.cos(nextAngle) * baseRadius * scale;
         const y2 = centerY + Math.sin(nextAngle) * baseRadius * scale * verticalScale;
@@ -1083,6 +1073,28 @@ const VoltageMultiplierPage = () => {
                   height={600}
                   className="w-full bg-[#1a1a2e] rounded-lg"
                 />
+              </div>
+
+              <div className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-6 rounded-xl border border-violet-500/20">
+                <h2 className="text-xl font-semibold mb-6">Diagrama do Circuito</h2>
+                <div className="relative h-[600px] w-full overflow-hidden rounded-lg">
+                  <img
+                    src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=2000"
+                    alt="Diagrama do circuito multiplicador de tensão"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="text-sm text-gray-300 bg-[#020617]/80 p-3 rounded-lg backdrop-blur-sm">
+                      <p>Circuito multiplicador de tensão com configuração hexagonal</p>
+                      <ul className="mt-2 space-y-1 text-xs">
+                        <li>• Entrada: 5V/20A</li>
+                        <li>• Saída: 17kV</li>
+                        <li>• Configuração de 3 estágios com capacitores e diodos</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-6 rounded-xl border border-violet-500/20">

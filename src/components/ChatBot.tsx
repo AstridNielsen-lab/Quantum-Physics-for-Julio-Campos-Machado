@@ -10,23 +10,26 @@ interface Message {
 const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
 const API_KEY = "AIzaSyAuFi5KtPsMJI5IC8c5FjvYD5IbuBdwH_U";
 
-const systemPrompt = `Você é Julio Campos Machado, um físico teórico especializado em propulsão quântica e manipulação de partículas subatômicas. Você está aqui para ajudar com dúvidas sobre o projeto de motor de dobra quântico e cristais isocovalentes. Você pode discutir:
+const systemPrompt = `Você é Julio Campos Machado, um físico teórico especializado em propulsão quântica e manipulação de partículas subatômicas. Você está aqui para ajudar com dúvidas sobre o projeto de motor de dobra quântico e cristais isocovalentes.
 
-- Princípios de física quântica aplicados à propulsão
-- Como funcionam os motores de dobra quântica
-- A manipulação de elétrons e íons em campos magnéticos
-- Detalhes sobre configuração de circuitos e capacitores
-- Interação de lasers com cristais quânticos
-- Aplicações e limitações da tecnologia
+Mantenha suas respostas diretas e naturais, usando apenas pontuação simples. Evite caracteres especiais ou formatação. Use uma linguagem clara e fluida que funcione bem com leitura em voz alta.
 
-Mantenha suas respostas concisas, técnicas mas acessíveis, e sempre relacionadas ao projeto Quantum Doors.`;
+Você pode discutir:
+
+Como funcionam os motores de dobra quântica.
+A manipulação de elétrons e íons em campos magnéticos.
+Detalhes sobre configuração de circuitos e capacitores.
+Interação de lasers com cristais quânticos.
+Aplicações e limitações da tecnologia.
+
+Lembre-se de manter um tom profissional mas acessível, usando frases curtas e claras que funcionem bem quando lidas em voz alta.`;
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       type: 'bot',
-      content: 'Olá! Sou Julio Campos Machado, físico teórico especializado em propulsão quântica. Como posso ajudar você a entender nosso projeto Quantum Doors?'
+      content: 'Olá, sou Julio Campos Machado, físico teórico especializado em propulsão quântica. Como posso ajudar você a entender nosso projeto Quantum Doors?'
     }
   ]);
   const [input, setInput] = useState('');
@@ -80,7 +83,6 @@ const ChatBot = () => {
 
   return (
     <>
-      {/* Chat Button */}
       <button
         onClick={() => setIsOpen(true)}
         className="fixed bottom-6 right-6 bg-violet-600 text-white p-4 rounded-full shadow-lg hover:bg-violet-700 transition-colors z-40"
@@ -88,10 +90,8 @@ const ChatBot = () => {
         <MessageCircle className="w-6 h-6" />
       </button>
 
-      {/* Chat Window */}
       {isOpen && (
         <div className="fixed bottom-24 right-6 w-96 bg-[#020617] border border-violet-500/20 rounded-xl shadow-2xl z-40">
-          {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-violet-500/20">
             <div className="flex items-center gap-3">
               <MessageCircle className="w-6 h-6 text-violet-400" />
@@ -105,7 +105,6 @@ const ChatBot = () => {
             </button>
           </div>
 
-          {/* Messages */}
           <div className="h-96 overflow-y-auto p-4 space-y-4">
             {messages.map((message, index) => (
               <div
@@ -137,7 +136,6 @@ const ChatBot = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input */}
           <form onSubmit={handleSubmit} className="p-4 border-t border-violet-500/20">
             <div className="flex gap-2">
               <input

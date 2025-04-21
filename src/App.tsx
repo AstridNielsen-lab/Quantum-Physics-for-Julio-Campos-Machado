@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Atom, Brain, Contact, Download, ExternalLink, TestTube, Rocket, Send, Stars, Zap, Bot, FileText, Users, Globe, Thermometer } from 'lucide-react';
+import { Atom, Brain, Contact, Download, ExternalLink, TestTube, Rocket, Send, Stars, Zap, Bot, FileText, Users, Globe, Thermometer, Map } from 'lucide-react';
 import ContactForm from './components/ContactForm';
 import Hero from './components/Hero';
 import Navigation from './components/Navigation';
@@ -20,6 +20,8 @@ import VoltageMultiplierPage from './pages/VoltageMultiplierPage';
 import HexagonalGridPage from './pages/HexagonalGridPage';
 import ThermalMeshPage from './pages/ThermalMeshPage';
 import QuantumPropulsionPage from './pages/QuantumPropulsionPage';
+import ThermodynamicsPage from './pages/ThermodynamicsPage';
+import MagneticFieldPage from './pages/MagneticFieldPage';
 import SplashScreen from './components/SplashScreen';
 import ChatBot from './components/ChatBot';
 import ConceptChat from './components/ConceptChat';
@@ -101,6 +103,16 @@ function App() {
                               Malha Hexagonal
                             </a>
                           </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-4 mt-4">
+                          <a
+                            href="/magnetic-field"
+                            className="flex items-center justify-center gap-2 px-6 py-3 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold w-full"
+                          >
+                            <Map className="w-5 h-5" />
+                            Mapa de Campo Magnético
+                          </a>
                         </div>
 
                         <div className="pt-8 border-t border-violet-500/20 space-y-4">
@@ -258,6 +270,8 @@ function App() {
           <Route path="/hexagonal-grid" element={<HexagonalGridPage />} />
           <Route path="/thermal-mesh" element={<ThermalMeshPage />} />
           <Route path="/quantum-propulsion" element={<QuantumPropulsionPage />} />
+          <Route path="/thermodynamics" element={<ThermodynamicsPage />} />
+          <Route path="/magnetic-field" element={<MagneticFieldPage />} />
         </Routes>
       </div>
     </>
