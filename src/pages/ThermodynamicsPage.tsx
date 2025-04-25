@@ -43,11 +43,10 @@ const ThermodynamicsPage = () => {
     ctx.fillStyle = '#1a1a2e';
     ctx.fillRect(0, 0, width, height);
 
-    // Draw grid with responsive spacing
-    const gridSize = Math.min(20, width / 20);
+    // Draw grid
     ctx.strokeStyle = '#ffffff10';
     ctx.lineWidth = 1;
-    
+    const gridSize = 20;
     for (let x = 0; x < width; x += gridSize) {
       ctx.beginPath();
       ctx.moveTo(x, 0);
@@ -61,10 +60,8 @@ const ThermodynamicsPage = () => {
       ctx.stroke();
     }
 
-    // Draw layers with responsive sizing
+    // Draw layers
     const layerHeight = height / layers.length;
-    const particleSize = Math.max(1, width / 300);
-    
     layers.forEach((layer, index) => {
       const y = index * layerHeight;
       const isSelected = selectedLayer === index;
@@ -79,15 +76,15 @@ const ThermodynamicsPage = () => {
       ctx.fillStyle = gradient;
       ctx.fillRect(0, y, width, layerHeight);
 
-      // Particles with responsive count and size
-      const particleCount = Math.min(layer.units * 5, Math.floor(width / 20));
+      // Particles
+      const particleCount = layer.units * 5;
       for (let i = 0; i < particleCount; i++) {
         const particleTime = currentTime + i * (Math.PI * 2 / particleCount);
         const x = (Math.sin(particleTime * 2) * 0.5 + 0.5) * width;
         const particleY = y + (Math.cos(particleTime * 3) * 0.3 + 0.5) * layerHeight;
         
         ctx.beginPath();
-        ctx.arc(x, particleY, particleSize, 0, Math.PI * 2);
+        ctx.arc(x, particleY, 2, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(34, 211, 238, ${0.5 + Math.sin(particleTime) * 0.5})`;
         ctx.fill();
 
@@ -96,18 +93,17 @@ const ThermodynamicsPage = () => {
           ctx.filter = 'blur(4px)';
           ctx.globalAlpha = 0.3;
           ctx.beginPath();
-          ctx.arc(x, particleY, particleSize, 0, Math.PI * 2);
+          ctx.arc(x, particleY, 2, 0, Math.PI * 2);
           ctx.fillStyle = '#22d3ee';
           ctx.fill();
           ctx.restore();
         }
       }
 
-      // Layer info with responsive font size
+      // Layer info
       if (isSelected) {
-        const fontSize = Math.max(10, Math.min(12, width / 50));
         ctx.fillStyle = '#ffffff';
-        ctx.font = `${fontSize}px monospace`;
+        ctx.font = '12px monospace';
         ctx.textAlign = 'left';
         ctx.fillText(`Camada ${index + 1}: ${layer.units} unidades`, 10, y + 20);
         ctx.fillText(`Temperatura: ${(layer.temperature / 1e9).toFixed(2)}B K`, 10, y + 40);
@@ -115,9 +111,9 @@ const ThermodynamicsPage = () => {
       }
     });
 
-    // Draw laser beam with responsive width
+    // Draw laser beam
     const laserY = height / 2;
-    const laserWidth = Math.max(4, width / 60);
+    const laserWidth = 10;
     const laserAngle = Math.sin(currentTime) * Math.PI / 6;
     
     ctx.save();
@@ -143,17 +139,8 @@ const ThermodynamicsPage = () => {
     if (!canvas) return;
 
     const updateSize = () => {
-      const container = canvas.parentElement;
-      if (!container) return;
-
-      const width = container.clientWidth;
-      const height = Math.min(600, window.innerHeight * 0.6);
-
-      canvas.width = width * window.devicePixelRatio;
-      canvas.height = height * window.devicePixelRatio;
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-
+      canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+      canvas.height = canvas.offsetHeight * window.devicePixelRatio;
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
@@ -279,6 +266,8 @@ const ThermodynamicsPage = () => {
                 <h2 className="text-xl font-semibold mb-6">Visualização da Malha Quântica</h2>
                 <canvas
                   ref={canvasRef}
+                  width={600}
+                  height={600}
                   className="w-full bg-[#1a1a2e] rounded-lg"
                 />
                 <div className="mt-4 text-sm text-gray-400">

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Atom, Brain, Contact, Download, ExternalLink, TestTube, Rocket, Send, Stars, Zap, Bot, FileText, Users, Globe, Thermometer, Map } from 'lucide-react';
+import { Atom, Brain, Contact, Download, ExternalLink, TestTube, Rocket, Send, Stars, Zap, Bot, FileText, Users, Globe, Thermometer, Magnet } from 'lucide-react';
 import ContactForm from './components/ContactForm';
 import Hero from './components/Hero';
 import Navigation from './components/Navigation';
@@ -21,7 +21,9 @@ import HexagonalGridPage from './pages/HexagonalGridPage';
 import ThermalMeshPage from './pages/ThermalMeshPage';
 import QuantumPropulsionPage from './pages/QuantumPropulsionPage';
 import ThermodynamicsPage from './pages/ThermodynamicsPage';
+import QuantumFlightPage from './pages/QuantumFlightPage';
 import MagneticFieldPage from './pages/MagneticFieldPage';
+import TechnicalReportPage from './pages/TechnicalReportPage';
 import SplashScreen from './components/SplashScreen';
 import ChatBot from './components/ChatBot';
 import ConceptChat from './components/ConceptChat';
@@ -105,13 +107,27 @@ function App() {
                           </div>
                         </div>
 
-                        <div className="grid grid-cols-1 gap-4 mt-4">
+                        <div className="space-y-4 mt-4">
+                          <a
+                            href="/quantum-flight"
+                            className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 rounded-lg transition-colors text-white font-semibold w-full"
+                          >
+                            <Stars className="w-5 h-5" />
+                            Simulador de Voo Quântico
+                          </a>
                           <a
                             href="/magnetic-field"
-                            className="flex items-center justify-center gap-2 px-6 py-3 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold w-full"
+                            className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 rounded-lg transition-colors text-white font-semibold w-full"
                           >
-                            <Map className="w-5 h-5" />
-                            Mapa de Campo Magnético
+                            <Magnet className="w-5 h-5" />
+                            Campo Magnético
+                          </a>
+                          <a
+                            href="/technical-report"
+                            className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 rounded-lg transition-colors text-white font-semibold w-full"
+                          >
+                            <FileText className="w-5 h-5" />
+                            Relatório Técnico Completo
                           </a>
                         </div>
 
@@ -271,7 +287,9 @@ function App() {
           <Route path="/thermal-mesh" element={<ThermalMeshPage />} />
           <Route path="/quantum-propulsion" element={<QuantumPropulsionPage />} />
           <Route path="/thermodynamics" element={<ThermodynamicsPage />} />
+          <Route path="/quantum-flight" element={<QuantumFlightPage />} />
           <Route path="/magnetic-field" element={<MagneticFieldPage />} />
+          <Route path="/technical-report" element={<TechnicalReportPage />} />
         </Routes>
       </div>
     </>

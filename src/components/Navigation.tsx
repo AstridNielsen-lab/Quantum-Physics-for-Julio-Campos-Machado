@@ -13,7 +13,6 @@ const Navigation = () => {
     { href: '#mission', label: 'Missão' },
     { href: '/thermal-mesh', label: 'Térmica' },
     { href: '/hexagonal-grid', label: 'Malha' },
-    { href: '/magnetic-field', label: 'Campo Magnético' },
     { href: '/thermodynamics', label: 'Termodinâmica' },
     { href: '#contact', label: 'Contato' },
   ];
