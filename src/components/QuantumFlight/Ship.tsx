@@ -1,20 +1,18 @@
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { useGLTF, Text } from '@react-three/drei';
+import { Text } from '@react-three/drei';
 import * as THREE from 'three';
+import { useGameStore } from '../../stores/gameStore';
 
 const Ship = () => {
-  const shipRef = useRef<THREE.Group>(null);
+  const { position, rotation, speed } = useGameStore();
   const engineGlowRef = useRef<THREE.PointLight>(null);
   const shieldRef = useRef<THREE.Mesh>(null);
   
   useFrame(({ clock }) => {
-    if (!shipRef.current || !engineGlowRef.current || !shieldRef.current) return;
+    if (!engineGlowRef.current || !shieldRef.current) return;
     
     const time = clock.getElapsedTime();
-    
-    // Subtle ship hover animation
-    shipRef.current.position.y = Math.sin(time) * 0.1;
     
     // Engine glow pulsing
     engineGlowRef.current.intensity = 2 + Math.sin(time * 4) * 0.5;
@@ -25,9 +23,9 @@ const Ship = () => {
   });
 
   return (
-    <group ref={shipRef}>
+    <group position={position} rotation={rotation}>
       {/* Main Hull */}
-      <mesh position={[0, 0, 0]}>
+      <mesh>
         <cylinderGeometry args={[1, 1, 6, 8]} />
         <meshStandardMaterial 
           color="#2a3b4c"
@@ -163,6 +161,43 @@ const Ship = () => {
       >
         QS Voyager
       </Text>
+
+      {/* Speed Effects */}
+      {speed > 1 && (
+        <group>
+          {/* Speed Lines */}
+          {[...Array(20)].map((_, i) => (
+            <mesh key={i} position={[0, 0, -10 + i * 0.5]}>
+              <boxGeometry args={[0.1, 0.1, 2]} />
+              <meshBasicMaterial 
+                color="#22d3ee"
+                transparent
+                opacity={0.3}
+                blending={THREE.AdditiveBlending}
+              />
+            </mesh>
+          ))}
+          
+          {/* Speed Particles */}
+          <points>
+            <bufferGeometry>
+              <bufferAttribute 
+                attach="attributes-position"
+                count={200}
+                array={new Float32Array(600).map(() => Math.random() * 10 - 5)}
+                itemSize={3}
+              />
+            </bufferGeometry>
+            <pointsMaterial 
+              color="#67e8f9"
+              size={0.02}
+              transparent
+              opacity={0.5}
+              blending={THREE.AdditiveBlending}
+            />
+          </points>
+        </group>
+      )}
     </group>
   );
 };
