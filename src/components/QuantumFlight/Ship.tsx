@@ -9,16 +9,24 @@ const Ship = () => {
   const engineGlowRef = useRef<THREE.PointLight>(null);
   const shieldRef = useRef<THREE.Mesh>(null);
   const engineParticlesRef = useRef<THREE.Points>(null);
+  const coreGlowRef = useRef<THREE.Mesh>(null);
   
   useFrame((state, delta) => {
-    if (!engineGlowRef.current || !shieldRef.current || !engineParticlesRef.current) return;
+    if (!engineGlowRef.current || !shieldRef.current || !engineParticlesRef.current || !coreGlowRef.current) return;
     
     const time = state.clock.getElapsedTime();
     
-    // Smooth engine glow pulsing
+    // Core glow pulsing
+    const coreScale = 1 + Math.sin(time * 3) * 0.2;
+    coreGlowRef.current.scale.set(coreScale, coreScale, coreScale);
+    if (coreGlowRef.current.material instanceof THREE.Material) {
+      coreGlowRef.current.material.opacity = 0.7 + Math.sin(time * 2) * 0.3;
+    }
+
+    // Engine glow pulsing
     engineGlowRef.current.intensity = 2 + Math.sin(time * 8) * 0.5 + speed * 0.5;
     
-    // Dynamic shield rotation and distortion
+    // Shield rotation and distortion
     shieldRef.current.rotation.y = time * 0.2;
     shieldRef.current.rotation.z = Math.sin(time * 0.8) * 0.15;
     shieldRef.current.scale.set(
@@ -38,6 +46,17 @@ const Ship = () => {
 
   return (
     <group position={position} rotation={rotation}>
+      {/* Core Glow */}
+      <mesh ref={coreGlowRef} position={[0, 0, 0]}>
+        <sphereGeometry args={[1.2, 32, 32]} />
+        <meshBasicMaterial 
+          color="#a855f7"
+          transparent
+          opacity={0.8}
+          blending={THREE.AdditiveBlending}
+        />
+      </mesh>
+
       {/* Main Hull */}
       <mesh>
         <cylinderGeometry args={[1, 1, 6, 8]} />

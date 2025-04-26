@@ -63,12 +63,12 @@ const QuantumFlightPage = () => {
     setIsLoading(true);
 
     try {
-      const systemPrompt = `You are the quantum ship's AI navigation system. Current status:
-      - Speed: ${speed} m/s
-      - Energy: ${energy}%
-      - Shields: ${shields}%
+      const systemPrompt = `Você é a IA de navegação da nave quântica. Status atual:
+      - Velocidade: ${speed} m/s
+      - Energia: ${energy}%
+      - Escudos: ${shields}%
       
-      Respond as a helpful but professional AI assistant. Keep responses focused on ship operations, navigation, and safety.`;
+      Responda de forma natural e direta, usando apenas pontuação simples como pontos e vírgulas. Evite caracteres especiais ou formatação. Use linguagem clara e fluida que funcione bem quando lida em voz alta.`;
 
       const response = await axios.post(
         `${API_URL}?key=${API_KEY}`,
@@ -86,6 +86,11 @@ const QuantumFlightPage = () => {
 
       const aiResponse = response.data.candidates[0].content.parts[0].text;
       setMessages(prev => [...prev, { role: 'assistant', content: aiResponse }]);
+
+      // Text-to-speech
+      const utterance = new SpeechSynthesisUtterance(aiResponse);
+      utterance.lang = 'pt-BR';
+      window.speechSynthesis.speak(utterance);
     } catch (error) {
       console.error('Error calling Gemini API:', error);
       setMessages(prev => [...prev, {
@@ -154,7 +159,7 @@ const QuantumFlightPage = () => {
           <div className="absolute right-8 top-40 z-20 w-96 bg-slate-900/90 backdrop-blur-sm rounded-lg border border-violet-500/20">
             <div className="p-4 border-b border-violet-500/20 flex items-center gap-3">
               <Bot className="w-5 h-5 text-violet-400" />
-              <h2 className="font-semibold">AI Navigation Assistant</h2>
+              <h2 className="font-semibold">IA de Navegação</h2>
             </div>
             <div className="h-96 overflow-y-auto p-4 space-y-4">
               {messages.map((message, index) => (
@@ -211,12 +216,12 @@ const QuantumFlightPage = () => {
           <div className="absolute left-8 top-40 z-20 w-80 bg-slate-900/90 backdrop-blur-sm rounded-lg border border-violet-500/20">
             <div className="p-4 border-b border-violet-500/20 flex items-center gap-3">
               <Thermometer className="w-5 h-5 text-violet-400" />
-              <h2 className="font-semibold">Temperature Control</h2>
+              <h2 className="font-semibold">Controle de Temperatura</h2>
             </div>
             <div className="p-4 space-y-4">
               <div>
                 <div className="flex justify-between text-sm mb-1">
-                  <span>Core Temperature</span>
+                  <span>Temperatura do Núcleo</span>
                   <span className="text-violet-400">2,734 K</span>
                 </div>
                 <div className="h-2 bg-slate-800 rounded-full">
@@ -225,7 +230,7 @@ const QuantumFlightPage = () => {
               </div>
               <div>
                 <div className="flex justify-between text-sm mb-1">
-                  <span>Shield Temperature</span>
+                  <span>Temperatura dos Escudos</span>
                   <span className="text-violet-400">1,253 K</span>
                 </div>
                 <div className="h-2 bg-slate-800 rounded-full">
@@ -234,7 +239,7 @@ const QuantumFlightPage = () => {
               </div>
               <div>
                 <div className="flex justify-between text-sm mb-1">
-                  <span>Engine Temperature</span>
+                  <span>Temperatura do Motor</span>
                   <span className="text-violet-400">3,856 K</span>
                 </div>
                 <div className="h-2 bg-slate-800 rounded-full">
@@ -250,12 +255,12 @@ const QuantumFlightPage = () => {
           <div className="absolute left-8 bottom-40 z-20 w-80 bg-slate-900/90 backdrop-blur-sm rounded-lg border border-violet-500/20">
             <div className="p-4 border-b border-violet-500/20 flex items-center gap-3">
               <Shield className="w-5 h-5 text-violet-400" />
-              <h2 className="font-semibold">Shield Status</h2>
+              <h2 className="font-semibold">Status dos Escudos</h2>
             </div>
             <div className="p-4 space-y-4">
               <div>
                 <div className="flex justify-between text-sm mb-1">
-                  <span>Front Shield</span>
+                  <span>Escudo Frontal</span>
                   <span className="text-violet-400">92%</span>
                 </div>
                 <div className="h-2 bg-slate-800 rounded-full">
@@ -264,7 +269,7 @@ const QuantumFlightPage = () => {
               </div>
               <div>
                 <div className="flex justify-between text-sm mb-1">
-                  <span>Rear Shield</span>
+                  <span>Escudo Traseiro</span>
                   <span className="text-violet-400">88%</span>
                 </div>
                 <div className="h-2 bg-slate-800 rounded-full">
@@ -273,7 +278,7 @@ const QuantumFlightPage = () => {
               </div>
               <div>
                 <div className="flex justify-between text-sm mb-1">
-                  <span>Quantum Field</span>
+                  <span>Campo Quântico</span>
                   <span className="text-violet-400">95%</span>
                 </div>
                 <div className="h-2 bg-slate-800 rounded-full">
@@ -289,12 +294,12 @@ const QuantumFlightPage = () => {
           <div className="absolute right-8 bottom-40 z-20 w-96 bg-slate-900/90 backdrop-blur-sm rounded-lg border border-violet-500/20">
             <div className="p-4 border-b border-violet-500/20 flex items-center gap-3">
               <Gauge className="w-5 h-5 text-violet-400" />
-              <h2 className="font-semibold">Engine Control</h2>
+              <h2 className="font-semibold">Controle do Motor</h2>
             </div>
             <div className="p-4 space-y-4">
               <div>
                 <div className="flex justify-between text-sm mb-1">
-                  <span>Quantum Drive</span>
+                  <span>Motor Quântico</span>
                   <span className="text-violet-400">{speed.toFixed(2)} m/s</span>
                 </div>
                 <div className="h-2 bg-slate-800 rounded-full">
@@ -306,7 +311,7 @@ const QuantumFlightPage = () => {
               </div>
               <div>
                 <div className="flex justify-between text-sm mb-1">
-                  <span>Energy Output</span>
+                  <span>Saída de Energia</span>
                   <span className="text-violet-400">{energy}%</span>
                 </div>
                 <div className="h-2 bg-slate-800 rounded-full">
@@ -321,28 +326,28 @@ const QuantumFlightPage = () => {
                   onClick={() => setSpeed(1)}
                   className="p-2 bg-slate-800 rounded-lg hover:bg-slate-700 transition-colors text-sm"
                 >
-                  Low Speed
+                  Velocidade Baixa
                 </button>
                 <button
                   onClick={() => setSpeed(5)}
                   className="p-2 bg-slate-800 rounded-lg hover:bg-slate-700 transition-colors text-sm"
                 >
-                  Medium Speed
+                  Velocidade Média
                 </button>
                 <button
                   onClick={() => setSpeed(10)}
                   className="p-2 bg-slate-800 rounded-lg hover:bg-slate-700 transition-colors text-sm"
                 >
-                  High Speed
+                  Velocidade Alta
                 </button>
               </div>
               <div className="bg-slate-800 p-3 rounded-lg">
                 <div className="flex items-center gap-2 text-sm mb-2">
                   <AlertTriangle className="w-4 h-4 text-yellow-400" />
-                  <span>System Status</span>
+                  <span>Status do Sistema</span>
                 </div>
                 <div className="text-xs text-gray-400">
-                  All systems operating within normal parameters. Quantum field stability at 98.3%.
+                  Todos os sistemas operando dentro dos parâmetros normais. Estabilidade do campo quântico em 98.3%.
                 </div>
               </div>
             </div>

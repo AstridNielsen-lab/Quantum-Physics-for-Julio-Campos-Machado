@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Atom, Brain, Contact, Download, ExternalLink, TestTube, Rocket, Send, Stars, Zap, Bot, FileText, Users, Globe, Thermometer, Magnet } from 'lucide-react';
+import { Atom, Brain, Contact, Download, ExternalLink, TestTube, Rocket, Send, Stars, Zap, Bot, FileText, Users, Globe, Thermometer, Magnet, Map } from 'lucide-react';
 import ContactForm from './components/ContactForm';
 import Hero from './components/Hero';
 import Navigation from './components/Navigation';
@@ -23,6 +23,7 @@ import QuantumPropulsionPage from './pages/QuantumPropulsionPage';
 import ThermodynamicsPage from './pages/ThermodynamicsPage';
 import QuantumFlightPage from './pages/QuantumFlightPage';
 import MagneticFieldPage from './pages/MagneticFieldPage';
+import GlobalMagneticFieldPage from './pages/GlobalMagneticFieldPage';
 import TechnicalReportPage from './pages/TechnicalReportPage';
 import SplashScreen from './components/SplashScreen';
 import ChatBot from './components/ChatBot';
@@ -123,6 +124,13 @@ function App() {
                             Campo Magnético
                           </a>
                           <a
+                            href="/global-magnetic-field"
+                            className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 rounded-lg transition-colors text-white font-semibold w-full"
+                          >
+                            <Map className="w-5 h-5" />
+                            Campo Magnético Global
+                          </a>
+                          <a
                             href="/technical-report"
                             className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 rounded-lg transition-colors text-white font-semibold w-full"
                           >
@@ -148,7 +156,7 @@ function App() {
                             </a>
                             
                             <a
-                              href="https://www.chatpdf.com/pt/c/TBSw8VehAxGvWOXiNjPZV"
+                              href="https://www.chatpdf.com/share/23YthM6FKlZIW9ugicrwI"
                               target="_blank"
                               rel="noopener noreferrer"
                               className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 rounded-lg transition-colors text-white font-semibold"
@@ -160,7 +168,7 @@ function App() {
 
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
                             <a
-                              href="https://chatgpt.com/.../677119ee-bf70-8013-8e35-2faecbe3e2f3"
+                              href="https://jcm-tecnologia.vercel.app"
                               target="_blank"
                               rel="noopener noreferrer"
                               className="flex items-center justify-center gap-2 px-4 py-2 bg-violet-900/50 hover:bg-violet-900/70 rounded-lg transition-colors text-white"
@@ -252,7 +260,7 @@ function App() {
                             Like Look Solutions
                           </a>
                           <a
-                            href="/projeto-quantum.pdf"
+                            href="https://docs.google.com/document/d/17rhZ6zljcakYO3IYjIxXz8LPJ9_rtq1jpKT-TGxUOEo/edit?usp=sharing"
                             download
                             className="flex items-center gap-2 text-violet-400 hover:text-violet-300 transition-colors"
                           >
@@ -289,6 +297,7 @@ function App() {
           <Route path="/thermodynamics" element={<ThermodynamicsPage />} />
           <Route path="/quantum-flight" element={<QuantumFlightPage />} />
           <Route path="/magnetic-field" element={<MagneticFieldPage />} />
+          <Route path="/global-magnetic-field" element={<GlobalMagneticFieldPage />} />
           <Route path="/technical-report" element={<TechnicalReportPage />} />
         </Routes>
       </div>

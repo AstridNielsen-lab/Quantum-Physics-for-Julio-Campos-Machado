@@ -130,313 +130,310 @@ const TechnicalReportPage = () => {
               
               <div className="prose prose-invert max-w-none">
                 <p className="text-gray-300 mb-6">
-                  A exploração espacial sempre dependeu de foguetes baseados em reações químicas ou nucleares, que, apesar de eficazes para viagens próximas à Terra, possuem limitações fundamentais para viagens interestelares. Nosso novo conceito de propulsão a laser com cristais isocovalentes promete superar essas barreiras.
+                  A exploração espacial sempre dependeu de foguetes baseados em reações químicas ou nucleares, 
+                  que, apesar de eficazes para viagens próximas à Terra, possuem limitações fundamentais para 
+                  viagens interestelares. Nosso novo conceito de propulsão a laser com cristais isocovalentes 
+                  promete superar essas barreiras.
                 </p>
 
+                <div className="grid md:grid-cols-2 gap-6 mb-8">
+                  <div className="bg-violet-900/20 p-6 rounded-lg border border-violet-500/20">
+                    <h3 className="text-lg font-semibold text-violet-400 mb-4">Foguetes Convencionais</h3>
+                    <ul className="space-y-2 text-gray-300">
+                      <li>• Limitados pela equação de Tsiolkovsky</li>
+                      <li>• Necessidade de grande massa de propelente</li>
+                      <li>• Velocidade máxima restrita</li>
+                      <li>• Inviável para viagens interestelares</li>
+                    </ul>
+                  </div>
+                  <div className="bg-violet-900/20 p-6 rounded-lg border border-violet-500/20">
+                    <h3 className="text-lg font-semibold text-violet-400 mb-4">Propulsão Quântica</h3>
+                    <ul className="space-y-2 text-gray-300">
+                      <li>• Manipulação de campos quânticos</li>
+                      <li>• Sem necessidade de propelente convencional</li>
+                      <li>• Potencial para velocidades relativísticas</li>
+                      <li>• Ideal para exploração interestelar</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="bg-violet-950/30 p-8 rounded-xl border border-violet-500/20 mb-8">
+                  <h3 className="text-2xl font-semibold mb-6 text-violet-400">
+                    RELATÓRIO TÉCNICO: MOTOR DE PROPULSÃO QUÂNTICA INTERESTELAR
+                  </h3>
+
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="text-lg font-semibold text-violet-300 mb-3">Sumário Executivo</h4>
+                      <div className="text-gray-300 space-y-4">
+                        <p>
+                          Este relatório apresenta o desenvolvimento teórico de um motor de propulsão quântica 
+                          interestelar baseado em cristais isocovalentes. O sistema proposto utiliza princípios 
+                          avançados da física quântica para manipular elétrons acelerados e fótons em feixes de 
+                          laser de alta voltagem.
+                        </p>
+                        <p>
+                          O motor foi projetado para operar com lasers de alta voltagem (1,5 kV a 17 kV) e 
+                          temperaturas de plasma extremamente elevadas (10⁶ a 10⁸ K), incorporando materiais 
+                          avançados como grafeno, silício dopado e supercondutores de alta temperatura.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="bg-violet-900/20 p-6 rounded-lg border border-violet-500/20">
+                        <h4 className="text-lg font-semibold text-violet-300 mb-4">Especificações Técnicas</h4>
+                        <ul className="space-y-2 text-gray-300">
+                          <li>• Potência do Laser: 17 kV</li>
+                          <li>• Temperatura de Operação: 10⁸ K</li>
+                          <li>• Eficiência Energética: &gt;95%</li>
+                          <li>• Velocidade Máxima: 8,25% c</li>
+                        </ul>
+                      </div>
+                      <div className="bg-violet-900/20 p-6 rounded-lg border border-violet-500/20">
+                        <h4 className="text-lg font-semibold text-violet-300 mb-4">Materiais Avançados</h4>
+                        <ul className="space-y-2 text-gray-300">
+                          <li>• Grafeno Dopado</li>
+                          <li>• Silício de Alta Pureza</li>
+                          <li>• Supercondutores HTS</li>
+                          <li>• Cristais Isocovalentes</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div className="bg-violet-900/20 p-6 rounded-lg border border-violet-500/20">
+                      <h4 className="text-lg font-semibold text-violet-300 mb-4">Princípios de Funcionamento</h4>
+                      <div className="space-y-4 text-gray-300">
+                        <p>
+                          O motor utiliza uma combinação única de campos magnéticos assimétricos e lasers de alta 
+                          potência para manipular elétrons em nível quântico. A interação entre os cristais 
+                          isocovalentes e o feixe de laser cria zonas de repulsão controlada.
+                        </p>
+                        <p>
+                          O sistema é capaz de gerar impulso através da manipulação do vácuo quântico, sem 
+                          necessidade de ejeção de massa convencional. Isto permite uma eficiência energética 
+                          sem precedentes e potencial para velocidades relativísticas.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gray-800/50 p-6 rounded-lg mb-8 border border-gray-700">
+                  <h3 className="text-xl font-semibold mb-4 text-blue-300">
+                    RELATÓRIO TÉCNICO: MOTOR DE PROPULSÃO QUÂNTICA INTERESTELAR BASEADO EM CRISTAIS ISOCOVALENTES
+                  </h3>
+
+                  <div className="mb-8">
+                    <h4 className="text-lg font-medium mb-3 text-blue-200">SUMÁRIO EXECUTIVO</h4>
+                    <p className="text-gray-300 mb-4">
+                      Este relatório apresenta o desenvolvimento teórico de um motor de propulsão quântica 
+                      interestelar baseado em cristais isocovalentes. O sistema proposto utiliza princípios 
+                      avançados da física quântica para manipular elétrons acelerados e fótons em feixes de 
+                      laser de alta voltagem, criando zonas de repulsão e atração a nível subatômico que 
+                      geram impulso suficiente para viagens interestelares.
+                    </p>
+                    <p className="text-gray-300 mb-4">
+                      O motor foi projetado para operar com lasers de alta voltagem (1,5 kV a 17 kV) e 
+                      temperaturas de plasma extremamente elevadas (10⁶ a 10⁸ K), incorporando materiais 
+                      avançados como grafeno, silício dopado e supercondutores de alta temperatura. Os 
+                      cálculos teóricos indicam que o sistema pode atingir velocidades de até 8,25% da 
+                      velocidade da luz após um ano de aceleração contínua.
+                    </p>
+                    <p className="text-gray-300">
+                      Este relatório detalha os princípios científicos fundamentais, a estrutura do motor, 
+                      os materiais utilizados, os mecanismos de funcionamento e os cálculos de performance, 
+                      fornecendo uma base teórica completa para o desenvolvimento futuro de um protótipo funcional.
+                    </p>
+                  </div>
+
+                  <div className="space-y-8">
+                    <div>
+                      <h4 className="text-lg font-medium mb-3 text-blue-200">1. INTRODUÇÃO</h4>
+                      
+                      <div className="ml-4 space-y-4">
+                        <div>
+                          <h5 className="font-medium text-blue-100">1.1 Contexto e Motivação</h5>
+                          <p className="text-gray-300">
+                            A exploração do espaço interestelar representa um dos maiores desafios tecnológicos 
+                            da humanidade. As distâncias astronômicas entre sistemas estelares exigem sistemas 
+                            de propulsão capazes de atingir velocidades significativas em relação à velocidade 
+                            da luz. Os métodos convencionais de propulsão, baseados em reações químicas ou 
+                            mesmo nucleares, são fundamentalmente limitados em termos de eficiência e velocidade 
+                            máxima alcançável.
+                          </p>
+                        </div>
+                        
+                        <div>
+                          <h5 className="font-medium text-blue-100">1.2 Objetivos do Projeto</h5>
+                          <p className="text-gray-300">
+                            O objetivo principal deste projeto é desenvolver um esquema teórico completo para um 
+                            motor de propulsão quântica interestelar que:
+                          </p>
+                          <ul className="list-disc pl-6 text-gray-300 space-y-1 mt-2">
+                            <li>Utilize cristais quânticos isocovalentes como componente central</li>
+                            <li>Manipule elétrons acelerados e fótons em feixes de laser de alta voltagem</li>
+                            <li>Crie zonas de repulsão e atração a nível subatômico</li>
+                            <li>Gere impulso suficiente para viagens interestelares</li>
+                            <li>Opere com eficiência energética superior aos sistemas de propulsão convencionais</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="text-lg font-medium mb-3 text-blue-200">2. FUNDAMENTOS CIENTÍFICOS</h4>
+                      
+                      <div className="ml-4 space-y-6">
+                        <div>
+                          <h5 className="font-medium text-blue-100">2.1 Eletrodinâmica Quântica (QED)</h5>
+                          <p className="text-gray-300">
+                            A Eletrodinâmica Quântica (QED) constitui a base teórica fundamental para o motor 
+                            de propulsão quântica. Esta teoria descreve como a luz e a matéria interagem, 
+                            explicando fenômenos como a emissão e absorção de fótons por elétrons, a polarização 
+                            do vácuo e as flutuações quânticas do campo eletromagnético.
+                          </p>
+                        </div>
+                        
+                        <div>
+                          <h5 className="font-medium text-blue-100">2.2 Efeito Casimir</h5>
+                          <p className="text-gray-300">
+                            O Efeito Casimir, previsto pelo físico holandês Hendrik Casimir em 1948, descreve 
+                            uma força atrativa entre duas placas condutoras paralelas no vácuo. Esta força surge 
+                            devido às flutuações quânticas do vácuo e à restrição dos modos de vibração do campo 
+                            eletromagnético entre as placas.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="grid md:grid-cols-2 gap-8 mb-8">
-                  <div className="bg-violet-900/20 p-6 rounded-lg">
-                    <h3 className="text-xl font-semibold mb-4 text-violet-300 flex items-center gap-2">
-                      <Zap className="w-5 h-5" />
-                      Foguetes Atuais
-                    </h3>
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="font-semibold text-violet-400">Propulsão Química</h4>
-                        <ul className="list-disc list-inside text-gray-300 space-y-1">
-                          <li>Queima de combustível convencional</li>
-                          <li>Impulso específico limitado (~450s)</li>
-                          <li>Alta massa de combustível necessária</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-violet-400">Propulsão Elétrica</h4>
-                        <ul className="list-disc list-inside text-gray-300 space-y-1">
-                          <li>Aceleração de íons/plasma</li>
-                          <li>Maior eficiência energética</li>
-                          <li>Empuxo muito baixo</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-violet-400">Propulsão Nuclear</h4>
-                        <ul className="list-disc list-inside text-gray-300 space-y-1">
-                          <li>Reações de fissão/fusão</li>
-                          <li>Riscos de radiação</li>
-                          <li>Restrições políticas</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-violet-900/20 p-6 rounded-lg">
-                    <h3 className="text-xl font-semibold mb-4 text-violet-300 flex items-center gap-2">
-                      <Atom className="w-5 h-5" />
-                      Nossa Propulsão Quântica
-                    </h3>
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="font-semibold text-violet-400">Laser de Alta Energia</h4>
-                        <ul className="list-disc list-inside text-gray-300 space-y-1">
-                          <li>1,5 kV a 17 kV de potência</li>
-                          <li>Plasma de 10⁶ a 10⁸ K</li>
-                          <li>Sem necessidade de propelente</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-violet-400">Cristais Isocovalentes</h4>
-                        <ul className="list-disc list-inside text-gray-300 space-y-1">
-                          <li>Grafeno dopado + silício</li>
-                          <li>Campos magnéticos de 15 Tesla</li>
-                          <li>Zonas de repulsão quântica</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-violet-400">Efeito Casimir</h4>
-                        <ul className="list-disc list-inside text-gray-300 space-y-1">
-                          <li>Manipulação do vácuo quântico</li>
-                          <li>Impulso sem ejeção de massa</li>
-                          <li>Velocidade de até 8,25% da luz</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
                 </div>
+              </div>
+            </section>
 
-                <div className="bg-violet-900/20 p-6 rounded-lg mb-8">
-                  <h3 className="text-xl font-semibold mb-4 text-violet-300 flex items-center gap-2">
-                    <Scale className="w-5 h-5" />
-                    Comparação de Performance
-                  </h3>
-                  <div className="overflow-x-auto">
-                    <table className="w-full">
-                      <thead>
-                        <tr className="border-b border-violet-500/20">
-                          <th className="py-3 px-4 text-left text-violet-400">Critério</th>
-                          <th className="py-3 px-4 text-left text-violet-400">Foguetes Tradicionais</th>
-                          <th className="py-3 px-4 text-left text-violet-400">Propulsão Quântica</th>
-                        </tr>
-                      </thead>
-                      <tbody className="text-gray-300">
-                        <tr className="border-b border-violet-500/20">
-                          <td className="py-3 px-4">Eficiência</td>
-                          <td className="py-3 px-4">450s de ISP</td>
-                          <td className="py-3 px-4">Conversão direta de energia</td>
-                        </tr>
-                        <tr className="border-b border-violet-500/20">
-                          <td className="py-3 px-4">Velocidade Máxima</td>
-                          <td className="py-3 px-4">~20 km/s</td>
-                          <td className="py-3 px-4">~24.750 km/s (8,25% da luz)</td>
-                        </tr>
-                        <tr className="border-b border-violet-500/20">
-                          <td className="py-3 px-4">Combustível</td>
-                          <td className="py-3 px-4">Toneladas de propelente</td>
-                          <td className="py-3 px-4">Energia direta do laser</td>
-                        </tr>
-                        <tr>
-                          <td className="py-3 px-4">Viabilidade Interestelar</td>
-                          <td className="py-3 px-4">Impraticável</td>
-                          <td className="py-3 px-4">Viável para Alpha Centauri</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+            <div className="bg-violet-900/20 p-6 rounded-lg">
+              <h3 className="text-xl font-semibold mb-4 text-violet-300 flex items-center gap-2">
+                <Zap className="w-5 h-5" />
+                Foguetes Atuais
+              </h3>
+              <div className="space-y-4">
+                <div>
+                  <h4 className="font-semibold text-violet-400">Propulsão Química</h4>
+                  <ul className="list-disc list-inside text-gray-300 space-y-1">
+                    <li>Queima de combustível convencional</li>
+                    <li>Impulso específico limitado (~450s)</li>
+                    <li>Alta massa de combustível necessária</li>
+                  </ul>
                 </div>
-
-                <div className="bg-violet-900/20 p-6 rounded-lg">
-                  <h3 className="text-xl font-semibold mb-4 text-violet-300 flex items-center gap-2">
-                    <Target className="w-5 h-5" />
-                    Conclusão
-                  </h3>
-                  <p className="text-gray-300 mb-4">
-                    Enquanto os foguetes atuais são limitados pela física newtoniana e pela necessidade de combustível, nosso sistema de propulsão a laser com cristais isocovalentes abre caminho para:
-                  </p>
-                  <ul className="list-disc list-inside text-gray-300 space-y-2">
-                    <li>Viagens interestelares em escalas de tempo humanas</li>
-                    <li>Naves mais leves e eficientes, sem depender de propelente</li>
-                    <li>Exploração de exoplanetas e colonização espacial realista</li>
+                <div>
+                  <h4 className="font-semibold text-violet-400">Propulsão Elétrica</h4>
+                  <ul className="list-disc list-inside text-gray-300 space-y-1">
+                    <li>Aceleração de íons/plasma</li>
+                    <li>Maior eficiência energética</li>
+                    <li>Empuxo muito baixo</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-violet-400">Propulsão Nuclear</h4>
+                  <ul className="list-disc list-inside text-gray-300 space-y-1">
+                    <li>Reações de fissão/fusão</li>
+                    <li>Riscos de radiação</li>
+                    <li>Restrições políticas</li>
                   </ul>
                 </div>
               </div>
-            </section>
+            </div>
 
-            <section className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-8 rounded-xl border border-violet-500/20">
-              <h2 className="text-2xl font-semibold mb-6 text-violet-400">
-                Visão Geral do Motor
-              </h2>
-              <div className="aspect-square max-w-2xl mx-auto mb-8">
-                <canvas
-                  ref={canvasRef}
-                  width={600}
-                  height={600}
-                  className="w-full bg-[#1a1a2e] rounded-lg"
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-4 text-sm text-gray-300">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-[#ec4899]" />
-                  <span>Sistema de Laser Central</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-[#22c55e]" />
-                  <span>Cristais Isocovalentes</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-[#22d3ee]" />
-                  <span>Plasma de Elétrons</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-[#a855f7]" />
-                  <span>Campo Magnético</span>
-                </div>
-              </div>
-            </section>
-
-            <section className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-8 rounded-xl border border-violet-500/20">
-              <h2 className="text-2xl font-semibold mb-6 text-violet-400">
-                Diagramas Estruturais
-              </h2>
-              <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-violet-900/20 p-6 rounded-lg">
+              <h3 className="text-xl font-semibold mb-4 text-violet-300 flex items-center gap-2">
+                <Atom className="w-5 h-5" />
+                Nossa Propulsão Quântica
+              </h3>
+              <div className="space-y-4">
                 <div>
-                  <h3 className="text-xl font-semibold mb-4 text-violet-300">
-                    Matriz Cristalina
-                  </h3>
-                  <div className="relative aspect-square bg-[#1a1a2e] rounded-lg overflow-hidden mb-4">
-                    <img
-                      src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=2000"
-                      alt="Estrutura da matriz cristalina isocovalente"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent" />
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <p className="text-sm text-gray-300 bg-[#020617]/80 p-2 rounded">
-                        Estrutura hexagonal com dopagem controlada de Boro (B), Nitrogênio (N) e Flúor (F)
-                      </p>
-                    </div>
-                  </div>
+                  <h4 className="font-semibold text-violet-400">Laser de Alta Energia</h4>
+                  <ul className="list-disc list-inside text-gray-300 space-y-1">
+                    <li>1,5 kV a 17 kV de potência</li>
+                    <li>Plasma de 10⁶ a 10⁸ K</li>
+                    <li>Sem necessidade de propelente</li>
+                  </ul>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-4 text-violet-300">
-                    Sistema de Laser
-                  </h3>
-                  <div className="relative aspect-square bg-[#1a1a2e] rounded-lg overflow-hidden mb-4">
-                    <img
-                      src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2000"
-                      alt="Sistema de laser e interação com cristais"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent" />
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <p className="text-sm text-gray-300 bg-[#020617]/80 p-2 rounded">
-                        Laser de alta potência (17 kV) interagindo com cristais isocovalentes
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-8 rounded-xl border border-violet-500/20">
-              <h2 className="text-2xl font-semibold mb-6 text-violet-400">
-                Fundamentos Científicos
-              </h2>
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-xl font-semibold mb-3 text-violet-300">
-                      Eletrodinâmica Quântica (QED)
-                    </h3>
-                    <p className="text-gray-300">
-                      Base teórica que descreve a interação entre luz e matéria, permitindo a 
-                      manipulação de fótons e elétrons para gerar impulso.
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold mb-3 text-violet-300">
-                      Efeito Casimir
-                    </h3>
-                    <p className="text-gray-300">
-                      Força atrativa entre placas condutoras no vácuo, explorada de forma dinâmica 
-                      para criar zonas de pressão diferencial.
-                    </p>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-xl font-semibold mb-3 text-violet-300">
-                      Plasma de Elétrons
-                    </h3>
-                    <p className="text-gray-300">
-                      Estado da matéria de alta energia usado para transferência e manipulação de 
-                      campos eletromagnéticos.
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold mb-3 text-violet-300">
-                      Campos de Ressonância
-                    </h3>
-                    <p className="text-gray-300">
-                      Configurações específicas que maximizam a transferência de energia e amplificação 
-                      de efeitos quânticos.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-8 rounded-xl border border-violet-500/20">
-              <h2 className="text-2xl font-semibold mb-6 text-violet-400">
-                Cálculos de Performance
-              </h2>
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <div className="bg-violet-900/20 p-6 rounded-lg mb-6">
-                    <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                      <Calculator className="text-violet-400 w-5 h-5" />
-                      Impulso Gerado
-                    </h3>
-                    <ul className="space-y-2 text-gray-300">
-                      <li>• Pressão de Radiação Quântica: 10³ N/m²</li>
-                      <li>• Área Efetiva de Propulsão: 7,85 m²</li>
-                      <li>• Impulso Total Estimado: 7,85 × 10³ N</li>
-                    </ul>
-                  </div>
-                  <div className="bg-violet-900/20 p-6 rounded-lg">
-                    <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                      <Rocket className="text-violet-400 w-5 h-5" />
-                      Velocidade de Propulsão
-                    </h3>
-                    <ul className="space-y-2 text-gray-300">
-                      <li>• Aceleração Inicial: 0,785 m/s²</li>
-                      <li>• Velocidade Terminal: 2,47 × 10⁷ m/s</li>
-                      <li>• Percentual da Velocidade da Luz: 8,25%</li>
-                    </ul>
-                  </div>
+                  <h4 className="font-semibold text-violet-400">Cristais Isocovalentes</h4>
+                  <ul className="list-disc list-inside text-gray-300 space-y-1">
+                    <li>Grafeno dopado + silício</li>
+                    <li>Campos magnéticos de 15 Tesla</li>
+                    <li>Zonas de repulsão quântica</li>
+                  </ul>
                 </div>
                 <div>
-                  <div className="bg-violet-900/20 p-6 rounded-lg mb-6">
-                    <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                      <Microscope className="text-violet-400 w-5 h-5" />
-                      Eficiência Energética
-                    </h3>
-                    <ul className="space-y-2 text-gray-300">
-                      <li>• Eficiência de Conversão: 42%</li>
-                      <li>• Potência de Entrada: 15 MW</li>
-                      <li>• Potência Efetiva: 6,3 MW</li>
-                    </ul>
-                  </div>
-                  <div className="bg-violet-900/20 p-6 rounded-lg">
-                    <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                      <Atom className="text-violet-400 w-5 h-5" />
-                      Arrasto Quântico
-                    </h3>
-                    <ul className="space-y-2 text-gray-300">
-                      <li>• Coeficiente de Arrasto: 3,2 × 10⁻⁵</li>
-                      <li>• Redução de Eficiência: &lt;0,5%</li>
-                      <li>• Massa Efetiva: 8,5 × 10³ kg</li>
-                    </ul>
-                  </div>
+                  <h4 className="font-semibold text-violet-400">Efeito Casimir</h4>
+                  <ul className="list-disc list-inside text-gray-300 space-y-1">
+                    <li>Manipulação do vácuo quântico</li>
+                    <li>Impulso sem ejeção de massa</li>
+                    <li>Velocidade de até 8,25% da luz</li>
+                  </ul>
                 </div>
               </div>
-            </section>
+            </div>
+
+            <div className="bg-violet-900/20 p-6 rounded-lg mb-8">
+              <h3 className="text-xl font-semibold mb-4 text-violet-300 flex items-center gap-2">
+                <Scale className="w-5 h-5" />
+                Comparação de Performance
+              </h3>
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-violet-500/20">
+                      <th className="py-3 px-4 text-left text-violet-400">Critério</th>
+                      <th className="py-3 px-4 text-left text-violet-400">Foguetes Tradicionais</th>
+                      <th className="py-3 px-4 text-left text-violet-400">Propulsão Quântica</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-gray-300">
+                    <tr className="border-b border-violet-500/20">
+                      <td className="py-3 px-4">Eficiência</td>
+                      <td className="py-3 px-4">450s de ISP</td>
+                      <td className="py-3 px-4">Conversão direta de energia</td>
+                    </tr>
+                    <tr className="border-b border-violet-500/20">
+                      <td className="py-3 px-4">Velocidade Máxima</td>
+                      <td className="py-3 px-4">~20 km/s</td>
+                      <td className="py-3 px-4">~24.750 km/s (8,25% da luz)</td>
+                    </tr>
+                    <tr className="border-b border-violet-500/20">
+                      <td className="py-3 px-4">Combustível</td>
+                      <td className="py-3 px-4">Toneladas de propelente</td>
+                      <td className="py-3 px-4">Energia direta do laser</td>
+                    </tr>
+                    <tr>
+                      <td className="py-3 px-4">Viabilidade Interestelar</td>
+                      <td className="py-3 px-4">Impraticável</td>
+                      <td className="py-3 px-4">Viável para Alpha Centauri</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div className="bg-violet-900/20 p-6 rounded-lg">
+              <h3 className="text-xl font-semibold mb-4 text-violet-300 flex items-center gap-2">
+                <Target className="w-5 h-5" />
+                Conclusão
+              </h3>
+              <p className="text-gray-300 mb-4">
+                Enquanto os foguetes atuais são limitados pela física newtoniana e pela necessidade de combustível, nosso sistema de propulsão a laser com cristais isocovalentes abre caminho para:
+              </p>
+              <ul className="list-disc list-inside text-gray-300 space-y-2">
+                <li>Viagens interestelares em escalas de tempo humanas</li>
+                <li>Naves mais leves e eficientes, sem depender de propelente</li>
+                <li>Exploração de exoplanetas e colonização espacial realista</li>
+              </ul>
+            </div>
           </div>
         </div>
       </main>
