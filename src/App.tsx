@@ -25,6 +25,7 @@ import QuantumFlightPage from './pages/QuantumFlightPage';
 import MagneticFieldPage from './pages/MagneticFieldPage';
 import GlobalMagneticFieldPage from './pages/GlobalMagneticFieldPage';
 import TechnicalReportPage from './pages/TechnicalReportPage';
+import ThermodynamicControlPanel from './pages/ThermodynamicControlPanel';
 import SplashScreen from './components/SplashScreen';
 import ChatBot from './components/ChatBot';
 import ConceptChat from './components/ConceptChat';
@@ -137,6 +138,17 @@ function App() {
                             <FileText className="w-5 h-5" />
                             Relatório Técnico Completo
                           </a>
+
+                          <a
+                             href="/thermodynamic-control-panel"
+                                   className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 rounded-lg transition-colors text-white font-semibold w-full"
+>
+                                 <Thermometer className="w-5 h-5" />
+                           Painel de Controle Termodinâmico
+                            </a>
+
+
+
                         </div>
 
                         <div className="pt-8 border-t border-violet-500/20 space-y-4">
@@ -299,6 +311,8 @@ function App() {
           <Route path="/magnetic-field" element={<MagneticFieldPage />} />
           <Route path="/global-magnetic-field" element={<GlobalMagneticFieldPage />} />
           <Route path="/technical-report" element={<TechnicalReportPage />} />
+          <Route path="/thermodynamic-control" element={<ThermodynamicControlPanel />} />
+          <Route path="/thermodynamic-control-panel" element={<ThermodynamicControlPanel />} />
         </Routes>
       </div>
     </>

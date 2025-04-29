@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import * as THREE from 'three';
-import { Gauge, Rocket, Radio, Shield, Thermometer, Navigation as NavIcon, Compass, Crosshair, Map, Eye, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
+import { Gauge, Rocket, Radio, Shield, Thermometer, Navigation as NavIcon, Compass, Crosshair, Map, Eye, ZoomIn, ZoomOut, RotateCcw, Settings, Power, Wifi } from 'lucide-react';
 import { useGameStore } from '../../stores/gameStore';
 
 const Interface = () => {
   const { position, rotation, speed, setRotation, zoom, setZoom, viewMode, setViewMode } = useGameStore();
-  const [showRouteMap, setShowRouteMap] = useState(false);
+  const [showRouteMap, setShowRouteMap] = useState(true);
   const [startPoint, setStartPoint] = useState<{ x: number, y: number } | null>(null);
   const [endPoint, setEndPoint] = useState<{ x: number, y: number } | null>(null);
+  const [showSystemStatus, setShowSystemStatus] = useState(true);
+  const [showNavigation, setShowNavigation] = useState(true);
+  const [showPropulsion, setShowPropulsion] = useState(true);
 
   // Automatic stabilizer effect
   useEffect(() => {
@@ -150,107 +153,210 @@ const Interface = () => {
         </div>
       </div>
 
-      {/* View Controls */}
-      <div className="absolute top-24 right-8 pointer-events-auto">
-        <div className="bg-slate-800/50 backdrop-blur-sm p-2 rounded-lg border border-slate-700/50 space-y-2">
-          <button
-            onClick={handleZoomIn}
-            className="w-8 h-8 flex items-center justify-center text-cyan-400 hover:bg-slate-700/50 rounded transition-colors"
-          >
-            <ZoomIn className="w-5 h-5" />
-          </button>
-          <button
-            onClick={handleZoomOut}
-            className="w-8 h-8 flex items-center justify-center text-cyan-400 hover:bg-slate-700/50 rounded transition-colors"
-          >
-            <ZoomOut className="w-5 h-5" />
-          </button>
-          <div className="h-px bg-slate-700/50" />
-          <button
-            onClick={() => handleViewModeChange('top')}
-            className={`w-8 h-8 flex items-center justify-center hover:bg-slate-700/50 rounded transition-colors ${
-              viewMode === 'top' ? 'text-cyan-400' : 'text-gray-400'
-            }`}
-          >
-            <Eye className="w-5 h-5" />
-          </button>
-          <button
-            onClick={() => handleViewModeChange('side')}
-            className={`w-8 h-8 flex items-center justify-center hover:bg-slate-700/50 rounded transition-colors ${
-              viewMode === 'side' ? 'text-cyan-400' : 'text-gray-400'
-            }`}
-          >
-            <Eye className="w-5 h-5 transform rotate-90" />
-          </button>
-          <button
-            onClick={() => handleViewModeChange('front')}
-            className={`w-8 h-8 flex items-center justify-center hover:bg-slate-700/50 rounded transition-colors ${
-              viewMode === 'front' ? 'text-cyan-400' : 'text-gray-400'
-            }`}
-          >
-            <Eye className="w-5 h-5" />
-          </button>
+      {/* Control Panel */}
+      <div className="absolute top-24 right-8 bottom-24 w-80 pointer-events-auto">
+        <div className="h-full bg-slate-800/50 backdrop-blur-sm rounded-lg border border-slate-700/50 p-4 space-y-4">
+          {/* System Status */}
+          <div>
+            <button
+              onClick={() => setShowSystemStatus(!showSystemStatus)}
+              className="w-full flex items-center justify-between p-2 bg-slate-700/50 rounded-lg text-cyan-400 hover:bg-slate-700/70 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <Settings className="w-5 h-5" />
+                <span>System Status</span>
+              </div>
+              <Power className="w-4 h-4" />
+            </button>
+            
+            {showSystemStatus && (
+              <div className="mt-2 space-y-2 p-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-400">Power</span>
+                  <span className="text-green-400">100%</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-400">Shields</span>
+                  <span className="text-green-400">98%</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-400">Life Support</span>
+                  <span className="text-green-400">Optimal</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-400">Communications</span>
+                  <span className="text-yellow-400">Limited</span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Navigation Controls */}
+          <div>
+            <button
+              onClick={() => setShowNavigation(!showNavigation)}
+              className="w-full flex items-center justify-between p-2 bg-slate-700/50 rounded-lg text-cyan-400 hover:bg-slate-700/70 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <NavIcon className="w-5 h-5" />
+                <span>Navigation</span>
+              </div>
+              <Compass className="w-4 h-4" />
+            </button>
+            
+            {showNavigation && (
+              <div className="mt-2 space-y-2 p-2">
+                <div className="grid grid-cols-3 gap-2">
+                  <button
+                    onClick={() => handleViewModeChange('top')}
+                    className={`p-2 rounded-lg flex items-center justify-center ${
+                      viewMode === 'top' ? 'bg-cyan-600' : 'bg-slate-700/50 hover:bg-slate-700/70'
+                    }`}
+                  >
+                    <Eye className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => handleViewModeChange('side')}
+                    className={`p-2 rounded-lg flex items-center justify-center ${
+                      viewMode === 'side' ? 'bg-cyan-600' : 'bg-slate-700/50 hover:bg-slate-700/70'
+                    }`}
+                  >
+                    <Eye className="w-4 h-4 transform rotate-90" />
+                  </button>
+                  <button
+                    onClick={() => handleViewModeChange('front')}
+                    className={`p-2 rounded-lg flex items-center justify-center ${
+                      viewMode === 'front' ? 'bg-cyan-600' : 'bg-slate-700/50 hover:bg-slate-700/70'
+                    }`}
+                  >
+                    <Eye className="w-4 h-4" />
+                  </button>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleZoomIn}
+                    className="flex-1 p-2 bg-slate-700/50 rounded-lg hover:bg-slate-700/70 transition-colors flex items-center justify-center"
+                  >
+                    <ZoomIn className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={handleZoomOut}
+                    className="flex-1 p-2 bg-slate-700/50 rounded-lg hover:bg-slate-700/70 transition-colors flex items-center justify-center"
+                  >
+                    <ZoomOut className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Propulsion Controls */}
+          <div>
+            <button
+              onClick={() => setShowPropulsion(!showPropulsion)}
+              className="w-full flex items-center justify-between p-2 bg-slate-700/50 rounded-lg text-cyan-400 hover:bg-slate-700/70 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <Rocket className="w-5 h-5" />
+                <span>Propulsion</span>
+              </div>
+              <Gauge className="w-4 h-4" />
+            </button>
+            
+            {showPropulsion && (
+              <div className="mt-2 space-y-2 p-2">
+                <div className="space-y-1">
+                  <div className="text-sm text-gray-400">Quantum Drive</div>
+                  <div className="h-2 bg-slate-700/50 rounded-full">
+                    <div
+                      className="h-full bg-cyan-400 rounded-full transition-all"
+                      style={{ width: `${(speed / 10) * 100}%` }}
+                    />
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-sm text-gray-400">Field Strength</div>
+                  <div className="h-2 bg-slate-700/50 rounded-full">
+                    <div className="h-full w-3/4 bg-cyan-400 rounded-full" />
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-sm text-gray-400">Core Temperature</div>
+                  <div className="h-2 bg-slate-700/50 rounded-full">
+                    <div className="h-full w-1/2 bg-cyan-400 rounded-full" />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Communications */}
+          <div className="p-2 bg-slate-700/50 rounded-lg">
+            <div className="flex items-center justify-between text-cyan-400 mb-2">
+              <div className="flex items-center gap-2">
+                <Radio className="w-5 h-5" />
+                <span>Communications</span>
+              </div>
+              <Wifi className="w-4 h-4" />
+            </div>
+            <div className="text-sm text-gray-400">
+              Last Message: Quantum field stable at 98.3%
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Route Map Toggle */}
-      <button
-        onClick={() => setShowRouteMap(!showRouteMap)}
-        className="absolute top-24 left-8 pointer-events-auto bg-slate-800/50 backdrop-blur-sm p-2 rounded-lg border border-slate-700/50 text-cyan-400 hover:bg-slate-700/50 transition-colors"
-      >
-        <Map className="w-5 h-5" />
-      </button>
-
       {/* Route Map */}
-      {showRouteMap && (
-        <div className="absolute top-40 left-8 pointer-events-auto bg-slate-800/50 backdrop-blur-sm p-4 rounded-lg border border-slate-700/50 w-96">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-cyan-400 font-semibold">Route Planner</h3>
-            <button
-              onClick={resetRoute}
-              className="text-gray-400 hover:text-cyan-400 transition-colors"
-            >
-              <RotateCcw className="w-4 h-4" />
-            </button>
-          </div>
-          <div
-            className="w-full h-64 bg-slate-900/50 rounded-lg border border-slate-700/50 relative"
-            onClick={handleMapClick}
+      <div className="absolute left-8 right-96 bottom-8 h-48 pointer-events-auto bg-slate-800/50 backdrop-blur-sm rounded-lg border border-slate-700/50 p-4">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-cyan-400 font-semibold flex items-center gap-2">
+            <Map className="w-5 h-5" />
+            Route Planner
+          </h3>
+          <button
+            onClick={resetRoute}
+            className="text-gray-400 hover:text-cyan-400 transition-colors"
           >
-            {startPoint && (
-              <div
-                className="absolute w-3 h-3 bg-green-400 rounded-full -translate-x-1/2 -translate-y-1/2"
-                style={{ left: startPoint.x, top: startPoint.y }}
-              />
-            )}
-            {endPoint && (
-              <div
-                className="absolute w-3 h-3 bg-red-400 rounded-full -translate-x-1/2 -translate-y-1/2"
-                style={{ left: endPoint.x, top: endPoint.y }}
-              />
-            )}
-            {startPoint && endPoint && (
-              <svg
-                className="absolute inset-0 pointer-events-none"
-                style={{ zIndex: 1 }}
-              >
-                <line
-                  x1={startPoint.x}
-                  y1={startPoint.y}
-                  x2={endPoint.x}
-                  y2={endPoint.y}
-                  stroke="#22d3ee"
-                  strokeWidth="2"
-                  strokeDasharray="4"
-                />
-              </svg>
-            )}
-          </div>
-          <div className="mt-4 text-sm text-gray-400">
-            Click to set start and end points for your quantum jump route
-          </div>
+            <RotateCcw className="w-4 h-4" />
+          </button>
         </div>
-      )}
+        <div
+          className="w-full h-24 bg-slate-900/50 rounded-lg border border-slate-700/50 relative"
+          onClick={handleMapClick}
+        >
+          {startPoint && (
+            <div
+              className="absolute w-3 h-3 bg-green-400 rounded-full -translate-x-1/2 -translate-y-1/2"
+              style={{ left: startPoint.x, top: startPoint.y }}
+            />
+          )}
+          {endPoint && (
+            <div
+              className="absolute w-3 h-3 bg-red-400 rounded-full -translate-x-1/2 -translate-y-1/2"
+              style={{ left: endPoint.x, top: endPoint.y }}
+            />
+          )}
+          {startPoint && endPoint && (
+            <svg
+              className="absolute inset-0 pointer-events-none"
+              style={{ zIndex: 1 }}
+            >
+              <line
+                x1={startPoint.x}
+                y1={startPoint.y}
+                x2={endPoint.x}
+                y2={endPoint.y}
+                stroke="#22d3ee"
+                strokeWidth="2"
+                strokeDasharray="4"
+              />
+            </svg>
+          )}
+        </div>
+        <div className="mt-2 text-sm text-gray-400">
+          Click to set start and end points for your quantum jump route
+        </div>
+      </div>
     </div>
   );
 };
