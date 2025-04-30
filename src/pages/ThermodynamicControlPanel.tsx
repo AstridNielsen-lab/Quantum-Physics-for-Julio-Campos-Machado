@@ -110,6 +110,13 @@ const ThermodynamicControlPanel = () => {
             Painel de Controle Termodinâmico
           </h1>
 
+          <div className="col-span-full">
+  <h2 className="text-2xl font-bold mt-12 mb-4 flex items-center gap-2 text-amber-400">
+    <Calculator /> Simulação da Sequência de Fibonacci
+  </h2>
+  <FibonacciSpiralSimulation />
+</div>
+
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-6">
               <div className="p-6 rounded-xl bg-violet-900/20 border border-violet-500/20">
@@ -179,12 +186,7 @@ const ThermodynamicControlPanel = () => {
 <FourierCircles /> 
 </div>
 
-<div className="col-span-full">
-  <h2 className="text-2xl font-bold mt-12 mb-4 flex items-center gap-2 text-amber-400">
-    <Calculator /> Simulação da Sequência de Fibonacci
-  </h2>
-  <FibonacciSpiralSimulation />
-</div>
+
             
           </div>
         </div>
