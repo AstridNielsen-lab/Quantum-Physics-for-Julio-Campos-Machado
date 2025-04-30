@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, Thermometer, Calculator } from 'lucide-react';
 import Navigation from '../components/Navigation';
 import FibonacciSpiralSimulation from '../components/FibonacciSpiralSimulation';
+import LaserCrystalSimulation from '../components/LaserCrystalSimulation';
 
 const ThermodynamicControlPanel = () => {
   return (
@@ -30,6 +31,18 @@ const ThermodynamicControlPanel = () => {
             </h2>
             <FibonacciSpiralSimulation />
           </div>
+          <div className="col-span-full">
+  <h2 className="text-2xl font-bold mt-12 mb-4 flex items-center gap-2 text-cyan-400">
+    <Calculator /> Simulação Laser-Cristal Dopado
+  </h2>
+  <LaserCrystalSimulation />
+</div>
+
+
+
+
+
+
         </div>
       </main>
     </div>
