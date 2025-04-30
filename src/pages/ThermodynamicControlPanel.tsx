@@ -8,6 +8,7 @@ import {
 import Navigation from '../components/Navigation';
 import QuantumSimulation from '../components/QuantumSimulation';
 import FourierCircles from '../components/FourierCircles';
+import FibonacciSpiralSimulation from '../components/FibonacciSpiralSimulation';
 
 
 interface Material {
@@ -176,6 +177,13 @@ const ThermodynamicControlPanel = () => {
 
 <div className="col-span-full">
 <FourierCircles /> 
+</div>
+
+<div className="col-span-full">
+  <h2 className="text-2xl font-bold mt-12 mb-4 flex items-center gap-2 text-amber-400">
+    <Calculator /> Simulação da Sequência de Fibonacci
+  </h2>
+  <FibonacciSpiralSimulation />
 </div>
             
           </div>
