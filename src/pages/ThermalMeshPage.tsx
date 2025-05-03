@@ -119,8 +119,7 @@ const ThermalMeshPage: React.FC = () => {
   const [autoAdjustEnabled, setAutoAdjustEnabled] = useState(true);
   const [lastStatusReport, setLastStatusReport] = useState(0);
 
-  const simulationIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const statusIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const simulationIntervalRef = useRef<number | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const fibGenRef = useRef(fibonacciGenerator());
@@ -157,7 +156,7 @@ const ThermalMeshPage: React.FC = () => {
       const adjustmentFactor = 0.1;
       const newMixRatio = Math.max(0, Math.min(1, 
         materialMixRatio - (tempDiff * adjustmentFactor * 0.01)
-      );
+      ));
       
       setMaterialMixRatio(parseFloat(newMixRatio.toFixed(2)));
       
@@ -398,7 +397,7 @@ const ThermalMeshPage: React.FC = () => {
             aiText = `Bloqueado: ${data.promptFeedback.blockReason}`;
           }
           
-          const aiMsg = { sender: 'ai', text: aiText };
+          const aiMsg: ChatMessage = { sender: 'ai', text: aiText };
           setChatMessages(prev => [...prev, aiMsg]);
           
           // Speak the AI response
@@ -406,7 +405,7 @@ const ThermalMeshPage: React.FC = () => {
           
       } catch (error) { 
           console.error('AI Error:', error); 
-          const errorMsg = { sender: 'ai', text: `Erro IA: ${error instanceof Error ? error.message : String(error)}` };
+          const errorMsg: ChatMessage = { sender: 'ai', text: `Erro IA: ${error instanceof Error ? error.message : String(error)}` };
           setChatMessages(prev => [...prev, errorMsg]);
           speak("Ocorreu um erro ao processar sua solicitação.");
       } finally { 
