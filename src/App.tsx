@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Atom, Brain, Contact, Download, ExternalLink, TestTube, Rocket, Send, Stars, Zap, Bot, FileText, Users, Globe, Thermometer, Magnet, Map } from 'lucide-react';
+import { Atom, Brain, Contact, Download, ExternalLink, TestTube, Rocket, Send, Stars, Zap, Bot, FileText, Users, Globe, Thermometer, Magnet, Map, Cpu } from 'lucide-react';
 import ContactForm from './components/ContactForm';
 import Hero from './components/Hero';
 import Navigation from './components/Navigation';
@@ -30,6 +30,7 @@ import SplashScreen from './components/SplashScreen';
 import ChatBot from './components/ChatBot';
 import ConceptChat from './components/ConceptChat';
 import SEO from './components/SEO';
+import QuantumEngineDiagramPage from './pages/QuantumEngineDiagramPage';
 
 function App() {
   const [showContent, setShowContent] = useState(false);
@@ -132,23 +133,19 @@ function App() {
                             Campo Magnético Global
                           </a>
                           <a
+                            href="/quantum-engine-diagram"
+                            className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 rounded-lg transition-colors text-white font-semibold w-full"
+                          >
+                            <Cpu className="w-5 h-5" />
+                            Diagrama do Motor Quântico
+                          </a>
+                          <a
                             href="/technical-report"
                             className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 rounded-lg transition-colors text-white font-semibold w-full"
                           >
                             <FileText className="w-5 h-5" />
                             Relatório Técnico Completo
                           </a>
-
-                          <a
-                             href="/thermodynamic-control-panel"
-                                   className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 rounded-lg transition-colors text-white font-semibold w-full"
->
-                                 <Thermometer className="w-5 h-5" />
-                           Painel de Controle Termodinâmico
-                            </a>
-
-
-
                         </div>
 
                         <div className="pt-8 border-t border-violet-500/20 space-y-4">
@@ -200,7 +197,7 @@ function App() {
                             </a>
                             
                             <a
-                              href="https://radiotatuapefm.wixsite.com/disparattechno"
+                              href="https://modern-physics-julio-campos-machado.vercel.app"
                               target="_blank"
                               rel="noopener noreferrer"
                               className="flex items-center justify-center gap-2 px-4 py-2 bg-violet-900/50 hover:bg-violet-900/70 rounded-lg transition-colors text-white"
@@ -272,7 +269,7 @@ function App() {
                             Like Look Solutions
                           </a>
                           <a
-                            href="https://docs.google.com/document/d/17rhZ6zljcakYO3IYjIxXz8LPJ9_rtq1jpKT-TGxUOEo/edit?usp=sharing"
+                            href="https://docs.google.com/document/d/10KaEqdS1PwojUWUSYHMjjblmp7r7tSf8oryjCqxs5zc/edit?usp=sharing"
                             download
                             className="flex items-center gap-2 text-violet-400 hover:text-violet-300 transition-colors"
                           >
@@ -312,7 +309,7 @@ function App() {
           <Route path="/global-magnetic-field" element={<GlobalMagneticFieldPage />} />
           <Route path="/technical-report" element={<TechnicalReportPage />} />
           <Route path="/thermodynamic-control" element={<ThermodynamicControlPanel />} />
-          <Route path="/thermodynamic-control-panel" element={<ThermodynamicControlPanel />} />
+          <Route path="/quantum-engine-diagram" element={<QuantumEngineDiagramPage />} />
         </Routes>
       </div>
     </>

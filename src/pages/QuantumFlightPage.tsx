@@ -1,116 +1,186 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Thermometer, Shield, Gauge, Bot, Zap, Rocket, Radio, Navigation as NavIcon, Compass, Layers, BrainCircuit, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, Rocket } from 'lucide-react';
+import { Canvas } from '@react-three/fiber';
+import { Stars, OrbitControls, PerspectiveCamera, useGLTF, Text } from '@react-three/drei';
+import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
+import * as THREE from 'three';
+import { create } from 'zustand';
 import Navigation from '../components/Navigation';
-import Scene from '../components/QuantumFlight/Scene';
-import Interface from '../components/QuantumFlight/Interface';
-import { useGameStore } from '../stores/gameStore';
-import axios from 'axios';
 
-const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
-const API_KEY = "AIzaSyA8_qX9Yv5KaQMGrLZLNUFmZ_77kZ19S-Q";
-
-interface Message {
-  role: 'user' | 'assistant';
-  content: string;
+interface GameState {
+  speed: number;
+  position: THREE.Vector3;
+  rotation: THREE.Euler;
+  energy: number;
+  setSpeed: (speed: number) => void;
+  setPosition: (position: THREE.Vector3) => void;
+  setRotation: (rotation: THREE.Euler) => void;
+  setEnergy: (energy: number) => void;
 }
 
-const QuantumFlightPage = () => {
-  const { setSpeed, setPosition, setRotation, speed, energy, shields } = useGameStore();
-  const [showChat, setShowChat] = useState(false);
-  const [showTempPanel, setShowTempPanel] = useState(false);
-  const [showShieldPanel, setShowShieldPanel] = useState(false);
-  const [showEnginePanel, setShowEnginePanel] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: 'assistant',
-      content: 'Olá, sou a IA de navegação quântica. Como posso ajudar com sua viagem?'
-    }
-  ]);
-  const [input, setInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+const useGameStore = create<GameState>((set) => ({
+  speed: 0,
+  position: new THREE.Vector3(0, 0, -10),
+  rotation: new THREE.Euler(0, 0, 0),
+  energy: 100,
+  setSpeed: (speed) => set({ speed }),
+  setPosition: (position) => set({ position }),
+  setRotation: (rotation) => set({ rotation }),
+  setEnergy: (energy) => set({ energy }),
+}));
 
-  const handleKeyDown = (event: React.KeyboardEvent) => {
+function Ship() {
+  const { position, rotation, speed } = useGameStore();
+  
+  return (
+    <group position={position} rotation={rotation}>
+      <mesh>
+        <boxGeometry args={[1, 0.3, 2]} />
+        <meshStandardMaterial color="#ffffff" emissive="#4a148c" emissiveIntensity={2} />
+      </mesh>
+      <pointLight color="#f72585" intensity={speed * 2} distance={10} position={[0, 0, 1]} />
+      <Text
+        position={[0, 1, 0]}
+        fontSize={0.5}
+        color="#ffffff"
+        anchorX="center"
+        anchorY="middle"
+      >
+        Quantum Ship
+      </Text>
+    </group>
+  );
+}
+
+function QuantumField() {
+  return (
+    <group>
+      <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+      <mesh position={[0, 0, -50]}>
+        <sphereGeometry args={[30, 32, 32]} />
+        <meshStandardMaterial
+          color="#4a148c"
+          emissive="#4a148c"
+          emissiveIntensity={2}
+          transparent
+          opacity={0.1}
+          wireframe
+        />
+      </mesh>
+    </group>
+  );
+}
+
+function Effects() {
+  return (
+    <EffectComposer>
+      <Bloom luminanceThreshold={0.6} luminanceSmoothing={0.9} height={300} />
+      <ChromaticAberration offset={[0.002, 0.002]} />
+    </EffectComposer>
+  );
+}
+
+function Interface() {
+  const { speed, energy } = useGameStore();
+
+  return (
+    <div className="fixed inset-0 pointer-events-none">
+      <div className="absolute bottom-8 left-8 bg-violet-900/20 backdrop-blur-sm p-4 rounded-xl border border-violet-500/20">
+        <div className="space-y-2">
+          <div>
+            <div className="text-sm text-gray-400">Velocidade</div>
+            <div className="text-2xl font-mono text-violet-400">
+              {(speed * 299792).toFixed(0)} km/s
+            </div>
+          </div>
+          <div>
+            <div className="text-sm text-gray-400">Energia Quântica</div>
+            <div className="h-2 w-48 bg-violet-900/50 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-violet-400 transition-all duration-300"
+                style={{ width: `${energy}%` }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="absolute bottom-8 right-8 bg-violet-900/20 backdrop-blur-sm p-4 rounded-xl border border-violet-500/20">
+        <div className="text-sm text-gray-400 space-y-2">
+          <div>W/S - Acelerar/Desacelerar</div>
+          <div>A/D - Girar Esquerda/Direita</div>
+          <div>Q/E - Rolar</div>
+          <div>SPACE - Impulso Quântico</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function QuantumFlightPage() {
+  const { setSpeed, setPosition, setRotation, setEnergy } = useGameStore();
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    const { speed, position, rotation, energy } = useGameStore.getState();
     const moveSpeed = 0.1;
     const rotateSpeed = 0.05;
 
     switch (event.code) {
       case 'KeyW':
-        setSpeed(1);
+        setSpeed(Math.min(speed + 0.1, 1));
         break;
       case 'KeyS':
-        setSpeed(-0.5);
+        setSpeed(Math.max(speed - 0.1, -0.5));
         break;
       case 'KeyA':
-        setRotation(new THREE.Euler(0, rotateSpeed, 0));
+        setRotation(new THREE.Euler(rotation.x, rotation.y + rotateSpeed, rotation.z));
         break;
       case 'KeyD':
-        setRotation(new THREE.Euler(0, -rotateSpeed, 0));
+        setRotation(new THREE.Euler(rotation.x, rotation.y - rotateSpeed, rotation.z));
+        break;
+      case 'KeyQ':
+        setRotation(new THREE.Euler(rotation.x, rotation.y, rotation.z + rotateSpeed));
+        break;
+      case 'KeyE':
+        setRotation(new THREE.Euler(rotation.x, rotation.y, rotation.z - rotateSpeed));
         break;
       case 'Space':
-        setSpeed(2);
+        if (energy >= 10) {
+          setSpeed(2);
+          setEnergy(energy - 10);
+        }
         break;
     }
+
+    // Update position based on current speed and rotation
+    const direction = new THREE.Vector3(0, 0, -1);
+    direction.applyEuler(rotation);
+    direction.multiplyScalar(speed * moveSpeed);
+    setPosition(position.clone().add(direction));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim() || isLoading) return;
-
-    const userMessage = input.trim();
-    setInput('');
-    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
-    setIsLoading(true);
-
-    try {
-      const systemPrompt = `Você é a IA de navegação da nave quântica. Status atual:
-      - Velocidade: ${speed} m/s
-      - Energia: ${energy}%
-      - Escudos: ${shields}%
-      
-      Responda de forma natural e direta, usando apenas pontuação simples como pontos e vírgulas. Evite caracteres especiais ou formatação. Use linguagem clara e fluida que funcione bem quando lida em voz alta.`;
-
-      const response = await axios.post(
-        `${API_URL}?key=${API_KEY}`,
-        {
-          contents: [
-            {
-              parts: [
-                { text: systemPrompt },
-                { text: userMessage }
-              ]
-            }
-          ]
-        }
-      );
-
-      const aiResponse = response.data.candidates[0].content.parts[0].text;
-      setMessages(prev => [...prev, { role: 'assistant', content: aiResponse }]);
-
-      // Text-to-speech
-      const utterance = new SpeechSynthesisUtterance(aiResponse);
-      utterance.lang = 'pt-BR';
-      window.speechSynthesis.speak(utterance);
-    } catch (error) {
-      console.error('Error calling Gemini API:', error);
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: 'Desculpe, houve um erro na comunicação. Por favor, tente novamente.'
-      }]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  React.useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-[#020617] text-white" onKeyDown={handleKeyDown} tabIndex={0}>
+    <div className="min-h-screen bg-[#020617] text-white">
       <Navigation />
       
       <main className="relative h-screen">
         <div className="absolute inset-0 z-10">
-          <Suspense fallback={null}>
-            <Scene />
-          </Suspense>
+          <Canvas>
+            <PerspectiveCamera makeDefault position={[0, 5, 10]} />
+            <OrbitControls enableZoom={false} enablePan={false} />
+            <ambientLight intensity={0.2} />
+            <Suspense fallback={null}>
+              <QuantumField />
+              <Ship />
+              <Effects />
+            </Suspense>
+          </Canvas>
           <Interface />
         </div>
 
@@ -122,240 +192,13 @@ const QuantumFlightPage = () => {
           Voltar
         </Link>
 
-        {/* Control Panel Buttons */}
-        <div className="absolute top-24 right-8 z-20 flex gap-2">
-          <button
-            onClick={() => setShowChat(!showChat)}
-            className="p-2 bg-violet-900/20 backdrop-blur-sm rounded-lg border border-violet-500/20 text-violet-400 hover:bg-violet-900/40"
-            title="AI Assistant"
-          >
-            <Bot className="w-5 h-5" />
-          </button>
-          <button
-            onClick={() => setShowTempPanel(!showTempPanel)}
-            className="p-2 bg-violet-900/20 backdrop-blur-sm rounded-lg border border-violet-500/20 text-violet-400 hover:bg-violet-900/40"
-            title="Temperature Control"
-          >
-            <Thermometer className="w-5 h-5" />
-          </button>
-          <button
-            onClick={() => setShowShieldPanel(!showShieldPanel)}
-            className="p-2 bg-violet-900/20 backdrop-blur-sm rounded-lg border border-violet-500/20 text-violet-400 hover:bg-violet-900/40"
-            title="Shield Status"
-          >
-            <Shield className="w-5 h-5" />
-          </button>
-          <button
-            onClick={() => setShowEnginePanel(!showEnginePanel)}
-            className="p-2 bg-violet-900/20 backdrop-blur-sm rounded-lg border border-violet-500/20 text-violet-400 hover:bg-violet-900/40"
-            title="Engine Control"
-          >
-            <Gauge className="w-5 h-5" />
-          </button>
+        <div className="absolute top-24 left-1/2 -translate-x-1/2 z-20 bg-violet-900/20 backdrop-blur-sm px-6 py-3 rounded-lg border border-violet-500/20">
+          <h1 className="text-2xl font-bold flex items-center gap-3">
+            <Rocket className="text-violet-400" />
+            Quantum Flight — Navegação Quântica
+          </h1>
         </div>
-
-        {/* AI Chat Interface */}
-        {showChat && (
-          <div className="absolute right-8 top-40 z-20 w-96 bg-slate-900/90 backdrop-blur-sm rounded-lg border border-violet-500/20">
-            <div className="p-4 border-b border-violet-500/20 flex items-center gap-3">
-              <Bot className="w-5 h-5 text-violet-400" />
-              <h2 className="font-semibold">IA de Navegação</h2>
-            </div>
-            <div className="h-96 overflow-y-auto p-4 space-y-4">
-              {messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div
-                    className={`max-w-[80%] p-3 rounded-xl ${
-                      message.role === 'user'
-                        ? 'bg-violet-600 text-white'
-                        : 'bg-slate-800 text-gray-300'
-                    }`}
-                  >
-                    {message.content}
-                  </div>
-                </div>
-              ))}
-              {isLoading && (
-                <div className="flex justify-start">
-                  <div className="max-w-[80%] p-3 rounded-xl bg-slate-800">
-                    <div className="flex gap-1">
-                      <div className="w-2 h-2 bg-violet-400 rounded-full animate-bounce" />
-                      <div className="w-2 h-2 bg-violet-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
-                      <div className="w-2 h-2 bg-violet-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }} />
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-            <form onSubmit={handleSubmit} className="p-4 border-t border-violet-500/20">
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Digite sua mensagem..."
-                  className="flex-1 bg-slate-800 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
-                />
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="bg-violet-600 text-white p-2 rounded-lg hover:bg-violet-700 transition-colors disabled:opacity-50"
-                >
-                  <Radio className="w-5 h-5" />
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
-
-        {/* Temperature Panel */}
-        {showTempPanel && (
-          <div className="absolute left-8 top-40 z-20 w-80 bg-slate-900/90 backdrop-blur-sm rounded-lg border border-violet-500/20">
-            <div className="p-4 border-b border-violet-500/20 flex items-center gap-3">
-              <Thermometer className="w-5 h-5 text-violet-400" />
-              <h2 className="font-semibold">Controle de Temperatura</h2>
-            </div>
-            <div className="p-4 space-y-4">
-              <div>
-                <div className="flex justify-between text-sm mb-1">
-                  <span>Temperatura do Núcleo</span>
-                  <span className="text-violet-400">2,734 K</span>
-                </div>
-                <div className="h-2 bg-slate-800 rounded-full">
-                  <div className="h-full w-3/4 bg-violet-400 rounded-full" />
-                </div>
-              </div>
-              <div>
-                <div className="flex justify-between text-sm mb-1">
-                  <span>Temperatura dos Escudos</span>
-                  <span className="text-violet-400">1,253 K</span>
-                </div>
-                <div className="h-2 bg-slate-800 rounded-full">
-                  <div className="h-full w-1/2 bg-violet-400 rounded-full" />
-                </div>
-              </div>
-              <div>
-                <div className="flex justify-between text-sm mb-1">
-                  <span>Temperatura do Motor</span>
-                  <span className="text-violet-400">3,856 K</span>
-                </div>
-                <div className="h-2 bg-slate-800 rounded-full">
-                  <div className="h-full w-[85%] bg-violet-400 rounded-full" />
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Shield Panel */}
-        {showShieldPanel && (
-          <div className="absolute left-8 bottom-40 z-20 w-80 bg-slate-900/90 backdrop-blur-sm rounded-lg border border-violet-500/20">
-            <div className="p-4 border-b border-violet-500/20 flex items-center gap-3">
-              <Shield className="w-5 h-5 text-violet-400" />
-              <h2 className="font-semibold">Status dos Escudos</h2>
-            </div>
-            <div className="p-4 space-y-4">
-              <div>
-                <div className="flex justify-between text-sm mb-1">
-                  <span>Escudo Frontal</span>
-                  <span className="text-violet-400">92%</span>
-                </div>
-                <div className="h-2 bg-slate-800 rounded-full">
-                  <div className="h-full w-[92%] bg-violet-400 rounded-full" />
-                </div>
-              </div>
-              <div>
-                <div className="flex justify-between text-sm mb-1">
-                  <span>Escudo Traseiro</span>
-                  <span className="text-violet-400">88%</span>
-                </div>
-                <div className="h-2 bg-slate-800 rounded-full">
-                  <div className="h-full w-[88%] bg-violet-400 rounded-full" />
-                </div>
-              </div>
-              <div>
-                <div className="flex justify-between text-sm mb-1">
-                  <span>Campo Quântico</span>
-                  <span className="text-violet-400">95%</span>
-                </div>
-                <div className="h-2 bg-slate-800 rounded-full">
-                  <div className="h-full w-[95%] bg-violet-400 rounded-full" />
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Engine Panel */}
-        {showEnginePanel && (
-          <div className="absolute right-8 bottom-40 z-20 w-96 bg-slate-900/90 backdrop-blur-sm rounded-lg border border-violet-500/20">
-            <div className="p-4 border-b border-violet-500/20 flex items-center gap-3">
-              <Gauge className="w-5 h-5 text-violet-400" />
-              <h2 className="font-semibold">Controle do Motor</h2>
-            </div>
-            <div className="p-4 space-y-4">
-              <div>
-                <div className="flex justify-between text-sm mb-1">
-                  <span>Motor Quântico</span>
-                  <span className="text-violet-400">{speed.toFixed(2)} m/s</span>
-                </div>
-                <div className="h-2 bg-slate-800 rounded-full">
-                  <div 
-                    className="h-full bg-violet-400 rounded-full transition-all duration-300"
-                    style={{ width: `${(speed / 10) * 100}%` }}
-                  />
-                </div>
-              </div>
-              <div>
-                <div className="flex justify-between text-sm mb-1">
-                  <span>Saída de Energia</span>
-                  <span className="text-violet-400">{energy}%</span>
-                </div>
-                <div className="h-2 bg-slate-800 rounded-full">
-                  <div 
-                    className="h-full bg-violet-400 rounded-full"
-                    style={{ width: `${energy}%` }}
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-3 gap-2">
-                <button
-                  onClick={() => setSpeed(1)}
-                  className="p-2 bg-slate-800 rounded-lg hover:bg-slate-700 transition-colors text-sm"
-                >
-                  Velocidade Baixa
-                </button>
-                <button
-                  onClick={() => setSpeed(5)}
-                  className="p-2 bg-slate-800 rounded-lg hover:bg-slate-700 transition-colors text-sm"
-                >
-                  Velocidade Média
-                </button>
-                <button
-                  onClick={() => setSpeed(10)}
-                  className="p-2 bg-slate-800 rounded-lg hover:bg-slate-700 transition-colors text-sm"
-                >
-                  Velocidade Alta
-                </button>
-              </div>
-              <div className="bg-slate-800 p-3 rounded-lg">
-                <div className="flex items-center gap-2 text-sm mb-2">
-                  <AlertTriangle className="w-4 h-4 text-yellow-400" />
-                  <span>Status do Sistema</span>
-                </div>
-                <div className="text-xs text-gray-400">
-                  Todos os sistemas operando dentro dos parâmetros normais. Estabilidade do campo quântico em 98.3%.
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </main>
     </div>
   );
-};
-
-export default QuantumFlightPage;
+}
