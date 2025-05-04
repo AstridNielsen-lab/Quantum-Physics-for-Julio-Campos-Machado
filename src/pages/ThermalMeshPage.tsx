@@ -4,6 +4,8 @@ import AdiabaticCompressionInfo from './AdiabaticCompressionInfo';
 import QuantumThermalChallenges from './QuantumThermalChallenges';
 import ThermalMeshApplication from './ThermalMeshApplication';
 import ShipVisualization from './ShipVisualization';
+import AIControlInterface from '../components/AIControlInterface';
+import { useAIStore } from '../stores/aiStore';
 
 // --- Interfaces --- 
 interface ThermalPoint { x: number; y: number; layer: number; temperature: number; efficiencyFactor: number; powerGenerated: number; }
@@ -165,9 +167,7 @@ const ThermalMeshPage: React.FC = () => {
   const fibGenRef = useRef(fibonacciGenerator());
   const speechSynthesisRef = useRef<SpeechSynthesisUtterance | null>(null);
 
-  const effectiveMaterial = getEffectiveMaterialProps(selectedMaterial1, selectedMaterial2, materialMixRatio);
-  const targetDistanceMeters = destinations[selectedDestination].distanceLY * METERS_PER_LIGHT_YEAR;
-
+ 
   // --- Helper Functions --- 
   const getEffectiveMaterialProps = (matKey1: MaterialKey, matKey2: MaterialKey, mixRatio: number): MaterialProperties => {
     if (matKey1 === matKey2) return materials[matKey1];
@@ -181,6 +181,10 @@ const ThermalMeshPage: React.FC = () => {
       color: mixColors(p1.color, p2.color, mixRatio) 
     };
   };
+
+  const effectiveMaterial = getEffectiveMaterialProps(selectedMaterial1, selectedMaterial2, materialMixRatio);
+  const targetDistanceMeters = destinations[selectedDestination].distanceLY * METERS_PER_LIGHT_YEAR;
+
 
   const mixColors = (c1: string, c2: string, r: number): string => {
     try { 
@@ -843,6 +847,16 @@ const ThermalMeshPage: React.FC = () => {
         {/* Thermal Mesh Canvas */}
         <div className="bg-gray-800 p-1 rounded-lg shadow-lg inline-block border-2 border-gray-700 mb-6">
           <canvas ref={canvasRef} width={MESH_WIDTH} height={TOTAL_ROWS * GRID_SIZE} className="rounded" style={{ maxHeight: '40vh', width: 'auto', display: 'block' }} />
+        </div>
+
+        {/* Controls & Status Cards */}
+        <div className="grid md:grid-cols-2 gap-8">
+          <div className="space-y-6">
+            {/* Existing controls */}
+            <AIControlInterface />
+          </div>
+          
+          {/* Rest of the existing layout */}
         </div>
 
         {/* Controls & Status Cards */}
