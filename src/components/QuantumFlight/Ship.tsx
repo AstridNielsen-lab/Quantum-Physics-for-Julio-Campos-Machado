@@ -1,8 +1,7 @@
 import React, { useRef } from 'react';
-import { useFrame, useLoader } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
 import { Text } from '@react-three/drei';
 import * as THREE from 'three';
-import { TextureLoader } from 'three';
 import { useGameStore } from '../../stores/gameStore';
 
 const Ship = () => {
@@ -11,9 +10,6 @@ const Ship = () => {
   const shieldRef = useRef<THREE.Mesh>(null);
   const engineParticlesRef = useRef<THREE.Points>(null);
   const coreGlowRef = useRef<THREE.Mesh>(null);
-
-  // Load the schematic texture
-  const schematicTexture = useLoader(TextureLoader, '/assets/spaceship_schematic.png');
   
   useFrame((state, delta) => {
     if (!engineGlowRef.current || !shieldRef.current || !engineParticlesRef.current || !coreGlowRef.current) return;
@@ -50,17 +46,6 @@ const Ship = () => {
 
   return (
     <group position={position} rotation={rotation}>
-      {/* Schematic Display - Added */}
-      <mesh position={[0, 0.5, -4.5]} rotation={[0, 0, 0]}> {/* Positioned slightly in front and above center */}
-        <planeGeometry args={[3, 3]} /> {/* Adjust size as needed */} 
-        <meshBasicMaterial 
-          map={schematicTexture} 
-          transparent={true} // Enable transparency for PNG
-          side={THREE.DoubleSide} // Render both sides
-          depthWrite={false} // Prevent writing to depth buffer to avoid z-fighting issues
-        />
-      </mesh>
-
       {/* Core Glow */}
       <mesh ref={coreGlowRef} position={[0, 0, 0]}>
         <sphereGeometry args={[1.2, 32, 32]} />
@@ -236,4 +221,3 @@ const Ship = () => {
 };
 
 export default Ship;
-
