@@ -12,11 +12,11 @@
   "dependencies": {
     "@react-spring/three": "^9.7.3",
     "@react-three/drei": "^9.102.3",
-    "@react-three/fiber": "^8.15.19", 
+    "@react-three/fiber": "^8.15.19",
     "@react-three/postprocessing": "^2.16.2",
     "@types/d3": "^7.4.3",
     "axios": "^1.6.7",
-    "better-react-mathjax": "^2.3.0",
+    "better-react-mathjax": "^2.0.3",
     "d3": "^7.8.5",
     "lucide-react": "^0.358.0",
     "mathjax": "^3.2.2",

@@ -43,4 +43,3 @@ const QuantumThermalChallenges: React.FC = () => {
 };
 
 export default QuantumThermalChallenges;
-

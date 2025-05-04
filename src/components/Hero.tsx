@@ -25,7 +25,7 @@ const Hero = () => {
 
         <div className="flex flex-col md:flex-row gap-4 justify-center">
           <a
-            href="https://modern-physics-julio-campos-machado.vercel.app"
+            href="#about"
             className="px-8 py-3 bg-violet-600 hover:bg-violet-700 rounded-full transition-colors text-white font-semibold"
           >
             Conheça o Projeto

@@ -85,4 +85,3 @@ const ShipVisualization: React.FC<ShipVisualizationProps> = ({ velocityFractionC
 };
 
 export default ShipVisualization;
-

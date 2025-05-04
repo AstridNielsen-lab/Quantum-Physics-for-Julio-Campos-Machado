@@ -197,7 +197,7 @@ function App() {
                             </a>
                             
                             <a
-                              href="https://modern-physics-julio-campos-machado.vercel.app"
+                              href="https://radiotatuapefm.wixsite.com/disparattechno"
                               target="_blank"
                               rel="noopener noreferrer"
                               className="flex items-center justify-center gap-2 px-4 py-2 bg-violet-900/50 hover:bg-violet-900/70 rounded-lg transition-colors text-white"
@@ -269,7 +269,7 @@ function App() {
                             Like Look Solutions
                           </a>
                           <a
-                            href="https://docs.google.com/document/d/10KaEqdS1PwojUWUSYHMjjblmp7r7tSf8oryjCqxs5zc/edit?usp=sharing"
+                            href="https://docs.google.com/document/d/17rhZ6zljcakYO3IYjIxXz8LPJ9_rtq1jpKT-TGxUOEo/edit?usp=sharing"
                             download
                             className="flex items-center gap-2 text-violet-400 hover:text-violet-300 transition-colors"
                           >

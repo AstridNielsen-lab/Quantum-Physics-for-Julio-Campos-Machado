@@ -56,4 +56,3 @@ const AdiabaticCompressionInfo: React.FC = () => {
 };
 
 export default AdiabaticCompressionInfo;
-
