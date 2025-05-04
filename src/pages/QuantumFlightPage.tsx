@@ -4,6 +4,7 @@ import { ArrowLeft, Thermometer, Shield, Gauge, Bot, Zap, Rocket, Radio, Navigat
 import Navigation from '../components/Navigation';
 import Scene from '../components/QuantumFlight/Scene';
 import Interface from '../components/QuantumFlight/Interface';
+import ShipAsciiDisplay from '../components/QuantumFlight/ShipAsciiDisplay'; // Added import
 import { useGameStore } from '../stores/gameStore';
 import axios from 'axios';
 
@@ -113,6 +114,9 @@ const QuantumFlightPage = () => {
           </Suspense>
           <Interface />
         </div>
+
+        {/* Added Ship ASCII Display */}
+        <ShipAsciiDisplay />
 
         <Link
           to="/"
