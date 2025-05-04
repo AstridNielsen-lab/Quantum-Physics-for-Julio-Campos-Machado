@@ -112,7 +112,7 @@ function App() {
 
                         <div className="space-y-4 mt-4">
                           <a
-                            href="/quantum-flight"
+                            href="https://simulador-voo-ebhb.vercel.app"
                             className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 rounded-lg transition-colors text-white font-semibold w-full"
                           >
                             <Stars className="w-5 h-5" />
