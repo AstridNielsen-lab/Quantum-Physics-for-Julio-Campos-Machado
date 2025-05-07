@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Atom, Brain, Contact, Download, ExternalLink, TestTube, Rocket, Send, Stars, Zap, Bot, FileText, Users, Globe, Thermometer, Magnet, Map, Cpu } from 'lucide-react';
+import { Atom, Brain, Contact, Download, ExternalLink, Rocket, Send, Stars, Zap, Bot, FileText, Globe, Thermometer, Magnet, Map, Cpu } from 'lucide-react';
 import ContactForm from './components/ContactForm';
 import Hero from './components/Hero';
 import Navigation from './components/Navigation';
