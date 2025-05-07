@@ -105,7 +105,7 @@ function App() {
                               className="flex items-center justify-center gap-2 px-6 py-3 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold w-full"
                             >
                               <Atom className="w-5 h-5" />
-                              Malha Hexagonal
+                              Malha Hexagonal Energética
                             </a>
                           </div>
                         </div>
