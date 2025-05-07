@@ -85,7 +85,7 @@ O projeto Quantum Doors representa uma revolução na física teórica e propuls
 ## Contato
 
 - 📧 Email: julio@quantum-doors.com
-- 🌐 Website: [quantum-doors.com](https://quantum-doors.com)
+- 🌐 Website: [quantum-doors.com](https://quantum-physics-for-julio-campos-machado.vercel.app)
 - 📱 WhatsApp: +55 11 99294-6628
 - 🏢 Like Look Solutions: [likelook.wixsite.com/solutions](https://likelook.wixsite.com/solutions)
 
@@ -93,8 +93,8 @@ O projeto Quantum Doors representa uma revolução na física teórica e propuls
 
 Para mais informações técnicas e detalhes do projeto:
 - [Documento Técnico Completo](https://docs.google.com/document/d/17rhZ6zljcakYO3IYjIxXz8LPJ9_rtq1jpKT-TGxUOEo/edit?usp=sharing)
-- [Apresentação do Projeto](https://quantum-doors.com/presentation)
-- [Especificações Técnicas](https://quantum-doors.com/specs)
+- [Apresentação do Projeto](https://quantum-physics-for-julio-campos-machado.vercel.app)
+- [Especificações Técnicas](https://quantum-physics-for-julio-campos-machado.vercel.app)
 
 ## Licença
 
