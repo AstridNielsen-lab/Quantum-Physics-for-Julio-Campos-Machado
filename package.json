@@ -17,6 +17,7 @@
     "@types/d3": "^7.4.3",
     "axios": "^1.6.7",
     "better-react-mathjax": "^2.0.3",
+    "chart.js": "^4.4.9",
     "d3": "^7.8.5",
     "lucide-react": "^0.358.0",
     "mathjax": "^3.2.2",
