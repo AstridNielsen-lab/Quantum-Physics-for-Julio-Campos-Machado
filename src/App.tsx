@@ -31,6 +31,7 @@ import ChatBot from './components/ChatBot';
 import ConceptChat from './components/ConceptChat';
 import SEO from './components/SEO';
 import QuantumEngineDiagramPage from './pages/QuantumEngineDiagramPage';
+import AbelianSymmetryPage from './pages/AbelianSymmetryPage';
 
 function App() {
   const [showContent, setShowContent] = useState(false);
@@ -105,7 +106,7 @@ function App() {
                               className="flex items-center justify-center gap-2 px-6 py-3 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold w-full"
                             >
                               <Atom className="w-5 h-5" />
-                              Malha Hexagonal
+                              Malha Hexagonal Energética
                             </a>
                           </div>
                         </div>
@@ -118,6 +119,15 @@ function App() {
                             <Stars className="w-5 h-5" />
                             Simulador de Voo Quântico
                           </a>
+
+                          <a
+                            href="/AbelianSymmetry"
+                            className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 rounded-lg transition-colors text-white font-semibold w-full"
+                          >
+                            <Stars className="w-5 h-5" />
+                            Simetria Abeliana
+                          </a>
+                          
                           <a
                             href="/magnetic-field"
                             className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 rounded-lg transition-colors text-white font-semibold w-full"
@@ -306,6 +316,7 @@ function App() {
           <Route path="/thermodynamics" element={<ThermodynamicsPage />} />
           <Route path="/quantum-flight" element={<QuantumFlightPage />} />
           <Route path="/magnetic-field" element={<MagneticFieldPage />} />
+          <Route path="/AbelianSymmetry" element={<AbelianSymmetryPage />} />
           <Route path="/global-magnetic-field" element={<GlobalMagneticFieldPage />} />
           <Route path="/technical-report" element={<TechnicalReportPage />} />
           <Route path="/thermodynamic-control" element={<ThermodynamicControlPanel />} />
