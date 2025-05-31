@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Atom, Brain, Contact, Download, ExternalLink, Rocket, Send, Stars, Zap, Bot, FileText, Globe, Thermometer, Magnet, Map, Cpu } from 'lucide-react';
+import { Atom, Brain, Contact, Download, ExternalLink, Rocket, Send, Stars, Zap, Bot, FileText, Globe, Thermometer, Magnet, Map, Cpu, Cog } from 'lucide-react';
 import ContactForm from './components/ContactForm';
 import Hero from './components/Hero';
 import Navigation from './components/Navigation';
@@ -32,6 +32,7 @@ import ChatBot from './components/ChatBot';
 import ConceptChat from './components/ConceptChat';
 import SEO from './components/SEO';
 import QuantumEngineDiagramPage from './pages/QuantumEngineDiagramPage';
+import QuantumPropulsionEngine from './pages/QuantumPropulsionEngine';
 import AbelianSymmetryPage from './pages/AbelianSymmetryPage';
 
 function App() {
@@ -163,6 +164,13 @@ function App() {
                           >
                             <FileText className="w-5 h-5" />
                             Relatório Técnico Completo
+                          </a>
+                          <a
+                            href="/quantum-propulsion-engine"
+                            className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 rounded-lg transition-colors text-white font-semibold w-full"
+                          >
+                            <Cog className="w-5 h-5" />
+                            Motor de Propulsão Quântica
                           </a>
                         </div>
 
@@ -330,6 +338,7 @@ function App() {
           <Route path="/technical-report" element={<TechnicalReportPage />} />
           <Route path="/thermodynamic-control" element={<ThermodynamicControlPanel />} />
           <Route path="/quantum-engine-diagram" element={<QuantumEngineDiagramPage />} />
+          <Route path="/quantum-propulsion-engine" element={<QuantumPropulsionEngine />} />
         </Routes>
       </div>
     </>

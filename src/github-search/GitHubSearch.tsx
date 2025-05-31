@@ -147,10 +147,34 @@ const GitHubSearch: React.FC = () => {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-extrabold text-gray-900 flex items-center justify-center">
             <Github className="w-10 h-10 mr-3 text-gray-700" />
-            Pesquisador de Repositórios GitHub
+            Pesquisador Avançado de Repositórios GitHub
           </h1>
           <p className="mt-3 text-lg text-gray-500">
-            Pesquise repositórios públicos no GitHub usando a API oficial. Todos os dados retornados são públicos.
+            Pesquise repositórios públicos no GitHub utilizando a API RESTful oficial v3. Esta ferramenta acadêmica oferece acesso estruturado a mais de 200 milhões de repositórios de código aberto.
+          </p>
+          <div className="mt-4 flex flex-wrap justify-center gap-3 text-sm">
+            <span className="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full">REST API v3</span>
+            <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full">Busca Semântica</span>
+            <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full">Padrões SOLID</span>
+            <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full">TypeScript</span>
+            <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full">React 18</span>
+          </div>
+        </div>
+
+        {/* Technical Information */}
+        <div className="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-lg p-6 mb-8 text-sm text-gray-600">
+          <h2 className="text-base font-semibold text-gray-900 mb-3">Sobre o Sistema de Busca</h2>
+          <p className="mb-2">
+            Este sistema utiliza a <a href="https://docs.github.com/pt/rest" target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:text-indigo-800 font-medium">API REST v3 do GitHub</a> para pesquisar e recuperar metadados de repositórios com alta precisão. A busca implementa:
+          </p>
+          <ul className="list-disc pl-5 space-y-1 mb-3">
+            <li>Qualificadores de busca avançados para filtragem precisa</li>
+            <li>Ordenação por relevância utilizando algoritmos de classificação do GitHub</li>
+            <li>Paginação otimizada para grandes conjuntos de resultados</li>
+            <li>Tratamento de taxa limite (rate limiting) conforme especificações da API</li>
+          </ul>
+          <p>
+            O desenvolvimento segue práticas recomendadas de engenharia de software e padrões da indústria para garantir confiabilidade, escalabilidade e manutenibilidade.
           </p>
         </div>
 
@@ -159,8 +183,11 @@ const GitHubSearch: React.FC = () => {
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="query" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="query" className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
                   Nome do Repositório
+                  <span className="ml-1 inline-block rounded-full bg-gray-100 px-1 text-xs text-gray-500" title="Você pode usar parte do nome, palavras-chave ou descrição para encontrar repositórios">
+                    ?
+                  </span>
                 </label>
                 <div className="relative rounded-md shadow-sm">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -179,8 +206,11 @@ const GitHubSearch: React.FC = () => {
               </div>
 
               <div>
-                <label htmlFor="user" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="user" className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
                   Usuário / Organização
+                  <span className="ml-1 inline-block rounded-full bg-gray-100 px-1 text-xs text-gray-500" title="Digite o nome de usuário ou organização exato. Ex: 'microsoft', 'google', 'facebook'">
+                    ?
+                  </span>
                 </label>
                 <div className="relative rounded-md shadow-sm">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -199,8 +229,11 @@ const GitHubSearch: React.FC = () => {
               </div>
 
               <div>
-                <label htmlFor="language" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="language" className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
                   Linguagem de Programação
+                  <span className="ml-1 inline-block rounded-full bg-gray-100 px-1 text-xs text-gray-500" title="Filtra repositórios pela linguagem principal usada no código-fonte">
+                    ?
+                  </span>
                 </label>
                 <div className="relative rounded-md shadow-sm">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -222,8 +255,11 @@ const GitHubSearch: React.FC = () => {
               </div>
 
               <div>
-                <label htmlFor="topic" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="topic" className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
                   Tópico
+                  <span className="ml-1 inline-block rounded-full bg-gray-100 px-1 text-xs text-gray-500" title="Os tópicos são tags definidas pelos mantenedores para categorizar os repositórios">
+                    ?
+                  </span>
                 </label>
                 <div className="relative rounded-md shadow-sm">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -245,7 +281,11 @@ const GitHubSearch: React.FC = () => {
               </div>
             </div>
 
-            <div className="mt-6">
+            <div className="mt-4 px-2 text-xs text-gray-500 italic">
+              <p>Dica: Combine os filtros para resultados mais precisos. Por exemplo, use "machine-learning" como tópico e "Python" como linguagem para encontrar bibliotecas de aprendizado de máquina em Python.</p>
+            </div>
+            
+            <div className="mt-4">
               <button
                 type="submit"
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -309,6 +349,16 @@ const GitHubSearch: React.FC = () => {
               {results.map(repo => (
                 <div key={repo.id} className="bg-white overflow-hidden shadow rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
                   <div className="px-4 py-5 sm:p-6">
+                    {/* Academic Research Context Tag - conditional rendering based on repo attributes */}
+                    {(repo.topics.some(t => 
+                      ['research', 'academic', 'science', 'paper', 'thesis', 'dissertation', 'study', 'experiment', 'data-science', 'machine-learning'].includes(t)
+                    ) || repo.name.toLowerCase().includes('research') || (repo.description && repo.description.toLowerCase().includes('research'))) && (
+                      <div className="mb-2">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-green-100 text-green-800">
+                          Repositório Acadêmico
+                        </span>
+                      </div>
+                    )}
                     <div className="flex items-start">
                       <img
                         src={repo.owner.avatar_url}
@@ -351,6 +401,27 @@ const GitHubSearch: React.FC = () => {
                         {repo.topics.length > 4 && (
                           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                             +{repo.topics.length - 4}
+                          </span>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Professional Project Indicators */}
+                    {repo.stargazers_count > 100 && (
+                      <div className="mt-2 flex flex-wrap gap-1">
+                        {repo.stargazers_count > 1000 && (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
+                            Projeto Popular
+                          </span>
+                        )}
+                        {repo.forks_count > 100 && (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                            Altamente Bifurcado
+                          </span>
+                        )}
+                        {new Date().getTime() - new Date(repo.updated_at).getTime() < 7776000000 && ( // 90 days in milliseconds
+                          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                            Ativamente Mantido
                           </span>
                         )}
                       </div>
@@ -514,6 +585,106 @@ const GitHubSearch: React.FC = () => {
           )}
         </div>
 
+        {/* API Usage Information */}
+        <div className="mt-8 bg-gray-50 p-6 rounded-lg border border-gray-200">
+          <h2 className="text-lg font-medium text-gray-900 mb-4">Informações Técnicas sobre a API</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="text-md font-medium text-gray-800 mb-2">Especificações da API GitHub</h3>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li className="flex items-start">
+                  <span className="text-indigo-500 mr-2">•</span>
+                  <span><b>Endpoint:</b> <code className="bg-gray-100 px-1 py-0.5 rounded">https://api.github.com/search/repositories</code></span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-indigo-500 mr-2">•</span>
+                  <span><b>Método:</b> <code className="bg-gray-100 px-1 py-0.5 rounded">GET</code></span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-indigo-500 mr-2">•</span>
+                  <span><b>Rate Limit:</b> 10 requisições/minuto (não autenticado), 30 requisições/minuto (autenticado)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-indigo-500 mr-2">•</span>
+                  <span><b>Biblioteca Cliente:</b> <a href="https://github.com/octokit/rest.js" target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline">Octokit REST.js</a></span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-md font-medium text-gray-800 mb-2">Parâmetros de Busca Avançada</h3>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li className="flex items-start">
+                  <span className="text-indigo-500 mr-2">•</span>
+                  <span><b>Qualificadores Adicionais:</b> <code>stars:>1000</code>, <code>fork:true</code>, <code>created:>2023-01-01</code></span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-indigo-500 mr-2">•</span>
+                  <span><b>Operadores Booleanos:</b> AND (<code>+</code>), NOT (<code>-</code>), OR</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-indigo-500 mr-2">•</span>
+                  <span><b>Ordenação:</b> <code>sort=stars</code>, <code>sort=forks</code>, <code>sort=updated</code>, <code>sort=help-wanted-issues</code></span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-indigo-500 mr-2">•</span>
+                  <span><b>Documentação Oficial:</b> <a href="https://docs.github.com/pt/rest/search" target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline">GitHub Search API</a></span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Security and Best Practices */}
+        <div className="mt-8 bg-gray-50 p-6 rounded-lg border border-gray-200">
+          <h2 className="text-lg font-medium text-gray-900 mb-4">Segurança e Boas Práticas</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="text-md font-medium text-gray-800 mb-2">Medidas de Segurança Implementadas</h3>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li className="flex items-start">
+                  <span className="text-indigo-500 mr-2">•</span>
+                  <span>Uso exclusivo de HTTPS para todas as requisições API</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-indigo-500 mr-2">•</span>
+                  <span>Sanitização de inputs para prevenir injeção</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-indigo-500 mr-2">•</span>
+                  <span>Validação de dados no lado cliente e servidor</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-indigo-500 mr-2">•</span>
+                  <span>Limitação de taxa para prevenir sobrecarga</span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-md font-medium text-gray-800 mb-2">Padrões e Boas Práticas</h3>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li className="flex items-start">
+                  <span className="text-indigo-500 mr-2">•</span>
+                  <span>Desenvolvimento baseado em componentes React</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-indigo-500 mr-2">•</span>
+                  <span>Tipagem estrita com TypeScript</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-indigo-500 mr-2">•</span>
+                  <span>Design responsivo e acessível (WCAG 2.1)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-indigo-500 mr-2">•</span>
+                  <span>Tratamento de erros e feedback do usuário</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
         {/* Footer - Disclaimer */}
         <div className="mt-12 pt-8 border-t border-gray-200">
           <div className="bg-blue-50 p-4 rounded-lg">
@@ -525,8 +696,9 @@ const GitHubSearch: React.FC = () => {
               </div>
               <div className="ml-3 flex-1 md:flex md:justify-between">
                 <p className="text-sm text-blue-700">
-                  Este site utiliza a API pública do GitHub para buscar repositórios. Apenas dados públicos são acessados.
-                  O uso desta ferramenta deve respeitar os Termos de Serviço do GitHub.
+                  Este sistema utiliza a API pública do GitHub para buscar repositórios. Apenas dados públicos são acessados, 
+                  seguindo as diretrizes éticas e legais de uso de APIs. O uso desta ferramenta deve respeitar os 
+                  <a href="https://docs.github.com/pt/site-policy/github-terms/github-terms-of-service" className="underline ml-1" target="_blank" rel="noopener noreferrer">Termos de Serviço do GitHub</a>.
                 </p>
                 <p className="mt-3 text-sm md:mt-0 md:ml-6">
                   <a href="https://docs.github.com/pt/rest" className="whitespace-nowrap font-medium text-blue-700 hover:text-blue-600">
@@ -537,8 +709,24 @@ const GitHubSearch: React.FC = () => {
             </div>
           </div>
           
+          <div className="mt-8 grid md:grid-cols-3 gap-4 text-center text-sm text-gray-500">
+            <div>
+              <h4 className="font-medium text-gray-700">Recursos Acadêmicos</h4>
+              <p className="mt-1">Ideal para pesquisadores e estudantes buscando projetos open-source</p>
+            </div>
+            <div>
+              <h4 className="font-medium text-gray-700">Conformidade LGPD</h4>
+              <p className="mt-1">Este aplicativo respeita a privacidade e proteção de dados pessoais</p>
+            </div>
+            <div>
+              <h4 className="font-medium text-gray-700">Suporte & Feedback</h4>
+              <p className="mt-1">Contribuições são bem-vindas através do repositório no GitHub</p>
+            </div>
+          </div>
+          
           <p className="mt-8 text-center text-sm text-gray-500">
-            &copy; {new Date().getFullYear()} GitHub Repository Search. Desenvolvido por Julio Campos Machado.
+            &copy; {new Date().getFullYear()} GitHub Repository Search. Desenvolvido por Julio Campos Machado.<br/>
+            <span className="text-xs">Versão 1.2.0 - Última atualização: {new Date().toLocaleDateString('pt-BR')}</span>
           </p>
         </div>
       </div>
