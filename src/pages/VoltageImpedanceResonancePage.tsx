@@ -48,12 +48,50 @@ const VoltageImpedanceResonancePage = () => {
   ];
 
   const materials: Record<string, MaterialProperty> = {
+    // Elementos Básicos de Simulação
+    boron: { name: "Boro (B)", resistivity: 1.8e6, permeability: 0.9999, permittivity: 2.5, color: "#3b82f6" },
+    nitrogen: { name: "Nitrogênio (N)", resistivity: 1e15, permeability: 0.999999, permittivity: 1.0006, color: "#8b5cf6" },
+    fluorine: { name: "Flúor (F) - Z=9", resistivity: 1e16, permeability: 0.999998, permittivity: 1.0008, color: "#10b981" },
+    
+    // Materiais Condutores Tradicionais
     copper: { name: "Cobre", resistivity: 1.68e-8, permeability: 0.999994, permittivity: 1, color: "#d97706" },
     aluminum: { name: "Alumínio", resistivity: 2.65e-8, permeability: 1.000022, permittivity: 1.6, color: "#94a3b8" },
     iron: { name: "Ferro", resistivity: 9.71e-8, permeability: 5000, permittivity: 1, color: "#6b7280" },
     gold: { name: "Ouro", resistivity: 2.44e-8, permeability: 0.999964, permittivity: 1, color: "#eab308" },
     silver: { name: "Prata", resistivity: 1.59e-8, permeability: 0.9999736, permittivity: 1, color: "#cbd5e1" },
+    
+    // Materiais Avançados
     superconductor: { name: "Supercondutor", resistivity: 1e-25, permeability: 0, permittivity: 1, color: "#22d3ee" },
+    
+    // Elementos Adicionais para Simulação
+    carbon: { name: "Carbono (C)", resistivity: 3.5e-5, permeability: 0.999979, permittivity: 5.7, color: "#4b5563" },
+    silicon: { name: "Silício (Si)", resistivity: 640, permeability: 0.999981, permittivity: 11.7, color: "#6366f1" },
+    germanium: { name: "Germânio (Ge)", resistivity: 0.46, permeability: 0.999982, permittivity: 16.0, color: "#ec4899" },
+    titanium: { name: "Titânio (Ti)", resistivity: 4.2e-7, permeability: 1.00018, permittivity: 1, color: "#64748b" },
+    nickel: { name: "Níquel (Ni)", resistivity: 6.99e-8, permeability: 600, permittivity: 1, color: "#84cc16" },
+    cobalt: { name: "Cobalto (Co)", resistivity: 6.24e-8, permeability: 250, permittivity: 1, color: "#f59e0b" },
+    platinum: { name: "Platina (Pt)", resistivity: 1.06e-7, permeability: 1.0003, permittivity: 1, color: "#e5e7eb" },
+    palladium: { name: "Paládio (Pd)", resistivity: 1.08e-7, permeability: 1.0008, permittivity: 1, color: "#d1d5db" },
+    tungsten: { name: "Tungstênio (W)", resistivity: 5.6e-8, permeability: 1.00008, permittivity: 1, color: "#374151" },
+    molybdenum: { name: "Molibdênio (Mo)", resistivity: 5.34e-8, permeability: 1.00012, permittivity: 1, color: "#6b7280" },
+    
+    // Ligas e Compostos Especiais
+    brass: { name: "Latão", resistivity: 7e-8, permeability: 0.999991, permittivity: 1, color: "#fbbf24" },
+    bronze: { name: "Bronze", resistivity: 9e-8, permeability: 0.999992, permittivity: 1, color: "#92400e" },
+    steel: { name: "Aço", resistivity: 1.43e-7, permeability: 2000, permittivity: 1, color: "#52525b" },
+    stainless_steel: { name: "Aço Inoxidável", resistivity: 7.2e-7, permeability: 1.02, permittivity: 1, color: "#71717a" },
+    
+    // Semicondutores e Materiais Quânticos
+    gallium_arsenide: { name: "GaAs", resistivity: 1e-3, permeability: 0.999998, permittivity: 12.9, color: "#7c3aed" },
+    indium_phosphide: { name: "InP", resistivity: 1e-2, permeability: 0.999997, permittivity: 12.5, color: "#a855f7" },
+    silicon_carbide: { name: "SiC", resistivity: 1e5, permeability: 0.999995, permittivity: 9.7, color: "#059669" },
+    gallium_nitride: { name: "GaN", resistivity: 1e10, permeability: 0.999996, permittivity: 9.0, color: "#0891b2" },
+    
+    // Materiais Exóticos
+    graphene: { name: "Grafeno", resistivity: 1e-6, permeability: 0.9999995, permittivity: 2.6, color: "#1f2937" },
+    metamaterial: { name: "Metamaterial", resistivity: 1e-4, permeability: -1.5, permittivity: -2.1, color: "#db2777" },
+    quantum_dots: { name: "Pontos Quânticos", resistivity: 1e3, permeability: 1.0001, permittivity: 8.5, color: "#f97316" },
+    superlattice: { name: "Super-rede", resistivity: 1e-1, permeability: 1.0002, permittivity: 15.2, color: "#84cc16" }
   };
 
   // Calculate resonant frequency
