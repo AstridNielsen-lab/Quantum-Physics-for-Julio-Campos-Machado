@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { ArrowLeft, Zap, Radio, Compass, Settings, RefreshCw, Atom, Layers, Magnet, Waves, AlertTriangle, Calculator } from 'lucide-react';
+import { ArrowLeft, Zap, Radio, Compass, Settings, RefreshCw, Atom, Layers, Magnet, Waves, AlertTriangle, Calculator, Orbit, Target, Zap as Electric, Lightbulb, Beaker, Cpu } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 
@@ -948,6 +948,652 @@ const VoltageImpedanceResonancePage = () => {
                     <div className="bg-violet-900/20 p-4 rounded-lg">
                       <h3 className="font-semibold text-violet-400 mb-2">Frequência Ressonante</h3>
                       <p className="text-sm font-mono">f = 1/(2π√LC)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Nova seção para Análise Atômica dos Elementos */}
+          <div className="mt-12">
+            <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
+              <Atom className="text-violet-400" />
+              Simulação de Campos Atômicos: Boro, Nitrogênio e Flúor
+            </h2>
+            
+            <div className="grid md:grid-cols-3 gap-8 mb-8">
+              {/* Boro (B) */}
+              <div className="bg-gradient-to-br from-blue-900/20 to-cyan-900/20 p-6 rounded-xl border border-blue-500/20">
+                <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                  <Orbit className="text-blue-400" />
+                  Boro (B) - Z=5
+                </h3>
+                
+                <div className="space-y-4">
+                  <div className="bg-blue-900/20 p-4 rounded-lg">
+                    <h4 className="font-semibold text-blue-400 mb-2">Configuração Eletrônica</h4>
+                    <p className="text-sm font-mono">1s² 2s² 2p¹</p>
+                    <p className="text-xs text-gray-400 mt-2">3 elétrons de valência (2s² 2p¹)</p>
+                  </div>
+                  
+                  <div className="bg-blue-900/20 p-4 rounded-lg">
+                    <h4 className="font-semibold text-blue-400 mb-2">Propriedades Físicas</h4>
+                    <div className="space-y-1 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Massa Atômica:</span>
+                        <span className="text-blue-400">10.811 u</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Raio Atômico:</span>
+                        <span className="text-blue-400">87 pm</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Energia de Ionização:</span>
+                        <span className="text-blue-400">8.30 eV</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-blue-900/20 p-4 rounded-lg">
+                    <h4 className="font-semibold text-blue-400 mb-2">Campo Elétrico Nuclear</h4>
+                    <div className="space-y-1 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Carga Nuclear:</span>
+                        <span className="text-blue-400">+5e</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Campo E (1s):</span>
+                        <span className="text-blue-400">2.87×10¹¹ V/m</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Momento Magnético:</span>
+                        <span className="text-blue-400">0.0 μB</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-blue-900/20 p-4 rounded-lg">
+                    <h4 className="font-semibold text-blue-400 mb-2">Potencial de Criação Artificial</h4>
+                    <div className="space-y-2 text-sm">
+                      <p className="text-gray-300">Fusão Nuclear:</p>
+                      <p className="text-xs font-mono">⁴He + ¹H → ⁵B (instável)</p>
+                      <p className="text-xs font-mono">⁶Li + p → α + ³He + ⁵B</p>
+                      <div className="flex justify-between mt-2">
+                        <span className="text-gray-400">Energia Necessária:</span>
+                        <span className="text-blue-400">~1.5 MeV</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Nitrogênio (N) */}
+              <div className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 p-6 rounded-xl border border-purple-500/20">
+                <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                  <Orbit className="text-purple-400" />
+                  Nitrogênio (N) - Z=7
+                </h3>
+                
+                <div className="space-y-4">
+                  <div className="bg-purple-900/20 p-4 rounded-lg">
+                    <h4 className="font-semibold text-purple-400 mb-2">Configuração Eletrônica</h4>
+                    <p className="text-sm font-mono">1s² 2s² 2p³</p>
+                    <p className="text-xs text-gray-400 mt-2">5 elétrons de valência (2s² 2p³)</p>
+                  </div>
+                  
+                  <div className="bg-purple-900/20 p-4 rounded-lg">
+                    <h4 className="font-semibold text-purple-400 mb-2">Propriedades Físicas</h4>
+                    <div className="space-y-1 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Massa Atômica:</span>
+                        <span className="text-purple-400">14.007 u</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Raio Atômico:</span>
+                        <span className="text-purple-400">65 pm</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Energia de Ionização:</span>
+                        <span className="text-purple-400">14.53 eV</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-purple-900/20 p-4 rounded-lg">
+                    <h4 className="font-semibold text-purple-400 mb-2">Campo Elétrico Nuclear</h4>
+                    <div className="space-y-1 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Carga Nuclear:</span>
+                        <span className="text-purple-400">+7e</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Campo E (1s):</span>
+                        <span className="text-purple-400">4.01×10¹¹ V/m</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Momento Magnético:</span>
+                        <span className="text-purple-400">0.404 μB</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-purple-900/20 p-4 rounded-lg">
+                    <h4 className="font-semibold text-purple-400 mb-2">Potencial de Criação Artificial</h4>
+                    <div className="space-y-2 text-sm">
+                      <p className="text-gray-300">Captura de Nêutrons:</p>
+                      <p className="text-xs font-mono">¹⁴C + n → ¹⁴N + p</p>
+                      <p className="text-xs font-mono">¹²C + α → ¹⁵N + n</p>
+                      <div className="flex justify-between mt-2">
+                        <span className="text-gray-400">Energia Necessária:</span>
+                        <span className="text-purple-400">~7.3 MeV</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Flúor (F) */}
+              <div className="bg-gradient-to-br from-green-900/20 to-teal-900/20 p-6 rounded-xl border border-green-500/20">
+                <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                  <Orbit className="text-green-400" />
+                  Flúor (F) - Z=9
+                </h3>
+                
+                <div className="space-y-4">
+                  <div className="bg-green-900/20 p-4 rounded-lg">
+                    <h4 className="font-semibold text-green-400 mb-2">Configuração Eletrônica</h4>
+                    <p className="text-sm font-mono">1s² 2s² 2p⁵</p>
+                    <p className="text-xs text-gray-400 mt-2">7 elétrons de valência (2s² 2p⁵)</p>
+                  </div>
+                  
+                  <div className="bg-green-900/20 p-4 rounded-lg">
+                    <h4 className="font-semibold text-green-400 mb-2">Propriedades Físicas</h4>
+                    <div className="space-y-1 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Massa Atômica:</span>
+                        <span className="text-green-400">18.998 u</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Raio Atômico:</span>
+                        <span className="text-green-400">64 pm</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Energia de Ionização:</span>
+                        <span className="text-green-400">17.42 eV</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-green-900/20 p-4 rounded-lg">
+                    <h4 className="font-semibold text-green-400 mb-2">Campo Elétrico Nuclear</h4>
+                    <div className="space-y-1 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Carga Nuclear:</span>
+                        <span className="text-green-400">+9e</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Campo E (1s):</span>
+                        <span className="text-green-400">5.15×10¹¹ V/m</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Momento Magnético:</span>
+                        <span className="text-green-400">2.629 μB</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-green-900/20 p-4 rounded-lg">
+                    <h4 className="font-semibold text-green-400 mb-2">Potencial de Criação Artificial</h4>
+                    <div className="space-y-2 text-sm">
+                      <p className="text-gray-300">Bombardeamento de Oxigênio:</p>
+                      <p className="text-xs font-mono">¹⁶O + ³He → ¹⁹F + γ</p>
+                      <p className="text-xs font-mono">¹⁸O + p → ¹⁸F + n</p>
+                      <div className="flex justify-between mt-2">
+                        <span className="text-gray-400">Energia Necessária:</span>
+                        <span className="text-green-400">~2.4 MeV</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Seção de Simulação de Criação de Elementos */}
+            <div className="mt-12">
+              <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
+                <Beaker className="text-yellow-400" />
+                Simulação de Criação de Elementos com Campos Eletromagnéticos
+              </h2>
+              
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
+                {/* Teoria de Criação Artificial */}
+                <div className="bg-gradient-to-br from-yellow-900/20 to-orange-900/20 p-6 rounded-xl border border-yellow-500/20">
+                  <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <Lightbulb className="text-yellow-400" />
+                    Fundamentos Teóricos
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-yellow-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-yellow-400 mb-2">Configuração Eletrônica e Campos</h4>
+                      <div className="space-y-2 text-sm">
+                        <p className="text-gray-300">A criação artificial de elementos requer:</p>
+                        <ul className="list-disc list-inside text-gray-400 space-y-1">
+                          <li>Controle preciso de campos elétricos (E &gt; 10¹¹ V/m)</li>
+                          <li>Campos magnéticos intensos (B &gt; 10 Tesla)</li>
+                          <li>Sincronização de frequências ressonantes</li>
+                          <li>Manipulação de orbitais eletrônicos</li>
+                        </ul>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-yellow-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-yellow-400 mb-2">Equações Fundamentais</h4>
+                      <div className="space-y-2 text-sm font-mono">
+                        <p className="text-gray-300">Energia de Ionização:</p>
+                        <p className="text-yellow-400">E = 13.6 × Z²eff / n² eV</p>
+                        <p className="text-gray-300">Campo Elétrico Nuclear:</p>
+                        <p className="text-yellow-400">E = ke × Z / r²</p>
+                        <p className="text-gray-300">Frequência de Bohr:</p>
+                        <p className="text-yellow-400">f = E₁ - E₂ / h</p>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-yellow-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-yellow-400 mb-2">Métodos de Criação</h4>
+                      <div className="grid grid-cols-2 gap-2 text-xs">
+                        <div className="bg-orange-900/20 p-2 rounded">
+                          <span className="text-orange-400 font-semibold">Fusão Nuclear</span>
+                          <p className="text-gray-400">Combinação de núcleos leves</p>
+                        </div>
+                        <div className="bg-orange-900/20 p-2 rounded">
+                          <span className="text-orange-400 font-semibold">Captura</span>
+                          <p className="text-gray-400">Absorção de partículas</p>
+                        </div>
+                        <div className="bg-orange-900/20 p-2 rounded">
+                          <span className="text-orange-400 font-semibold">Bombardeamento</span>
+                          <p className="text-gray-400">Aceleração de projéteis</p>
+                        </div>
+                        <div className="bg-orange-900/20 p-2 rounded">
+                          <span className="text-orange-400 font-semibold">Fissão</span>
+                          <p className="text-gray-400">Fragmentação de núcleos pesados</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Simulação Prática */}
+                <div className="bg-gradient-to-br from-cyan-900/20 to-blue-900/20 p-6 rounded-xl border border-cyan-500/20">
+                  <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <Cpu className="text-cyan-400" />
+                    Simulação Prática
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-cyan-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-cyan-400 mb-2">Parâmetros de Controle</h4>
+                      <div className="space-y-3">
+                        <div>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span className="text-gray-400">Campo Elétrico (×10¹¹ V/m)</span>
+                            <span className="text-cyan-400">2.87</span>
+                          </div>
+                          <div className="w-full bg-cyan-900/20 rounded-full h-2">
+                            <div className="bg-cyan-400 h-2 rounded-full" style={{width: '57%'}}></div>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span className="text-gray-400">Campo Magnético (Tesla)</span>
+                            <span className="text-cyan-400">15.2</span>
+                          </div>
+                          <div className="w-full bg-cyan-900/20 rounded-full h-2">
+                            <div className="bg-cyan-400 h-2 rounded-full" style={{width: '76%'}}></div>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span className="text-gray-400">Energia de Feixe (MeV)</span>
+                            <span className="text-cyan-400">7.3</span>
+                          </div>
+                          <div className="w-full bg-cyan-900/20 rounded-full h-2">
+                            <div className="bg-cyan-400 h-2 rounded-full" style={{width: '73%'}}></div>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span className="text-gray-400">Sincronização (Hz)</span>
+                            <span className="text-cyan-400">3.29×10¹⁵</span>
+                          </div>
+                          <div className="w-full bg-cyan-900/20 rounded-full h-2">
+                            <div className="bg-cyan-400 h-2 rounded-full" style={{width: '85%'}}></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-cyan-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-cyan-400 mb-2">Status do Sistema</h4>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Estabilidade do Plasma:</span>
+                          <span className="text-green-400">87%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Confinamento Magnético:</span>
+                          <span className="text-green-400">92%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Eficiência Energética:</span>
+                          <span className="text-yellow-400">64%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Taxa de Produção:</span>
+                          <span className="text-cyan-400">10⁶ átomos/s</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-cyan-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-cyan-400 mb-2">Elemento Alvo: Nitrogênio-15</h4>
+                      <div className="space-y-2 text-sm">
+                        <p className="text-gray-300 font-mono">¹²C + α → ¹⁵N + n</p>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Probabilidade de Sucesso:</span>
+                          <span className="text-green-400">78%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Tempo Estimado:</span>
+                          <span className="text-cyan-400">245 μs</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Energia Total:</span>
+                          <span className="text-cyan-400">7.297 MeV</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Comparação de Elementos */}
+              <div className="bg-gradient-to-br from-violet-900/20 to-purple-900/20 p-6 rounded-xl border border-violet-500/20 mb-8">
+                <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                  <Target className="text-violet-400" />
+                  Comparação: Parâmetros de Criação dos Elementos
+                </h3>
+                
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-violet-500/20">
+                        <th className="text-left py-3 px-4 text-violet-400">Elemento</th>
+                        <th className="text-center py-3 px-4 text-violet-400">Z</th>
+                        <th className="text-center py-3 px-4 text-violet-400">Campo E (×10¹¹ V/m)</th>
+                        <th className="text-center py-3 px-4 text-violet-400">Energia (MeV)</th>
+                        <th className="text-center py-3 px-4 text-violet-400">Método Principal</th>
+                        <th className="text-center py-3 px-4 text-violet-400">Dificuldade</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-violet-500/10">
+                      <tr>
+                        <td className="py-3 px-4">
+                          <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 rounded-full bg-blue-400"></div>
+                            <span className="text-blue-400 font-medium">Boro (B)</span>
+                          </div>
+                        </td>
+                        <td className="text-center py-3 px-4 text-gray-300">5</td>
+                        <td className="text-center py-3 px-4 text-gray-300">2.87</td>
+                        <td className="text-center py-3 px-4 text-gray-300">1.5</td>
+                        <td className="text-center py-3 px-4 text-gray-300">Fusão α + p</td>
+                        <td className="text-center py-3 px-4">
+                          <span className="bg-green-900/40 text-green-400 px-2 py-1 rounded text-xs">Baixa</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="py-3 px-4">
+                          <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 rounded-full bg-purple-400"></div>
+                            <span className="text-purple-400 font-medium">Nitrogênio (N)</span>
+                          </div>
+                        </td>
+                        <td className="text-center py-3 px-4 text-gray-300">7</td>
+                        <td className="text-center py-3 px-4 text-gray-300">4.01</td>
+                        <td className="text-center py-3 px-4 text-gray-300">7.3</td>
+                        <td className="text-center py-3 px-4 text-gray-300">Captura n</td>
+                        <td className="text-center py-3 px-4">
+                          <span className="bg-yellow-900/40 text-yellow-400 px-2 py-1 rounded text-xs">Média</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="py-3 px-4">
+                          <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 rounded-full bg-green-400"></div>
+                            <span className="text-green-400 font-medium">Flúor (F)</span>
+                          </div>
+                        </td>
+                        <td className="text-center py-3 px-4 text-gray-300">9</td>
+                        <td className="text-center py-3 px-4 text-gray-300">5.15</td>
+                        <td className="text-center py-3 px-4 text-gray-300">2.4</td>
+                        <td className="text-center py-3 px-4 text-gray-300">Bombardeamento O</td>
+                        <td className="text-center py-3 px-4">
+                          <span className="bg-green-900/40 text-green-400 px-2 py-1 rounded text-xs">Baixa</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              
+              {/* Configuração Experimental */}
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
+                <div className="bg-gradient-to-br from-red-900/20 to-pink-900/20 p-6 rounded-xl border border-red-500/20">
+                  <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <Electric className="text-red-400" />
+                    Configuração do Acelerador
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-red-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-red-400 mb-2">Especificações do Equipamento</h4>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Tipo de Acelerador:</span>
+                          <span className="text-red-400">Cíclotron Superconduto</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Energia Máxima:</span>
+                          <span className="text-red-400">50 MeV</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Campo Magnético:</span>
+                          <span className="text-red-400">20 Tesla</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Frequência RF:</span>
+                          <span className="text-red-400">100 MHz</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Vácuo:</span>
+                          <span className="text-red-400">10⁻¹⁰ Torr</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-red-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-red-400 mb-2">Sistema de Controle</h4>
+                      <div className="space-y-2 text-sm">
+                        <div className="grid grid-cols-2 gap-2">
+                          <div className="bg-pink-900/20 p-2 rounded">
+                            <span className="text-pink-400 font-semibold block">Monitoramento</span>
+                            <span className="text-gray-400 text-xs">Sensores quânticos</span>
+                          </div>
+                          <div className="bg-pink-900/20 p-2 rounded">
+                            <span className="text-pink-400 font-semibold block">Feedback</span>
+                            <span className="text-gray-400 text-xs">Controle adaptativo</span>
+                          </div>
+                          <div className="bg-pink-900/20 p-2 rounded">
+                            <span className="text-pink-400 font-semibold block">Segurança</span>
+                            <span className="text-gray-400 text-xs">Múltiplos failsafes</span>
+                          </div>
+                          <div className="bg-pink-900/20 p-2 rounded">
+                            <span className="text-pink-400 font-semibold block">Precisão</span>
+                            <span className="text-gray-400 text-xs">± 0.001 MeV</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-gradient-to-br from-indigo-900/20 to-blue-900/20 p-6 rounded-xl border border-indigo-500/20">
+                  <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <Waves className="text-indigo-400" />
+                    Dinâmica dos Campos
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-indigo-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-indigo-400 mb-2">Campos Eletromagnéticos</h4>
+                      <div className="space-y-3">
+                        <div>
+                          <div className="flex justify-between text-xs mb-1">
+                            <span className="text-gray-400">Intensidade E</span>
+                            <span className="text-indigo-400">Real-time</span>
+                          </div>
+                          <div className="w-full bg-indigo-900/20 rounded-full h-1">
+                            <div className="bg-gradient-to-r from-indigo-400 to-blue-400 h-1 rounded-full animate-pulse" style={{width: '78%'}}></div>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <div className="flex justify-between text-xs mb-1">
+                            <span className="text-gray-400">Intensidade B</span>
+                            <span className="text-indigo-400">Sincronizado</span>
+                          </div>
+                          <div className="w-full bg-indigo-900/20 rounded-full h-1">
+                            <div className="bg-gradient-to-r from-blue-400 to-cyan-400 h-1 rounded-full animate-pulse" style={{width: '82%'}}></div>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <div className="flex justify-between text-xs mb-1">
+                            <span className="text-gray-400">Ressonância</span>
+                            <span className="text-indigo-400">Ótima</span>
+                          </div>
+                          <div className="w-full bg-indigo-900/20 rounded-full h-1">
+                            <div className="bg-gradient-to-r from-green-400 to-emerald-400 h-1 rounded-full animate-pulse" style={{width: '95%'}}></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-indigo-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-indigo-400 mb-2">Eficiência de Conversão</h4>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Energia → Partículas:</span>
+                          <span className="text-green-400">73.2%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Confinamento:</span>
+                          <span className="text-green-400">91.7%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Captura de Produtos:</span>
+                          <span className="text-yellow-400">68.4%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Rendimento Total:</span>
+                          <span className="text-cyan-400">46.8%</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-indigo-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-indigo-400 mb-2">Condições Críticas</h4>
+                      <div className="space-y-1 text-xs">
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Temperatura do Plasma:</span>
+                          <span className="text-orange-400">10⁸ K</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Densidade de Partículas:</span>
+                          <span className="text-orange-400">10¹⁴ cm⁻³</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Tempo de Confinamento:</span>
+                          <span className="text-orange-400">150 ms</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Aplicações Futuras */}
+              <div className="bg-gradient-to-br from-emerald-900/20 to-teal-900/20 p-6 rounded-xl border border-emerald-500/20">
+                <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                  <Atom className="text-emerald-400" />
+                  Aplicações Futuras e Potencial Tecnológico
+                </h3>
+                
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="bg-emerald-900/20 p-4 rounded-lg">
+                    <h4 className="font-semibold text-emerald-400 mb-3">Medicina Nuclear</h4>
+                    <ul className="space-y-2 text-sm text-gray-300">
+                      <li>• Isótopos para diagnóstico</li>
+                      <li>• Radiofármacos personalizados</li>
+                      <li>• Terapia direcionada</li>
+                      <li>• Marcadores moleculares</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-emerald-900/20 p-4 rounded-lg">
+                    <h4 className="font-semibold text-emerald-400 mb-3">Propulsão Espacial</h4>
+                    <ul className="space-y-2 text-sm text-gray-300">
+                      <li>• Combustíveis exóticos</li>
+                      <li>• Propulsão iônica avançada</li>
+                      <li>• Reatores de fusão compactos</li>
+                      <li>• Blindagem contra radiação</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-emerald-900/20 p-4 rounded-lg">
+                    <h4 className="font-semibold text-emerald-400 mb-3">Computação Quântica</h4>
+                    <ul className="space-y-2 text-sm text-gray-300">
+                      <li>• Qubits estáveis</li>
+                      <li>• Memória quântica</li>
+                      <li>• Processamento atômico</li>
+                      <li>• Comunicação quântica</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="mt-6 p-4 bg-emerald-900/20 rounded-lg">
+                  <h4 className="font-semibold text-emerald-400 mb-2">Desafios Tecnológicos</h4>
+                  <div className="grid md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <span className="text-gray-400 font-medium">Controle de Precisão:</span>
+                      <p className="text-gray-300 mt-1">Necessário controle sub-atômico de campos e energias para reproduzir configurações eletrônicas específicas.</p>
+                    </div>
+                    <div>
+                      <span className="text-gray-400 font-medium">Estabilidade Temporal:</span>
+                      <p className="text-gray-300 mt-1">Manutenção de condições extremas por períodos suficientes para permitir reações nucleares.</p>
+                    </div>
+                    <div>
+                      <span className="text-gray-400 font-medium">Eficiência Energética:</span>
+                      <p className="text-gray-300 mt-1">Otimização do consumo energético para tornar o processo economicamente viável.</p>
+                    </div>
+                    <div>
+                      <span className="text-gray-400 font-medium">Controle de Produtos:</span>
+                      <p className="text-gray-300 mt-1">Captura seletiva e purificação dos elementos criados para aplicações práticas.</p>
                     </div>
                   </div>
                 </div>
