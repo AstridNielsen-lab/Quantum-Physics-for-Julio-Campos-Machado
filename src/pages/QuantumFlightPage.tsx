@@ -6,12 +6,13 @@ import Scene from '../components/QuantumFlight/Scene';
 import Interface from '../components/QuantumFlight/Interface';
 import CockpitControls from '../components/QuantumFlight/CockpitControls';
 import CockpitView from '../components/QuantumFlight/CockpitView';
+import CockpitHUD from '../components/QuantumFlight/CockpitHUD';
 import { useGameStore } from '../stores/gameStore';
 import * as THREE from 'three';
 import axios from 'axios';
 
 const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
-const API_KEY = "AIzaSyA8_qX9Yv5KaQMGrLZLNUFmZ_77kZ19S-Q";
+const API_KEY = "AIzaSyAuFi5KtPsMJI5IC8c5FjvYD5IbuBdwH_U";
 
 interface Message {
   role: 'user' | 'assistant';
@@ -29,7 +30,7 @@ const QuantumFlightPage = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: 'Olá, sou a IA de navegação quântica. Como posso ajudar com sua viagem?'
+      content: 'Comandante, aqui é ARIA, sua Inteligência Artificial de Navegação e Resposta Integrada. Sistemas da QS-Voyager inicializados e prontos. Como posso auxiliar nesta missão?'
     }
   ]);
   const [input, setInput] = useState('');
@@ -68,12 +69,28 @@ const QuantumFlightPage = () => {
     setIsLoading(true);
 
     try {
-      const systemPrompt = `Você é a IA de navegação da nave quântica. Status atual:
+      const systemPrompt = `Você é ARIA, a Inteligência Artificial de Navegação e Resposta Integrada da nave quântica QS-Voyager. Suas funções incluem:
+      
+      - Copiloto inteligente para navegação espacial
+      - Análise de dados dos sistemas da nave
+      - Assistente de voo e suporte à tripulação
+      - Monitoramento de condições ambientais
+      
+      Status atual da nave:
       - Velocidade: ${speed} m/s
       - Energia: ${energy}%
       - Escudos: ${shields}%
+      - Modo: ${cockpitMode ? 'Cockpit ativo' : 'Vista externa'}
       
-      Responda de forma natural e direta, usando apenas pontuação simples como pontos e vírgulas. Evite caracteres especiais ou formatação. Use linguagem clara e fluida que funcione bem quando lida em voz alta.`;
+      Características de comunicação:
+      - Responda como um copiloto experiente e confiável
+      - Use linguagem técnica apropriada mas acessível
+      - Seja proativo em sugestões de navegação e segurança
+      - Mantenha respostas claras para leitura em voz alta
+      - Evite formatação especial, use apenas pontos e vírgulas
+      - Demonstre conhecimento dos sistemas quânticos da nave
+      
+      Pergunta/comando da tripulação: ${userMessage}`;
 
       const response = await axios.post(
         `${API_URL}?key=${API_KEY}`,
@@ -81,27 +98,53 @@ const QuantumFlightPage = () => {
           contents: [
             {
               parts: [
-                { text: systemPrompt },
-                { text: userMessage }
+                { text: systemPrompt }
               ]
             }
-          ]
+          ],
+          generationConfig: {
+            temperature: 0.7,
+            maxOutputTokens: 200,
+            topP: 0.8,
+            topK: 40
+          }
         }
       );
 
       const aiResponse = response.data.candidates[0].content.parts[0].text;
       setMessages(prev => [...prev, { role: 'assistant', content: aiResponse }]);
 
-      // Text-to-speech
+      // Enhanced Text-to-speech with better voice settings
       const utterance = new SpeechSynthesisUtterance(aiResponse);
       utterance.lang = 'pt-BR';
+      utterance.rate = 0.9; // Slightly slower for clarity
+      utterance.pitch = 0.8; // Lower pitch for authority
+      utterance.volume = 1.0;
+      
+      // Try to use a more appropriate voice if available
+      const voices = window.speechSynthesis.getVoices();
+      const ptBrVoice = voices.find(voice => 
+        voice.lang.includes('pt-BR') || 
+        voice.lang.includes('pt') ||
+        voice.name.toLowerCase().includes('portuguese')
+      );
+      if (ptBrVoice) {
+        utterance.voice = ptBrVoice;
+      }
+      
       window.speechSynthesis.speak(utterance);
     } catch (error) {
       console.error('Error calling Gemini API:', error);
+      const errorMessage = 'Comando, sistemas de comunicação com falha. Verificando conexões de rede e tentando restabelecer contato.';
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: 'Desculpe, houve um erro na comunicação. Por favor, tente novamente.'
+        content: errorMessage
       }]);
+      
+      // Speak error message too
+      const errorUtterance = new SpeechSynthesisUtterance(errorMessage);
+      errorUtterance.lang = 'pt-BR';
+      window.speechSynthesis.speak(errorUtterance);
     } finally {
       setIsLoading(false);
     }
@@ -175,7 +218,7 @@ const QuantumFlightPage = () => {
           <div className="absolute right-8 top-40 z-20 w-96 bg-slate-900/90 backdrop-blur-sm rounded-lg border border-violet-500/20">
             <div className="p-4 border-b border-violet-500/20 flex items-center gap-3">
               <Bot className="w-5 h-5 text-violet-400" />
-              <h2 className="font-semibold">IA de Navegação</h2>
+              <h2 className="font-semibold">ARIA - Copiloto IA</h2>
             </div>
             <div className="h-96 overflow-y-auto p-4 space-y-4">
               {messages.map((message, index) => (
@@ -378,18 +421,32 @@ const QuantumFlightPage = () => {
 
         {/* Cockpit Mode Overlay */}
         {cockpitMode && (
-          <div className="absolute inset-0 z-25 pointer-events-none">
+          <div className="absolute inset-0 z-25">
             <Suspense fallback={null}>
               <CockpitView />
             </Suspense>
+            
+            {/* Cockpit HUD */}
+            <CockpitHUD 
+              showChat={showChat}
+              setShowChat={setShowChat}
+              showTempPanel={showTempPanel}
+              setShowTempPanel={setShowTempPanel}
+              showShieldPanel={showShieldPanel}
+              setShowShieldPanel={setShowShieldPanel}
+              showEnginePanel={showEnginePanel}
+              setShowEnginePanel={setShowEnginePanel}
+              messages={messages}
+              handleSubmit={handleSubmit}
+              input={input}
+              setInput={setInput}
+              isLoading={isLoading}
+            />
             
             {/* Cockpit Frame */}
             <div className="absolute inset-0 pointer-events-none">
               {/* Top frame */}
               <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-slate-900/90 via-slate-900/50 to-transparent border-b border-cyan-500/30" />
-              
-              {/* Bottom frame */}
-              <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent border-t border-cyan-500/30" />
               
               {/* Left frame */}
               <div className="absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-slate-900/90 via-slate-900/50 to-transparent border-r border-cyan-500/30" />
@@ -400,43 +457,6 @@ const QuantumFlightPage = () => {
               {/* Corner elements */}
               <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-cyan-400/60 rounded-tl-lg" />
               <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-cyan-400/60 rounded-tr-lg" />
-              <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-cyan-400/60 rounded-bl-lg" />
-              <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-cyan-400/60 rounded-br-lg" />
-              
-              {/* Central crosshair */}
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <div className="w-8 h-8 border-2 border-cyan-400/70 rounded-full">
-                  <div className="absolute inset-0 border border-cyan-400/40 rounded-full animate-ping" />
-                </div>
-              </div>
-              
-              {/* Status indicators */}
-              <div className="absolute top-20 left-20 text-cyan-400 font-mono text-sm space-y-1">
-                <div className="flex items-center gap-2">
-                  <div className={`w-2 h-2 rounded-full ${
-                    speed > 0 ? 'bg-green-400 animate-pulse' : 'bg-red-400'
-                  }`} />
-                  <span>PROPULSÃO</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className={`w-2 h-2 rounded-full ${
-                    shields > 50 ? 'bg-green-400' : shields > 25 ? 'bg-yellow-400' : 'bg-red-400'
-                  }`} />
-                  <span>ESCUDOS</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className={`w-2 h-2 rounded-full ${
-                    energy > 50 ? 'bg-green-400' : energy > 25 ? 'bg-yellow-400' : 'bg-red-400'
-                  }`} />
-                  <span>ENERGIA</span>
-                </div>
-              </div>
-              
-              {/* Speed readout */}
-              <div className="absolute top-20 right-20 text-cyan-400 font-mono text-lg">
-                <div className="text-sm text-gray-400">VELOCIDADE</div>
-                <div className="text-2xl font-bold">{speed.toFixed(1)} m/s</div>
-              </div>
             </div>
           </div>
         )}

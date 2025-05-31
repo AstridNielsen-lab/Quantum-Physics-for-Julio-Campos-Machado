@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Map, Minimize2, Maximize2, Move, Navigation, Target, Zap, Orbit, Star, Globe } from 'lucide-react';
+import { Map, Minimize2, Maximize2, Move, Navigation, Target, Zap, Orbit, Star, Globe, Crosshair } from 'lucide-react';
 import * as THREE from 'three';
 import { useGameStore } from '../../stores/gameStore';
 
@@ -30,7 +30,7 @@ interface Route {
 }
 
 const GalaxyMap: React.FC<GalaxyMapProps> = ({ isVisible, onToggle, onClose }) => {
-  const { position, setPosition } = useGameStore();
+  const { position, setPosition, speed } = useGameStore();
   const [isMinimized, setIsMinimized] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
@@ -42,6 +42,7 @@ const GalaxyMap: React.FC<GalaxyMapProps> = ({ isVisible, onToggle, onClose }) =
   const [mapCenter, setMapCenter] = useState({ x: 0, y: 0 });
   const [hoveredBody, setHoveredBody] = useState<CelestialBody | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [shipBlink, setShipBlink] = useState(true);
   const mapRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -235,6 +236,23 @@ const GalaxyMap: React.FC<GalaxyMapProps> = ({ isVisible, onToggle, onClose }) =
     setZoomLevel(prev => Math.max(0.5, Math.min(3, prev + delta)));
   };
 
+  // Convert nave position to map coordinates
+  const getShipMapPosition = () => {
+    return {
+      x: position.x * SCALE_FACTOR,
+      y: position.z * SCALE_FACTOR
+    };
+  };
+
+  // Ship blinking effect
+  useEffect(() => {
+    const blinkInterval = setInterval(() => {
+      setShipBlink(prev => !prev);
+    }, speed > 0 ? 300 : 800); // Blink faster when moving
+    
+    return () => clearInterval(blinkInterval);
+  }, [speed]);
+
   if (!isVisible) return null;
 
   return (
@@ -359,6 +377,97 @@ const GalaxyMap: React.FC<GalaxyMapProps> = ({ isVisible, onToggle, onClose }) =
                   />
                 )}
                 
+                {/* Ship position (QS Voyager) */}
+                {(() => {
+                  const shipPos = getShipMapPosition();
+                  return (
+                    <g>
+                      {/* Ship trail when moving */}
+                      {speed > 0 && (
+                        <circle
+                          cx={shipPos.x}
+                          cy={shipPos.y}
+                          r="8"
+                          fill="none"
+                          stroke="#00ff41"
+                          strokeWidth="1"
+                          opacity="0.3"
+                          className="animate-ping"
+                        />
+                      )}
+                      
+                      {/* Main ship marker */}
+                      <circle
+                        cx={shipPos.x}
+                        cy={shipPos.y}
+                        r="4"
+                        fill={shipBlink ? '#00ff41' : '#004d0f'}
+                        stroke="#ffffff"
+                        strokeWidth="1"
+                        className="transition-all duration-200"
+                      />
+                      
+                      {/* Ship icon */}
+                      <g transform={`translate(${shipPos.x - 6}, ${shipPos.y - 6})`}>
+                        <foreignObject width="12" height="12">
+                          <div className="flex items-center justify-center text-white">
+                            <Crosshair className="w-3 h-3" />
+                          </div>
+                        </foreignObject>
+                      </g>
+                      
+                      {/* Ship label */}
+                      <text
+                        x={shipPos.x}
+                        y={shipPos.y - 15}
+                        textAnchor="middle"
+                        fontSize="10"
+                        fill="#00ff41"
+                        fontWeight="bold"
+                        className="pointer-events-none"
+                      >
+                        QS-VOYAGER
+                      </text>
+                      
+                      {/* Coordinates display */}
+                      <text
+                        x={shipPos.x}
+                        y={shipPos.y + 20}
+                        textAnchor="middle"
+                        fontSize="8"
+                        fill="#00ff41"
+                        className="pointer-events-none font-mono"
+                      >
+                        X: {position.x.toFixed(1)}
+                      </text>
+                      <text
+                        x={shipPos.x}
+                        y={shipPos.y + 30}
+                        textAnchor="middle"
+                        fontSize="8"
+                        fill="#00ff41"
+                        className="pointer-events-none font-mono"
+                      >
+                        Z: {position.z.toFixed(1)}
+                      </text>
+                      
+                      {/* Speed indicator */}
+                      {speed > 0 && (
+                        <text
+                          x={shipPos.x}
+                          y={shipPos.y + 40}
+                          textAnchor="middle"
+                          fontSize="7"
+                          fill="#ffff00"
+                          className="pointer-events-none font-mono"
+                        >
+                          {speed.toFixed(1)} m/s
+                        </text>
+                      )}
+                    </g>
+                  );
+                })()}
+                
                 {/* Celestial bodies */}
                 {celestialBodies.map(body => (
                   <g key={body.id}>
@@ -418,6 +527,26 @@ const GalaxyMap: React.FC<GalaxyMapProps> = ({ isVisible, onToggle, onClose }) =
                 <div className="w-3 h-3 rounded-full bg-yellow-700"></div>
                 <span className="text-gray-300">Asteroides</span>
               </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse"></div>
+                <span className="text-gray-300">QS-Voyager</span>
+              </div>
+            </div>
+          </div>
+          
+          {/* Ship Status Panel */}
+          <div className="absolute bottom-2 right-2 bg-black/80 rounded p-2 text-xs">
+            <div className="text-green-400 font-semibold mb-1">Status da Nave</div>
+            <div className="space-y-1">
+              <div className="text-gray-300">
+                Posição: X:{position.x.toFixed(1)} Y:{position.y.toFixed(1)} Z:{position.z.toFixed(1)}
+              </div>
+              <div className="text-gray-300">
+                Velocidade: {speed.toFixed(2)} m/s
+              </div>
+              <div className={`text-xs ${speed > 0 ? 'text-yellow-400' : 'text-green-400'}`}>
+                {speed > 0 ? 'EM MOVIMENTO' : 'ESTACIONÁRIA'}
+              </div>
             </div>
           </div>
 
@@ -458,14 +587,24 @@ const GalaxyMap: React.FC<GalaxyMapProps> = ({ isVisible, onToggle, onClose }) =
 
       {isMinimized && (
         <div className="p-3">
-          <div className="text-sm text-cyan-400">
+          <div className="text-sm space-y-1">
+            <div className="text-green-400 font-semibold flex items-center gap-2">
+              <div className={`w-2 h-2 rounded-full bg-green-400 ${shipBlink ? 'opacity-100' : 'opacity-30'}`}></div>
+              QS-Voyager
+            </div>
+            <div className="text-cyan-400 text-xs font-mono">
+              X: {position.x.toFixed(1)} Y: {position.y.toFixed(1)} Z: {position.z.toFixed(1)}
+            </div>
+            <div className="text-cyan-400 text-xs">
+              Velocidade: {speed.toFixed(1)} m/s
+            </div>
             {selectedStart && selectedEnd ? (
-              <div>
+              <div className="text-xs text-gray-400 border-t border-gray-600 pt-1 mt-2">
                 <div>Rota: {selectedStart.name} → {selectedEnd.name}</div>
                 <div>Distância: {currentRoute?.distance.toFixed(1)} milhões km</div>
               </div>
             ) : (
-              <div>Selecione origem e destino</div>
+              <div className="text-xs text-gray-400 border-t border-gray-600 pt-1 mt-2">Selecione origem e destino</div>
             )}
           </div>
         </div>

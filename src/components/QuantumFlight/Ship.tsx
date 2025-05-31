@@ -16,6 +16,15 @@ const Ship = () => {
     
     const time = state.clock.getElapsedTime();
     
+    // Update ship position based on speed and direction
+    if (speed > 0) {
+      const moveSpeed = speed * delta;
+      const newPosition = position.clone();
+      newPosition.z += moveSpeed * Math.cos(rotation.y);
+      newPosition.x += moveSpeed * Math.sin(rotation.y);
+      useGameStore.getState().setPosition(newPosition);
+    }
+    
     // Core glow pulsing
     const coreScale = 1 + Math.sin(time * 3) * 0.2;
     coreGlowRef.current.scale.set(coreScale, coreScale, coreScale);
