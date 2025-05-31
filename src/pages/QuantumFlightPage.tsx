@@ -4,7 +4,10 @@ import { ArrowLeft, Thermometer, Shield, Gauge, Bot, Zap, Rocket, Radio, Navigat
 import Navigation from '../components/Navigation';
 import Scene from '../components/QuantumFlight/Scene';
 import Interface from '../components/QuantumFlight/Interface';
+import CockpitControls from '../components/QuantumFlight/CockpitControls';
+import CockpitView from '../components/QuantumFlight/CockpitView';
 import { useGameStore } from '../stores/gameStore';
+import * as THREE from 'three';
 import axios from 'axios';
 
 const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
@@ -21,6 +24,8 @@ const QuantumFlightPage = () => {
   const [showTempPanel, setShowTempPanel] = useState(false);
   const [showShieldPanel, setShowShieldPanel] = useState(false);
   const [showEnginePanel, setShowEnginePanel] = useState(false);
+  const [showControls, setShowControls] = useState(true);
+  const [cockpitMode, setCockpitMode] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
@@ -124,6 +129,17 @@ const QuantumFlightPage = () => {
 
         {/* Control Panel Buttons */}
         <div className="absolute top-24 right-8 z-20 flex gap-2">
+          <button
+            onClick={() => setCockpitMode(!cockpitMode)}
+            className={`p-2 backdrop-blur-sm rounded-lg border text-violet-400 transition-colors ${
+              cockpitMode 
+                ? 'bg-cyan-900/40 border-cyan-500/40 text-cyan-400' 
+                : 'bg-violet-900/20 border-violet-500/20 hover:bg-violet-900/40'
+            }`}
+            title="Modo Cockpit"
+          >
+            <Compass className="w-5 h-5" />
+          </button>
           <button
             onClick={() => setShowChat(!showChat)}
             className="p-2 bg-violet-900/20 backdrop-blur-sm rounded-lg border border-violet-500/20 text-violet-400 hover:bg-violet-900/40"
@@ -349,6 +365,77 @@ const QuantumFlightPage = () => {
                 <div className="text-xs text-gray-400">
                   Todos os sistemas operando dentro dos parâmetros normais. Estabilidade do campo quântico em 98.3%.
                 </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Cockpit Controls */}
+        <CockpitControls 
+          isVisible={showControls}
+          onToggle={() => setShowControls(!showControls)}
+        />
+
+        {/* Cockpit Mode Overlay */}
+        {cockpitMode && (
+          <div className="absolute inset-0 z-25 pointer-events-none">
+            <Suspense fallback={null}>
+              <CockpitView />
+            </Suspense>
+            
+            {/* Cockpit Frame */}
+            <div className="absolute inset-0 pointer-events-none">
+              {/* Top frame */}
+              <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-slate-900/90 via-slate-900/50 to-transparent border-b border-cyan-500/30" />
+              
+              {/* Bottom frame */}
+              <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent border-t border-cyan-500/30" />
+              
+              {/* Left frame */}
+              <div className="absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-slate-900/90 via-slate-900/50 to-transparent border-r border-cyan-500/30" />
+              
+              {/* Right frame */}
+              <div className="absolute top-0 bottom-0 right-0 w-16 bg-gradient-to-l from-slate-900/90 via-slate-900/50 to-transparent border-l border-cyan-500/30" />
+              
+              {/* Corner elements */}
+              <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-cyan-400/60 rounded-tl-lg" />
+              <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-cyan-400/60 rounded-tr-lg" />
+              <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-cyan-400/60 rounded-bl-lg" />
+              <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-cyan-400/60 rounded-br-lg" />
+              
+              {/* Central crosshair */}
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <div className="w-8 h-8 border-2 border-cyan-400/70 rounded-full">
+                  <div className="absolute inset-0 border border-cyan-400/40 rounded-full animate-ping" />
+                </div>
+              </div>
+              
+              {/* Status indicators */}
+              <div className="absolute top-20 left-20 text-cyan-400 font-mono text-sm space-y-1">
+                <div className="flex items-center gap-2">
+                  <div className={`w-2 h-2 rounded-full ${
+                    speed > 0 ? 'bg-green-400 animate-pulse' : 'bg-red-400'
+                  }`} />
+                  <span>PROPULSÃO</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className={`w-2 h-2 rounded-full ${
+                    shields > 50 ? 'bg-green-400' : shields > 25 ? 'bg-yellow-400' : 'bg-red-400'
+                  }`} />
+                  <span>ESCUDOS</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className={`w-2 h-2 rounded-full ${
+                    energy > 50 ? 'bg-green-400' : energy > 25 ? 'bg-yellow-400' : 'bg-red-400'
+                  }`} />
+                  <span>ENERGIA</span>
+                </div>
+              </div>
+              
+              {/* Speed readout */}
+              <div className="absolute top-20 right-20 text-cyan-400 font-mono text-lg">
+                <div className="text-sm text-gray-400">VELOCIDADE</div>
+                <div className="text-2xl font-bold">{speed.toFixed(1)} m/s</div>
               </div>
             </div>
           </div>

@@ -11,3 +11,39 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+/* Slider Styles for Cockpit Controls */
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #22d3ee;
+  cursor: pointer;
+  border: 2px solid #0891b2;
+  box-shadow: 0 0 8px rgba(34, 211, 238, 0.5);
+}
+
+.slider::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #22d3ee;
+  cursor: pointer;
+  border: 2px solid #0891b2;
+  box-shadow: 0 0 8px rgba(34, 211, 238, 0.5);
+}
+
+.slider::-webkit-slider-track {
+  height: 8px;
+  cursor: pointer;
+  background: #334155;
+  border-radius: 4px;
+}
+
+.slider::-moz-range-track {
+  height: 8px;
+  cursor: pointer;
+  background: #334155;
+  border-radius: 4px;
+}

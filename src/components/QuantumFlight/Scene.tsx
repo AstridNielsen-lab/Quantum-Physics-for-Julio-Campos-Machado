@@ -4,6 +4,7 @@ import { Stars, PerspectiveCamera } from '@react-three/drei';
 import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import Ship from './Ship';
+import CockpitView from './CockpitView';
 import { useGameStore } from '../../stores/gameStore';
 
 const CameraController = () => {

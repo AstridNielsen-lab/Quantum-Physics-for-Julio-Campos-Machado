@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { Gauge, Rocket, Radio, Shield, Thermometer, Navigation as NavIcon, Compass, Crosshair, Map, Eye, ZoomIn, ZoomOut, RotateCcw, Settings, Power, Wifi } from 'lucide-react';
 import { useGameStore } from '../../stores/gameStore';
+import GalaxyMap from './GalaxyMap';
 
 const Interface = () => {
   const { position, rotation, speed, setRotation, zoom, setZoom, viewMode, setViewMode } = useGameStore();
-  const [showRouteMap, setShowRouteMap] = useState(true);
-  const [startPoint, setStartPoint] = useState<{ x: number, y: number } | null>(null);
-  const [endPoint, setEndPoint] = useState<{ x: number, y: number } | null>(null);
+  const [showGalaxyMap, setShowGalaxyMap] = useState(false);
   const [showSystemStatus, setShowSystemStatus] = useState(true);
   const [showNavigation, setShowNavigation] = useState(true);
   const [showPropulsion, setShowPropulsion] = useState(true);
@@ -50,22 +49,6 @@ const Interface = () => {
     setViewMode(mode);
   };
 
-  const handleMapClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    if (!startPoint) {
-      setStartPoint({ x, y });
-    } else if (!endPoint) {
-      setEndPoint({ x, y });
-    }
-  };
-
-  const resetRoute = () => {
-    setStartPoint(null);
-    setEndPoint(null);
-  };
 
   return (
     <div className="fixed inset-0 pointer-events-none">
@@ -306,57 +289,24 @@ const Interface = () => {
         </div>
       </div>
 
-      {/* Route Map */}
-      <div className="absolute left-8 right-96 bottom-8 h-48 pointer-events-auto bg-slate-800/50 backdrop-blur-sm rounded-lg border border-slate-700/50 p-4">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-cyan-400 font-semibold flex items-center gap-2">
-            <Map className="w-5 h-5" />
-            Route Planner
-          </h3>
-          <button
-            onClick={resetRoute}
-            className="text-gray-400 hover:text-cyan-400 transition-colors"
-          >
-            <RotateCcw className="w-4 h-4" />
-          </button>
-        </div>
-        <div
-          className="w-full h-24 bg-slate-900/50 rounded-lg border border-slate-700/50 relative"
-          onClick={handleMapClick}
+      {/* Galaxy Map Button */}
+      <div className="absolute left-8 bottom-8 pointer-events-auto">
+        <button
+          onClick={() => setShowGalaxyMap(true)}
+          className="flex items-center gap-2 px-4 py-3 bg-slate-800/50 backdrop-blur-sm rounded-lg border border-slate-700/50 text-cyan-400 hover:bg-slate-700/70 transition-colors"
+          title="Abrir Mapa da Galáxia"
         >
-          {startPoint && (
-            <div
-              className="absolute w-3 h-3 bg-green-400 rounded-full -translate-x-1/2 -translate-y-1/2"
-              style={{ left: startPoint.x, top: startPoint.y }}
-            />
-          )}
-          {endPoint && (
-            <div
-              className="absolute w-3 h-3 bg-red-400 rounded-full -translate-x-1/2 -translate-y-1/2"
-              style={{ left: endPoint.x, top: endPoint.y }}
-            />
-          )}
-          {startPoint && endPoint && (
-            <svg
-              className="absolute inset-0 pointer-events-none"
-              style={{ zIndex: 1 }}
-            >
-              <line
-                x1={startPoint.x}
-                y1={startPoint.y}
-                x2={endPoint.x}
-                y2={endPoint.y}
-                stroke="#22d3ee"
-                strokeWidth="2"
-                strokeDasharray="4"
-              />
-            </svg>
-          )}
-        </div>
-        <div className="mt-2 text-sm text-gray-400">
-          Click to set start and end points for your quantum jump route
-        </div>
+          <Map className="w-5 h-5" />
+          <span>Mapa da Galáxia</span>
+        </button>
       </div>
+
+      {/* Galaxy Map Component */}
+      <GalaxyMap 
+        isVisible={showGalaxyMap}
+        onToggle={() => setShowGalaxyMap(!showGalaxyMap)}
+        onClose={() => setShowGalaxyMap(false)}
+      />
     </div>
   );
 };

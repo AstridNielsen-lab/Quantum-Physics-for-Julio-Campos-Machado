@@ -105,7 +105,7 @@ const VoltageImpedanceResonancePage = () => {
   const calculateImpedance = () => {
     const material = materials[selectedMaterial];
     const resonantFreq = calculateResonantFrequency();
-    const Q = 2 * Math.PI * frequency * inductance() / resistance();
+    const Q = 2 * Math.PI * frequency * calculateInductance() / resistance();
     
     // Impedância ajustada pela proximidade com a frequência ressonante
     const resonanceFactor = 1 + 10 * Math.exp(-Math.pow(frequency - resonantFreq, 2) / (2 * Math.pow(resonantFreq / 10, 2)));
@@ -636,7 +636,7 @@ const VoltageImpedanceResonancePage = () => {
     };
   }, [voltage, frequency, impedance, magneticField, selectedMaterial, resonanceMode]);
 
-  // Calculate inductance based on properties
+  // Calculate inductance based on properties (unified function)
   const calculateInductance = () => {
     const material = materials[selectedMaterial];
     return material.permeability * 4 * Math.PI * 1e-7 * 1000 * magneticField;
@@ -818,7 +818,7 @@ const VoltageImpedanceResonancePage = () => {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-400">Indutância:</span>
-                    <span className="text-violet-400 font-mono">{inductance().toExponential(3)} H</span>
+                    <span className="text-violet-400 font-mono">{calculateInductance().toExponential(3)} H</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-400">Resistência:</span>
