@@ -20,7 +20,7 @@ interface MaterialProperty {
 }
 
 const VoltageImpedanceResonancePage = () => {
-  const [voltage, setVoltage] = useState(120);
+  const [voltage, setVoltage] = useState(17000);
   const [frequency, setFrequency] = useState(60);
   const [impedance, setImpedance] = useState(50);
   const [magneticField, setMagneticField] = useState(1.5);
@@ -146,7 +146,7 @@ const VoltageImpedanceResonancePage = () => {
     }
 
     // Draw voltage waveform
-    const amplitude = voltage / 2;
+    const amplitude = Math.min(voltage / 50, height / 3); // Scale amplitude for high voltages
     const centerY = height / 2;
     
     // Draw waveform
@@ -184,7 +184,8 @@ const VoltageImpedanceResonancePage = () => {
     ctx.font = '14px monospace';
     ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'right';
-    ctx.fillText(`${voltage}V`, width - 10, 20);
+    const voltageText = voltage >= 1000 ? `${(voltage/1000).toFixed(1)}kV` : `${voltage}V`;
+    ctx.fillText(voltageText, width - 10, 20);
 
     // Draw frequency
     ctx.fillText(`${frequency}Hz`, width - 10, 40);
@@ -638,13 +639,13 @@ const VoltageImpedanceResonancePage = () => {
                     <input
                       type="range"
                       min="1"
-                      max="240"
+                      max="17000"
                       value={voltage}
                       onChange={(e) => setVoltage(Number(e.target.value))}
                       className="w-full h-2 bg-violet-900 rounded-lg appearance-none cursor-pointer"
                     />
                     <div className="text-right text-violet-400 mt-1">
-                      {voltage}V
+                      {voltage}V {voltage >= 1000 ? `(${(voltage/1000).toFixed(1)}kV)` : ''}
                     </div>
                   </div>
 
@@ -795,7 +796,13 @@ const VoltageImpedanceResonancePage = () => {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-400">Potência Dissipada:</span>
-                    <span className="text-violet-400 font-mono">{powerDissipation().toFixed(2)} W</span>
+                    <span className="text-violet-400 font-mono">
+                      {powerDissipation() >= 1000000 
+                        ? `${(powerDissipation()/1000000).toFixed(2)} MW` 
+                        : powerDissipation() >= 1000 
+                        ? `${(powerDissipation()/1000).toFixed(2)} kW` 
+                        : `${powerDissipation().toFixed(2)} W`}
+                    </span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-400">Campo Magnético:</span>
