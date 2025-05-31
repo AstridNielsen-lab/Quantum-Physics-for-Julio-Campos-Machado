@@ -17,6 +17,7 @@ import EnginePage from './pages/EnginePage';
 import MissionPage from './pages/MissionPage';
 import BlogPage from './pages/BlogPage';
 import VoltageMultiplierPage from './pages/VoltageMultiplierPage';
+import VoltageImpedanceResonancePage from './pages/VoltageImpedanceResonancePage';
 import HexagonalGridPage from './pages/HexagonalGridPage';
 import ThermalMeshPage from './pages/ThermalMeshPage';
 import QuantumPropulsionPage from './pages/QuantumPropulsionPage';
@@ -84,6 +85,13 @@ function App() {
                             >
                               <Zap className="w-5 h-5" />
                               Simulador de Tensão
+                            </a>
+                            <a
+                              href="/voltage-impedance-resonance"
+                              className="flex items-center justify-center gap-2 px-6 py-3 bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors text-white font-semibold w-full"
+                            >
+                              <Zap className="w-5 h-5" />
+                              Tensão, Impedância e Ressonância
                             </a>
                             <a
                               href="/quantum-propulsion"
@@ -310,6 +318,7 @@ function App() {
           <Route path="/mission" element={<MissionPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/voltage-multiplier" element={<VoltageMultiplierPage />} />
+          <Route path="/voltage-impedance-resonance" element={<VoltageImpedanceResonancePage />} />
           <Route path="/hexagonal-grid" element={<HexagonalGridPage />} />
           <Route path="/thermal-mesh" element={<ThermalMeshPage />} />
           <Route path="/quantum-propulsion" element={<QuantumPropulsionPage />} />

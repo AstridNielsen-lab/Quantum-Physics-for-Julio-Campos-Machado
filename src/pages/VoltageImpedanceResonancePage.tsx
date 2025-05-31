@@ -1,0 +1,969 @@
+import React, { useRef, useEffect, useState } from 'react';
+import { ArrowLeft, Zap, Radio, Compass, Settings, RefreshCw, Atom, Layers, Magnet, Waves, AlertTriangle, Calculator } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import Navigation from '../components/Navigation';
+
+interface FrequencyBand {
+  name: string;
+  min: number;
+  max: number;
+  color: string;
+  description: string;
+}
+
+interface MaterialProperty {
+  name: string;
+  resistivity: number;
+  permeability: number;
+  permittivity: number;
+  color: string;
+}
+
+const VoltageImpedanceResonancePage = () => {
+  const [voltage, setVoltage] = useState(120);
+  const [frequency, setFrequency] = useState(60);
+  const [impedance, setImpedance] = useState(50);
+  const [magneticField, setMagneticField] = useState(1.5);
+  const [selectedMaterial, setSelectedMaterial] = useState<string>("copper");
+  const [resonanceMode, setResonanceMode] = useState<number>(1);
+  const [angle, setAngle] = useState(0);
+  
+  const voltageCanvasRef = useRef<HTMLCanvasElement>(null);
+  const impedanceCanvasRef = useRef<HTMLCanvasElement>(null);
+  const resonanceCanvasRef = useRef<HTMLCanvasElement>(null);
+  const fieldCanvasRef = useRef<HTMLCanvasElement>(null);
+
+  const voltageAnimationRef = useRef<number>();
+  const impedanceAnimationRef = useRef<number>();
+  const resonanceAnimationRef = useRef<number>();
+  const fieldAnimationRef = useRef<number>();
+
+  const frequencyBands: FrequencyBand[] = [
+    { name: "ELF", min: 3, max: 30, color: "#ec4899", description: "Extremely Low Frequency" },
+    { name: "SLF", min: 30, max: 300, color: "#a855f7", description: "Super Low Frequency" },
+    { name: "ULF", min: 300, max: 3000, color: "#8b5cf6", description: "Ultra Low Frequency" },
+    { name: "VLF", min: 3, max: 30, color: "#6366f1", description: "Very Low Frequency", },
+    { name: "LF", min: 30, max: 300, color: "#3b82f6", description: "Low Frequency" },
+    { name: "MF", min: 300, max: 3000, color: "#22d3ee", description: "Medium Frequency" },
+  ];
+
+  const materials: Record<string, MaterialProperty> = {
+    copper: { name: "Cobre", resistivity: 1.68e-8, permeability: 0.999994, permittivity: 1, color: "#d97706" },
+    aluminum: { name: "Alumínio", resistivity: 2.65e-8, permeability: 1.000022, permittivity: 1.6, color: "#94a3b8" },
+    iron: { name: "Ferro", resistivity: 9.71e-8, permeability: 5000, permittivity: 1, color: "#6b7280" },
+    gold: { name: "Ouro", resistivity: 2.44e-8, permeability: 0.999964, permittivity: 1, color: "#eab308" },
+    silver: { name: "Prata", resistivity: 1.59e-8, permeability: 0.9999736, permittivity: 1, color: "#cbd5e1" },
+    superconductor: { name: "Supercondutor", resistivity: 1e-25, permeability: 0, permittivity: 1, color: "#22d3ee" },
+  };
+
+  // Calculate resonant frequency
+  const calculateResonantFrequency = () => {
+    const L = calculateInductance();
+    const C = 1e-6; // Capacitância fixa de 1 microfarad
+    return 1 / (2 * Math.PI * Math.sqrt(L * C));
+  };
+
+  // Calculate impedance
+  const calculateImpedance = () => {
+    const material = materials[selectedMaterial];
+    const resonantFreq = calculateResonantFrequency();
+    const Q = 2 * Math.PI * frequency * inductance() / resistance();
+    
+    // Impedância ajustada pela proximidade com a frequência ressonante
+    const resonanceFactor = 1 + 10 * Math.exp(-Math.pow(frequency - resonantFreq, 2) / (2 * Math.pow(resonantFreq / 10, 2)));
+    
+    return impedance * resonanceFactor;
+  };
+
+  // Calculate inductance based on material and magnetic field
+  const inductance = () => {
+    const material = materials[selectedMaterial];
+    return material.permeability * 4 * Math.PI * 1e-7 * 1000 * magneticField;
+  };
+
+  // Calculate resistance based on material properties
+  const resistance = () => {
+    const material = materials[selectedMaterial];
+    return material.resistivity * 100; // Normalizado para exibição
+  };
+
+  // Calculate skin depth
+  const skinDepth = () => {
+    const material = materials[selectedMaterial];
+    return Math.sqrt(material.resistivity / (Math.PI * frequency * 4 * Math.PI * 1e-7 * material.permeability));
+  };
+
+  // Calculate power dissipation
+  const powerDissipation = () => {
+    return Math.pow(voltage, 2) / calculateImpedance();
+  };
+
+  // Calculate magnetic field strength
+  const calculateMagneticFieldStrength = () => {
+    const current = voltage / calculateImpedance();
+    return 2e-7 * current; // B = μ₀I/2πr, simplificado para r=1m
+  };
+
+  // Calculate wavelength
+  const calculateWavelength = () => {
+    const c = 299792458; // Velocidade da luz em m/s
+    const material = materials[selectedMaterial];
+    const v = c / Math.sqrt(material.permittivity * material.permeability);
+    return v / frequency;
+  };
+
+  // Draw voltage waveform visualization
+  const drawVoltageWaveform = () => {
+    const canvas = voltageCanvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const width = canvas.width;
+    const height = canvas.height;
+    const time = Date.now() / 1000;
+
+    // Clear canvas
+    ctx.fillStyle = '#1a1a2e';
+    ctx.fillRect(0, 0, width, height);
+
+    // Draw grid
+    ctx.strokeStyle = '#ffffff10';
+    ctx.lineWidth = 1;
+    const gridSize = 20;
+    for (let x = 0; x < width; x += gridSize) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, height);
+      ctx.stroke();
+    }
+    for (let y = 0; y < height; y += gridSize) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(width, y);
+      ctx.stroke();
+    }
+
+    // Draw voltage waveform
+    const amplitude = voltage / 2;
+    const centerY = height / 2;
+    
+    // Draw waveform
+    ctx.beginPath();
+    for (let x = 0; x < width; x++) {
+      const t = (x / width) * Math.PI * 4 + time * frequency / 10;
+      const y = centerY - amplitude * Math.sin(t);
+      if (x === 0) {
+        ctx.moveTo(x, y);
+      } else {
+        ctx.lineTo(x, y);
+      }
+    }
+    ctx.strokeStyle = '#ec4899';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Draw glow effect
+    ctx.save();
+    ctx.filter = 'blur(4px)';
+    ctx.globalAlpha = 0.3;
+    ctx.strokeStyle = '#ec4899';
+    ctx.stroke();
+    ctx.restore();
+
+    // Draw center line
+    ctx.beginPath();
+    ctx.moveTo(0, centerY);
+    ctx.lineTo(width, centerY);
+    ctx.strokeStyle = '#ffffff20';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Draw voltage value
+    ctx.font = '14px monospace';
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'right';
+    ctx.fillText(`${voltage}V`, width - 10, 20);
+
+    // Draw frequency
+    ctx.fillText(`${frequency}Hz`, width - 10, 40);
+
+    // Draw current time marker
+    const markerX = (Math.sin(time) + 1) * width / 2;
+    ctx.beginPath();
+    ctx.moveTo(markerX, 0);
+    ctx.lineTo(markerX, height);
+    ctx.strokeStyle = '#ffffff30';
+    ctx.stroke();
+
+    voltageAnimationRef.current = requestAnimationFrame(drawVoltageWaveform);
+  };
+
+  // Draw impedance visualization
+  const drawImpedanceVisualization = () => {
+    const canvas = impedanceCanvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const width = canvas.width;
+    const height = canvas.height;
+    const time = Date.now() / 1000;
+    const material = materials[selectedMaterial];
+
+    // Clear canvas
+    ctx.fillStyle = '#1a1a2e';
+    ctx.fillRect(0, 0, width, height);
+
+    // Draw grid
+    ctx.strokeStyle = '#ffffff10';
+    ctx.lineWidth = 1;
+    const gridSize = 20;
+    for (let x = 0; x < width; x += gridSize) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, height);
+      ctx.stroke();
+    }
+    for (let y = 0; y < height; y += gridSize) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(width, y);
+      ctx.stroke();
+    }
+
+    const centerX = width / 2;
+    const centerY = height / 2;
+    
+    // Draw impedance vector
+    const impedanceValue = calculateImpedance();
+    const angle = time * 0.5;
+    const vectorLength = Math.min(impedanceValue, 200);
+    
+    // Draw resistance component (real)
+    const resistanceX = centerX + Math.cos(0) * resistance();
+    const resistanceY = centerY;
+    
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(resistanceX, resistanceY);
+    ctx.strokeStyle = '#22d3ee';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    
+    // Draw reactance component (imaginary)
+    const reactanceX = resistanceX;
+    const reactanceY = centerY - Math.sqrt(Math.pow(vectorLength, 2) - Math.pow(resistance(), 2));
+    
+    ctx.beginPath();
+    ctx.moveTo(resistanceX, resistanceY);
+    ctx.lineTo(reactanceX, reactanceY);
+    ctx.strokeStyle = '#a855f7';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    
+    // Draw total impedance vector
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(reactanceX, reactanceY);
+    ctx.strokeStyle = '#eab308';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    
+    // Draw component labels
+    ctx.font = '12px monospace';
+    ctx.fillStyle = '#22d3ee';
+    ctx.textAlign = 'center';
+    ctx.fillText(`R = ${resistance().toFixed(2)}Ω`, (centerX + resistanceX) / 2, resistanceY - 10);
+    
+    ctx.fillStyle = '#a855f7';
+    ctx.fillText(`X = ${Math.sqrt(Math.pow(vectorLength, 2) - Math.pow(resistance(), 2)).toFixed(2)}Ω`, reactanceX + 10, (centerY + reactanceY) / 2);
+    
+    ctx.fillStyle = '#eab308';
+    ctx.fillText(`Z = ${impedanceValue.toFixed(2)}Ω`, (centerX + reactanceX) / 2 - 10, (centerY + reactanceY) / 2 + 20);
+    
+    // Draw material indicator
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 20, 0, Math.PI * 2);
+    ctx.fillStyle = material.color;
+    ctx.fill();
+    
+    ctx.font = '10px monospace';
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.fillText(material.name.substring(0, 2), centerX, centerY + 4);
+
+    impedanceAnimationRef.current = requestAnimationFrame(drawImpedanceVisualization);
+  };
+
+  // Draw resonance visualization
+  const drawResonanceVisualization = () => {
+    const canvas = resonanceCanvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const width = canvas.width;
+    const height = canvas.height;
+    const time = Date.now() / 1000;
+
+    // Clear canvas
+    ctx.fillStyle = '#1a1a2e';
+    ctx.fillRect(0, 0, width, height);
+
+    // Draw grid
+    ctx.strokeStyle = '#ffffff10';
+    ctx.lineWidth = 1;
+    const gridSize = 20;
+    for (let x = 0; x < width; x += gridSize) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, height);
+      ctx.stroke();
+    }
+    for (let y = 0; y < height; y += gridSize) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(width, y);
+      ctx.stroke();
+    }
+
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const radius = 100;
+    
+    // Calculate resonant frequency
+    const resonantFreq = calculateResonantFrequency();
+    
+    // Calculate how close current frequency is to resonance
+    const resonanceRatio = Math.exp(-Math.pow(frequency - resonantFreq, 2) / (2 * Math.pow(resonantFreq / 5, 2)));
+    
+    // Draw resonance circle
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+    ctx.strokeStyle = '#ffffff20';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    
+    // Draw standing wave based on resonance mode
+    const wavePoints = 100;
+    ctx.beginPath();
+    
+    for (let i = 0; i < wavePoints; i++) {
+      const angle = (i / wavePoints) * Math.PI * 2;
+      const r = radius * (1 + 0.2 * resonanceRatio * Math.sin(resonanceMode * angle + time * 2));
+      const x = centerX + r * Math.cos(angle);
+      const y = centerY + r * Math.sin(angle);
+      
+      if (i === 0) {
+        ctx.moveTo(x, y);
+      } else {
+        ctx.lineTo(x, y);
+      }
+    }
+    
+    ctx.closePath();
+    const gradient = ctx.createLinearGradient(centerX - radius, centerY, centerX + radius, centerY);
+    gradient.addColorStop(0, '#22d3ee');
+    gradient.addColorStop(0.5, '#a855f7');
+    gradient.addColorStop(1, '#ec4899');
+    
+    ctx.strokeStyle = gradient;
+    ctx.lineWidth = 2 + 3 * resonanceRatio;
+    ctx.stroke();
+    
+    // Draw resonance particles
+    const particleCount = 20;
+    for (let i = 0; i < particleCount; i++) {
+      const particleAngle = (i / particleCount) * Math.PI * 2 + time * resonanceRatio * 2;
+      const r = radius * (1 + 0.3 * resonanceRatio * Math.sin(resonanceMode * particleAngle));
+      const x = centerX + r * Math.cos(particleAngle);
+      const y = centerY + r * Math.sin(particleAngle);
+      
+      ctx.beginPath();
+      ctx.arc(x, y, 3 * resonanceRatio, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(236, 72, 153, ${resonanceRatio})`;
+      ctx.fill();
+      
+      ctx.save();
+      ctx.filter = 'blur(4px)';
+      ctx.globalAlpha = 0.3 * resonanceRatio;
+      ctx.beginPath();
+      ctx.arc(x, y, 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#ec4899';
+      ctx.fill();
+      ctx.restore();
+    }
+    
+    // Draw resonance info
+    ctx.font = '14px monospace';
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.fillText(`Frequência Ressonante: ${resonantFreq.toFixed(2)}Hz`, centerX, 30);
+    ctx.fillText(`Modo: ${resonanceMode}`, centerX, 50);
+    
+    // Draw resonance level indicator
+    ctx.fillStyle = `rgba(236, 72, 153, ${resonanceRatio})`;
+    ctx.fillRect(centerX - 50, height - 30, 100 * resonanceRatio, 10);
+    ctx.strokeStyle = '#ffffff20';
+    ctx.strokeRect(centerX - 50, height - 30, 100, 10);
+
+    resonanceAnimationRef.current = requestAnimationFrame(drawResonanceVisualization);
+  };
+
+  // Draw magnetic field visualization
+  const drawMagneticFieldVisualization = () => {
+    const canvas = fieldCanvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const width = canvas.width;
+    const height = canvas.height;
+    const time = Date.now() / 1000;
+    setAngle(angle + 0.01);
+
+    // Clear canvas
+    ctx.fillStyle = '#1a1a2e';
+    ctx.fillRect(0, 0, width, height);
+
+    // Draw grid
+    ctx.strokeStyle = '#ffffff10';
+    ctx.lineWidth = 1;
+    const gridSize = 20;
+    for (let x = 0; x < width; x += gridSize) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, height);
+      ctx.stroke();
+    }
+    for (let y = 0; y < height; y += gridSize) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(width, y);
+      ctx.stroke();
+    }
+
+    const centerX = width / 2;
+    const centerY = height / 2;
+    
+    // Draw magnetic field lines
+    const fieldStrength = magneticField;
+    const lineCount = 16;
+    const maxRadius = Math.min(width, height) * 0.4;
+    
+    for (let i = 0; i < lineCount; i++) {
+      const lineAngle = (i / lineCount) * Math.PI * 2 + angle;
+      
+      ctx.beginPath();
+      
+      // Field lines shape depends on the selected material's permeability
+      const material = materials[selectedMaterial];
+      const permeabilityFactor = Math.min(10, material.permeability) / 10;
+      
+      if (material.permeability < 1) {
+        // Diamagnetic materials - field lines are pushed outward
+        for (let t = 0; t < Math.PI * 2; t += 0.1) {
+          const distortionFactor = 1 + 0.3 * (1 - permeabilityFactor) * Math.sin(t * 6);
+          const r = maxRadius * distortionFactor;
+          const x = centerX + r * Math.cos(t + lineAngle);
+          const y = centerY + r * Math.sin(t + lineAngle);
+          
+          if (t === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
+        }
+      } else if (material.permeability > 1) {
+        // Paramagnetic/ferromagnetic materials - field lines are pulled inward
+        for (let t = 0; t < Math.PI * 2; t += 0.1) {
+          const distortionFactor = 1 - 0.5 * permeabilityFactor * Math.sin(t * 3);
+          const r = maxRadius * distortionFactor;
+          const x = centerX + r * Math.cos(t + lineAngle);
+          const y = centerY + r * Math.sin(t + lineAngle);
+          
+          if (t === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
+        }
+      } else {
+        // Non-magnetic materials - regular field lines
+        ctx.arc(centerX, centerY, maxRadius, 0, Math.PI * 2);
+      }
+      
+      ctx.strokeStyle = `rgba(168, 85, 247, ${0.3 + 0.2 * Math.sin(lineAngle + time)})`;
+      ctx.lineWidth = 1 + fieldStrength * 0.5;
+      ctx.stroke();
+    }
+    
+    // Draw material in center
+    const materialRadius = 30 + 10 * Math.sin(time);
+    
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, materialRadius, 0, Math.PI * 2);
+    ctx.fillStyle = materials[selectedMaterial].color + '80';
+    ctx.fill();
+    ctx.strokeStyle = materials[selectedMaterial].color;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    
+    // Draw material name
+    ctx.font = '14px monospace';
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.fillText(materials[selectedMaterial].name, centerX, centerY + 5);
+    
+    // Draw field strength indicator
+    const fieldGradient = ctx.createRadialGradient(
+      centerX, centerY, 0,
+      centerX, centerY, maxRadius * 1.5
+    );
+    fieldGradient.addColorStop(0, `rgba(168, 85, 247, ${0.1 * fieldStrength})`);
+    fieldGradient.addColorStop(1, 'rgba(168, 85, 247, 0)');
+    
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, maxRadius * 1.5, 0, Math.PI * 2);
+    ctx.fillStyle = fieldGradient;
+    ctx.fill();
+    
+    // Draw field lines around the material
+    const arrowCount = 12;
+    for (let i = 0; i < arrowCount; i++) {
+      const arrowAngle = (i / arrowCount) * Math.PI * 2 + time * 0.5;
+      const r1 = materialRadius + 10;
+      const r2 = materialRadius + 30;
+      
+      const x1 = centerX + r1 * Math.cos(arrowAngle);
+      const y1 = centerY + r1 * Math.sin(arrowAngle);
+      const x2 = centerX + r2 * Math.cos(arrowAngle);
+      const y2 = centerY + r2 * Math.sin(arrowAngle);
+      
+      // Draw field line
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.strokeStyle = '#a855f7';
+      ctx.lineWidth = 1 + fieldStrength * 0.3;
+      ctx.stroke();
+      
+      // Draw arrow head
+      const headLength = 10;
+      const angle = Math.atan2(y2 - y1, x2 - x1);
+      
+      ctx.beginPath();
+      ctx.moveTo(x2, y2);
+      ctx.lineTo(
+        x2 - headLength * Math.cos(angle - Math.PI / 6),
+        y2 - headLength * Math.sin(angle - Math.PI / 6)
+      );
+      ctx.lineTo(
+        x2 - headLength * Math.cos(angle + Math.PI / 6),
+        y2 - headLength * Math.sin(angle + Math.PI / 6)
+      );
+      ctx.closePath();
+      ctx.fillStyle = '#a855f7';
+      ctx.fill();
+    }
+
+    fieldAnimationRef.current = requestAnimationFrame(drawMagneticFieldVisualization);
+  };
+
+  useEffect(() => {
+    drawVoltageWaveform();
+    drawImpedanceVisualization();
+    drawResonanceVisualization();
+    drawMagneticFieldVisualization();
+    
+    return () => {
+      if (voltageAnimationRef.current) {
+        cancelAnimationFrame(voltageAnimationRef.current);
+      }
+      if (impedanceAnimationRef.current) {
+        cancelAnimationFrame(impedanceAnimationRef.current);
+      }
+      if (resonanceAnimationRef.current) {
+        cancelAnimationFrame(resonanceAnimationRef.current);
+      }
+      if (fieldAnimationRef.current) {
+        cancelAnimationFrame(fieldAnimationRef.current);
+      }
+    };
+  }, [voltage, frequency, impedance, magneticField, selectedMaterial, resonanceMode]);
+
+  // Calculate inductance based on properties
+  const calculateInductance = () => {
+    const material = materials[selectedMaterial];
+    return material.permeability * 4 * Math.PI * 1e-7 * 1000 * magneticField;
+  };
+
+  return (
+    <div className="min-h-screen bg-[#020617] text-white">
+      <Navigation />
+      
+      <main className="py-20 px-4 md:px-8">
+        <div className="max-w-6xl mx-auto">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-violet-400 hover:text-violet-300 mb-8"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            Voltar
+          </Link>
+
+          <h1 className="text-4xl md:text-5xl font-bold mb-12 flex items-center gap-3">
+            <Zap className="text-violet-400" />
+            Tensão, Impedância e Ressonância Magnética
+          </h1>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="space-y-6">
+              <div className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-6 rounded-xl border border-violet-500/20">
+                <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                  <Settings className="text-violet-400" />
+                  Configurações
+                </h2>
+                
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Tensão (V)
+                    </label>
+                    <input
+                      type="range"
+                      min="1"
+                      max="240"
+                      value={voltage}
+                      onChange={(e) => setVoltage(Number(e.target.value))}
+                      className="w-full h-2 bg-violet-900 rounded-lg appearance-none cursor-pointer"
+                    />
+                    <div className="text-right text-violet-400 mt-1">
+                      {voltage}V
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Frequência (Hz)
+                    </label>
+                    <input
+                      type="range"
+                      min="1"
+                      max="1000"
+                      value={frequency}
+                      onChange={(e) => setFrequency(Number(e.target.value))}
+                      className="w-full h-2 bg-violet-900 rounded-lg appearance-none cursor-pointer"
+                    />
+                    <div className="text-right text-violet-400 mt-1">
+                      {frequency}Hz
+                      {frequencyBands.find(band => frequency >= band.min && frequency < band.max) && (
+                        <span className="ml-2 text-sm">
+                          ({frequencyBands.find(band => frequency >= band.min && frequency < band.max)?.name})
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Impedância Base (Ω)
+                    </label>
+                    <input
+                      type="range"
+                      min="1"
+                      max="200"
+                      step="1"
+                      value={impedance}
+                      onChange={(e) => setImpedance(Number(e.target.value))}
+                      className="w-full h-2 bg-violet-900 rounded-lg appearance-none cursor-pointer"
+                    />
+                    <div className="text-right text-violet-400 mt-1">
+                      {impedance}Ω
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Campo Magnético (T)
+                    </label>
+                    <input
+                      type="range"
+                      min="0.1"
+                      max="5"
+                      step="0.1"
+                      value={magneticField}
+                      onChange={(e) => setMagneticField(Number(e.target.value))}
+                      className="w-full h-2 bg-violet-900 rounded-lg appearance-none cursor-pointer"
+                    />
+                    <div className="text-right text-violet-400 mt-1">
+                      {magneticField}T
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Modo de Ressonância
+                    </label>
+                    <input
+                      type="range"
+                      min="1"
+                      max="6"
+                      step="1"
+                      value={resonanceMode}
+                      onChange={(e) => setResonanceMode(Number(e.target.value))}
+                      className="w-full h-2 bg-violet-900 rounded-lg appearance-none cursor-pointer"
+                    />
+                    <div className="text-right text-violet-400 mt-1">
+                      Modo {resonanceMode}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-6 rounded-xl border border-violet-500/20">
+                <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                  <Layers className="text-violet-400" />
+                  Material
+                </h2>
+                <div className="grid grid-cols-3 gap-3 mb-4">
+                  {Object.entries(materials).map(([key, material]) => (
+                    <button
+                      key={key}
+                      onClick={() => setSelectedMaterial(key)}
+                      className={`p-3 rounded-lg flex flex-col items-center justify-center transition-all ${
+                        selectedMaterial === key 
+                          ? 'bg-violet-600' 
+                          : 'bg-violet-900/20 hover:bg-violet-900/40'
+                      }`}
+                    >
+                      <div 
+                        className="w-6 h-6 rounded-full mb-2" 
+                        style={{ backgroundColor: material.color }}
+                      ></div>
+                      <span className="text-sm">{material.name}</span>
+                    </button>
+                  ))}
+                </div>
+                
+                <div className="space-y-2 mt-6">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Resistividade:</span>
+                    <span className="text-violet-400 font-mono">{materials[selectedMaterial].resistivity.toExponential(2)} Ω·m</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Permeabilidade:</span>
+                    <span className="text-violet-400 font-mono">{materials[selectedMaterial].permeability}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Permissividade:</span>
+                    <span className="text-violet-400 font-mono">{materials[selectedMaterial].permittivity}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-6 rounded-xl border border-violet-500/20">
+                <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                  <Calculator className="text-violet-400" />
+                  Dados Calculados
+                </h2>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Impedância Total:</span>
+                    <span className="text-violet-400 font-mono">{calculateImpedance().toFixed(2)} Ω</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Indutância:</span>
+                    <span className="text-violet-400 font-mono">{inductance().toExponential(3)} H</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Resistência:</span>
+                    <span className="text-violet-400 font-mono">{resistance().toFixed(2)} Ω</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Freq. Ressonante:</span>
+                    <span className="text-violet-400 font-mono">{calculateResonantFrequency().toFixed(2)} Hz</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Profundidade de Penetração:</span>
+                    <span className="text-violet-400 font-mono">{skinDepth().toExponential(3)} m</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Potência Dissipada:</span>
+                    <span className="text-violet-400 font-mono">{powerDissipation().toFixed(2)} W</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Campo Magnético:</span>
+                    <span className="text-violet-400 font-mono">{calculateMagneticFieldStrength().toExponential(3)} T</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Comprimento de Onda:</span>
+                    <span className="text-violet-400 font-mono">{calculateWavelength().toExponential(3)} m</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-6 rounded-xl border border-violet-500/20">
+                <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                  <Waves className="text-violet-400" />
+                  Bandas de Frequência
+                </h2>
+                <div className="space-y-3">
+                  {frequencyBands.map(band => (
+                    <div key={band.name} className="flex items-center">
+                      <div 
+                        className="w-4 h-4 rounded-full mr-3 flex-shrink-0" 
+                        style={{ backgroundColor: band.color }}
+                      ></div>
+                      <div className="flex-grow">
+                        <div className="flex justify-between text-sm">
+                          <span className="font-medium">{band.name}</span>
+                          <span className="text-gray-400">{band.min}-{band.max} Hz</span>
+                        </div>
+                        <div className="text-xs text-gray-400">{band.description}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-6 rounded-xl border border-violet-500/20">
+                <h2 className="text-xl font-semibold mb-6">Forma de Onda da Tensão</h2>
+                <canvas
+                  ref={voltageCanvasRef}
+                  width={600}
+                  height={300}
+                  className="w-full bg-[#1a1a2e] rounded-lg"
+                />
+                <div className="mt-4 text-sm text-gray-400">
+                  <p>• Visualização em tempo real da forma de onda de tensão</p>
+                  <p>• Frequência e amplitude ajustáveis pelos controles</p>
+                  <p>• As linhas verticais representam marcadores de tempo</p>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-6 rounded-xl border border-violet-500/20">
+                <h2 className="text-xl font-semibold mb-6">Diagrama de Impedância</h2>
+                <canvas
+                  ref={impedanceCanvasRef}
+                  width={600}
+                  height={400}
+                  className="w-full bg-[#1a1a2e] rounded-lg"
+                />
+                <div className="mt-4 text-sm text-gray-400">
+                  <p>• O diagrama vetorial mostra os componentes de impedância</p>
+                  <p>• Azul: componente resistivo (R)</p>
+                  <p>• Roxo: componente reativo (X)</p>
+                  <p>• Amarelo: impedância total (Z)</p>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-6 rounded-xl border border-violet-500/20">
+                <h2 className="text-xl font-semibold mb-6">Visualização de Ressonância</h2>
+                <canvas
+                  ref={resonanceCanvasRef}
+                  width={600}
+                  height={400}
+                  className="w-full bg-[#1a1a2e] rounded-lg"
+                />
+                <div className="mt-4 text-sm text-gray-400">
+                  <p>• Visualização das ondas estacionárias no sistema</p>
+                  <p>• O modo de ressonância determina o padrão das ondas</p>
+                  <p>• A intensidade da ressonância depende da proximidade com a frequência ressonante</p>
+                  <p>• Barra inferior: nível de ressonância atual</p>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-6 rounded-xl border border-violet-500/20">
+                <h2 className="text-xl font-semibold mb-6">Campo Magnético</h2>
+                <canvas
+                  ref={fieldCanvasRef}
+                  width={600}
+                  height={400}
+                  className="w-full bg-[#1a1a2e] rounded-lg"
+                />
+                <div className="mt-4 text-sm text-gray-400">
+                  <p>• Visualização do campo magnético ao redor do material selecionado</p>
+                  <p>• As linhas de campo são influenciadas pelas propriedades magnéticas do material</p>
+                  <p>• Materiais diamagnéticos (µr &lt; 1) empurram as linhas de campo para fora</p>
+                  <p>• Materiais paramagnéticos/ferromagnéticos (µr &gt; 1) atraem as linhas de campo</p>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-6 rounded-xl border border-violet-500/20">
+                <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                  <Magnet className="text-violet-400" />
+                  Aplicações Práticas
+                </h2>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-violet-900/20 p-4 rounded-lg">
+                    <h3 className="font-semibold text-violet-400 mb-2">Ressonância Magnética</h3>
+                    <p className="text-sm text-gray-300">
+                      Diagnóstico médico por imagem utilizando campos magnéticos ressonantes
+                    </p>
+                  </div>
+                  <div className="bg-violet-900/20 p-4 rounded-lg">
+                    <h3 className="font-semibold text-violet-400 mb-2">Transformadores</h3>
+                    <p className="text-sm text-gray-300">
+                      Transferência de energia e conversão de tensão em sistemas elétricos
+                    </p>
+                  </div>
+                  <div className="bg-violet-900/20 p-4 rounded-lg">
+                    <h3 className="font-semibold text-violet-400 mb-2">Filtros LC</h3>
+                    <p className="text-sm text-gray-300">
+                      Circuitos de filtro para sistemas de comunicação e processamento de sinais
+                    </p>
+                  </div>
+                  <div className="bg-violet-900/20 p-4 rounded-lg">
+                    <h3 className="font-semibold text-violet-400 mb-2">Sensores</h3>
+                    <p className="text-sm text-gray-300">
+                      Detecção de anomalias e medição de propriedades físicas em materiais
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-6 rounded-xl border border-violet-500/20">
+                <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                  <AlertTriangle className="text-violet-400" />
+                  Notas Importantes
+                </h2>
+                <div className="space-y-4 text-gray-300">
+                  <p>
+                    Este simulador demonstra os princípios fundamentais da interação entre
+                    tensão, impedância e ressonância magnética em diferentes materiais.
+                  </p>
+                  <div className="grid grid-cols-2 gap-4 mt-4">
+                    <div className="bg-violet-900/20 p-4 rounded-lg">
+                      <h3 className="font-semibold text-violet-400 mb-2">Lei de Ohm</h3>
+                      <p className="text-sm font-mono">V = I × Z</p>
+                    </div>
+                    <div className="bg-violet-900/20 p-4 rounded-lg">
+                      <h3 className="font-semibold text-violet-400 mb-2">Frequência Ressonante</h3>
+                      <p className="text-sm font-mono">f = 1/(2π√LC)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer className="bg-violet-950/30 py-8 px-4 md:px-8">
+        <div className="max-w-6xl mx-auto text-center text-gray-400">
+          <p>© 2024 Julio Campos Machado - Todos os direitos reservados</p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default VoltageImpedanceResonancePage;

@@ -14,6 +14,7 @@ const Navigation = () => {
     { href: '/thermal-mesh', label: 'Térmica' },
     { href: '/hexagonal-grid', label: 'Malha' },
     { href: '/thermodynamics', label: 'Termodinâmica' },
+    { href: '/voltage-impedance-resonance', label: 'Impedância' },
     { href: '#contact', label: 'Contato' },
   ];
 
