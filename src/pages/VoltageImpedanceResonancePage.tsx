@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { ArrowLeft, Zap, Radio, Compass, Settings, RefreshCw, Atom, Layers, Magnet, Waves, AlertTriangle, Calculator, Orbit, Target, Zap as Electric, Lightbulb, Beaker, Cpu } from 'lucide-react';
+import { ArrowLeft, Zap, Radio, Compass, Settings, RefreshCw, Atom, Layers, Magnet, Waves, AlertTriangle, Calculator, Orbit, Target, Zap as Electric, Lightbulb, Beaker, Cpu, Rocket, Gem, Navigation as NavigationIcon, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 
@@ -1639,6 +1639,733 @@ const VoltageImpedanceResonancePage = () => {
                     <div>
                       <span className="text-gray-400 font-medium">Controle de Produtos:</span>
                       <p className="text-gray-300 mt-1">Captura seletiva e purificação dos elementos criados para aplicações práticas.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Nova Seção: Cristais Quânticos para Propulsão Espacial */}
+            <div className="mt-12">
+              <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
+                <Gem className="text-cyan-400" />
+                Cristais Quânticos: Propulsão Espacial com Laser 17kV
+              </h2>
+              
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
+                {/* Configuração do Sistema Laser */}
+                <div className="bg-gradient-to-br from-cyan-900/20 to-blue-900/20 p-6 rounded-xl border border-cyan-500/20">
+                  <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <Zap className="text-cyan-400" />
+                    Sistema Laser Quântico 17kV
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-cyan-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-cyan-400 mb-2">Especificações do Laser</h4>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Tensão de Operação:</span>
+                          <span className="text-cyan-400 font-mono">17.000V</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Potência de Saída:</span>
+                          <span className="text-cyan-400 font-mono">850 MW</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Frequência:</span>
+                          <span className="text-cyan-400 font-mono">3.29×10¹⁵ Hz</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Comprimento de Onda:</span>
+                          <span className="text-cyan-400 font-mono">91.2 nm (UV-C)</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Densidade de Energia:</span>
+                          <span className="text-cyan-400 font-mono">2.87×10¹² J/m³</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-cyan-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-cyan-400 mb-2">Manipulação Eletrônica</h4>
+                      <div className="space-y-3">
+                        <div>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span className="text-gray-400">Campo E Induzido (V/m)</span>
+                            <span className="text-cyan-400">4.12×10¹¹</span>
+                          </div>
+                          <div className="w-full bg-cyan-900/20 rounded-full h-2">
+                            <div className="bg-gradient-to-r from-cyan-400 to-blue-400 h-2 rounded-full animate-pulse" style={{width: '82%'}}></div>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span className="text-gray-400">Força de Lorentz (N)</span>
+                            <span className="text-cyan-400">6.59×10⁻⁷</span>
+                          </div>
+                          <div className="w-full bg-cyan-900/20 rounded-full h-2">
+                            <div className="bg-gradient-to-r from-blue-400 to-purple-400 h-2 rounded-full animate-pulse" style={{width: '78%'}}></div>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span className="text-gray-400">Deslocamento Quântico (pm)</span>
+                            <span className="text-cyan-400">147.3</span>
+                          </div>
+                          <div className="w-full bg-cyan-900/20 rounded-full h-2">
+                            <div className="bg-gradient-to-r from-purple-400 to-pink-400 h-2 rounded-full animate-pulse" style={{width: '91%'}}></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-cyan-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-cyan-400 mb-2">Controle de Elementos</h4>
+                      <div className="grid grid-cols-3 gap-2 text-xs">
+                        <div className="bg-blue-900/40 p-2 rounded text-center">
+                          <span className="text-blue-400 font-semibold block">Boro (B)</span>
+                          <span className="text-gray-400">Z=5 - Ativo</span>
+                        </div>
+                        <div className="bg-purple-900/40 p-2 rounded text-center">
+                          <span className="text-purple-400 font-semibold block">Nitrogênio (N)</span>
+                          <span className="text-gray-400">Z=7 - Ativo</span>
+                        </div>
+                        <div className="bg-green-900/40 p-2 rounded text-center">
+                          <span className="text-green-400 font-semibold block">Flúor (F)</span>
+                          <span className="text-gray-400">Z=9 - Ativo</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Cristais Quânticos e Repulsão */}
+                <div className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 p-6 rounded-xl border border-purple-500/20">
+                  <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <Sparkles className="text-purple-400" />
+                    Estrutura de Cristais Quânticos
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-purple-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-purple-400 mb-2">Configuração BNF</h4>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Estrutura Cristalina:</span>
+                          <span className="text-purple-400">Hexagonal Multicamadas</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Parâmetro de Rede:</span>
+                          <span className="text-purple-400">2.487 Å</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Gap Energético:</span>
+                          <span className="text-purple-400">5.97 eV</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Densidade:</span>
+                          <span className="text-purple-400">2.34 g/cm³</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-purple-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-purple-400 mb-2">Propriedades Quânticas</h4>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Coerência Quântica:</span>
+                          <span className="text-green-400">97.3%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Tempo de Decoerência:</span>
+                          <span className="text-purple-400">2.47 ms</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Superposição de Estados:</span>
+                          <span className="text-purple-400">|ψ⟩ = α|0⟩ + β|1⟩</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Entrelaçamento:</span>
+                          <span className="text-green-400">Ativo</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-purple-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-purple-400 mb-2">Força de Repulsão Quântica</h4>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Força Resultante:</span>
+                          <span className="text-purple-400 font-mono">8.92×10⁻⁶ N</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Aceleração:</span>
+                          <span className="text-purple-400 font-mono">3.47 m/s²</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Impulso Específico:</span>
+                          <span className="text-purple-400 font-mono">12,450 s</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Eficiência:</span>
+                          <span className="text-green-400">84.7%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Sistema de Navegação Quântica */}
+              <div className="grid md:grid-cols-3 gap-8 mb-8">
+                <div className="bg-gradient-to-br from-indigo-900/20 to-blue-900/20 p-6 rounded-xl border border-indigo-500/20">
+                  <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                    <NavigationIcon className="text-indigo-400" />
+                    Campo de Navegação X
+                  </h3>
+                  
+                  <div className="space-y-3">
+                    <div className="bg-indigo-900/20 p-3 rounded-lg">
+                      <h4 className="font-semibold text-indigo-400 mb-2 text-sm">Matriz Boro (B⁵⁺)</h4>
+                      <div className="space-y-1 text-xs">
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Concentração:</span>
+                          <span className="text-indigo-400">47.3%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Polarização:</span>
+                          <span className="text-indigo-400">+X</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Campo Induzido:</span>
+                          <span className="text-indigo-400">2.1×10¹⁰ V/m</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-indigo-900/20 p-3 rounded-lg">
+                      <h4 className="font-semibold text-indigo-400 mb-2 text-sm">Resposta do Sistema</h4>
+                      <div className="space-y-2">
+                        <div>
+                          <div className="flex justify-between text-xs mb-1">
+                            <span className="text-gray-400">Thrust Vector X</span>
+                            <span className="text-indigo-400">78%</span>
+                          </div>
+                          <div className="w-full bg-indigo-900/20 rounded-full h-1">
+                            <div className="bg-indigo-400 h-1 rounded-full" style={{width: '78%'}}></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-gradient-to-br from-purple-900/20 to-violet-900/20 p-6 rounded-xl border border-purple-500/20">
+                  <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                    <NavigationIcon className="text-purple-400" />
+                    Campo de Navegação Y
+                  </h3>
+                  
+                  <div className="space-y-3">
+                    <div className="bg-purple-900/20 p-3 rounded-lg">
+                      <h4 className="font-semibold text-purple-400 mb-2 text-sm">Matriz Nitrogênio (N⁷⁺)</h4>
+                      <div className="space-y-1 text-xs">
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Concentração:</span>
+                          <span className="text-purple-400">31.7%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Polarização:</span>
+                          <span className="text-purple-400">+Y</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Campo Induzido:</span>
+                          <span className="text-purple-400">2.8×10¹⁰ V/m</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-purple-900/20 p-3 rounded-lg">
+                      <h4 className="font-semibold text-purple-400 mb-2 text-sm">Resposta do Sistema</h4>
+                      <div className="space-y-2">
+                        <div>
+                          <div className="flex justify-between text-xs mb-1">
+                            <span className="text-gray-400">Thrust Vector Y</span>
+                            <span className="text-purple-400">63%</span>
+                          </div>
+                          <div className="w-full bg-purple-900/20 rounded-full h-1">
+                            <div className="bg-purple-400 h-1 rounded-full" style={{width: '63%'}}></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-gradient-to-br from-green-900/20 to-emerald-900/20 p-6 rounded-xl border border-green-500/20">
+                  <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                    <NavigationIcon className="text-green-400" />
+                    Campo de Navegação Z
+                  </h3>
+                  
+                  <div className="space-y-3">
+                    <div className="bg-green-900/20 p-3 rounded-lg">
+                      <h4 className="font-semibold text-green-400 mb-2 text-sm">Matriz Flúor (F⁹⁺)</h4>
+                      <div className="space-y-1 text-xs">
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Concentração:</span>
+                          <span className="text-green-400">21.0%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Polarização:</span>
+                          <span className="text-green-400">+Z</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Campo Induzido:</span>
+                          <span className="text-green-400">3.6×10¹⁰ V/m</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-green-900/20 p-3 rounded-lg">
+                      <h4 className="font-semibold text-green-400 mb-2 text-sm">Resposta do Sistema</h4>
+                      <div className="space-y-2">
+                        <div>
+                          <div className="flex justify-between text-xs mb-1">
+                            <span className="text-gray-400">Thrust Vector Z</span>
+                            <span className="text-green-400">85%</span>
+                          </div>
+                          <div className="w-full bg-green-900/20 rounded-full h-1">
+                            <div className="bg-green-400 h-1 rounded-full" style={{width: '85%'}}></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Equações e Teoria Quântica */}
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
+                <div className="bg-gradient-to-br from-orange-900/20 to-red-900/20 p-6 rounded-xl border border-orange-500/20">
+                  <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <Calculator className="text-orange-400" />
+                    Equações Fundamentais
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-orange-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-orange-400 mb-3">Força de Repulsão Quântica</h4>
+                      <div className="space-y-2 text-sm font-mono">
+                        <p className="text-gray-300">F = q·E + (q·v × B) + Fquântica</p>
+                        <p className="text-orange-400">Fquântica = ℏ∇φ / (2π·m·λdB)</p>
+                        <p className="text-gray-300">onde λdB = h/(m·v) - Comprimento de de Broglie</p>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-orange-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-orange-400 mb-3">Campo Eletromagnético Induzido</h4>
+                      <div className="space-y-2 text-sm font-mono">
+                        <p className="text-gray-300">E_induzido = (17kV / d) × ε_cristal</p>
+                        <p className="text-orange-400">B_induzido = μ₀ × (I_laser × n_elétrons)</p>
+                        <p className="text-gray-300">P_laser = V² / Z_impedância</p>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-orange-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-orange-400 mb-3">Hamiltoniano do Sistema</h4>
+                      <div className="space-y-2 text-sm font-mono">
+                        <p className="text-gray-300">Ĥ = Ĥ₀ + Ĥ_interação + Ĥ_laser</p>
+                        <p className="text-orange-400">Ĥ_laser = -d̂·Ê·cos(ωt + φ)</p>
+                        <p className="text-gray-300">|ψ(t)⟩ = Σcₙ(t)·e^(-iEₙt/ℏ)·|n⟩</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-gradient-to-br from-teal-900/20 to-cyan-900/20 p-6 rounded-xl border border-teal-500/20">
+                  <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <Rocket className="text-teal-400" />
+                    Performance de Propulsão
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-teal-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-teal-400 mb-3">Parâmetros de Voo</h4>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Impulso Específico:</span>
+                          <span className="text-teal-400 font-mono">12,450 s</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">ΔV Máximo:</span>
+                          <span className="text-teal-400 font-mono">47,320 m/s</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Aceleração Contínua:</span>
+                          <span className="text-teal-400 font-mono">3.47 m/s²</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Força de Thrust:</span>
+                          <span className="text-teal-400 font-mono">8.92×10⁻⁶ N</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-teal-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-teal-400 mb-3">Eficiência Energética</h4>
+                      <div className="space-y-3">
+                        <div>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span className="text-gray-400">Conversão Laser → Thrust</span>
+                            <span className="text-teal-400">84.7%</span>
+                          </div>
+                          <div className="w-full bg-teal-900/20 rounded-full h-2">
+                            <div className="bg-teal-400 h-2 rounded-full" style={{width: '84.7%'}}></div>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span className="text-gray-400">Coerência Quântica</span>
+                            <span className="text-teal-400">97.3%</span>
+                          </div>
+                          <div className="w-full bg-teal-900/20 rounded-full h-2">
+                            <div className="bg-gradient-to-r from-teal-400 to-green-400 h-2 rounded-full" style={{width: '97.3%'}}></div>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span className="text-gray-400">Estabilidade Direcional</span>
+                            <span className="text-teal-400">91.2%</span>
+                          </div>
+                          <div className="w-full bg-teal-900/20 rounded-full h-2">
+                            <div className="bg-gradient-to-r from-green-400 to-emerald-400 h-2 rounded-full" style={{width: '91.2%'}}></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-teal-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-teal-400 mb-3">Missões Possíveis</h4>
+                      <div className="grid grid-cols-2 gap-2 text-xs">
+                        <div className="bg-green-900/40 p-2 rounded">
+                          <span className="text-green-400 font-semibold block">Órbita Lunar</span>
+                          <span className="text-gray-400">3.2 dias</span>
+                        </div>
+                        <div className="bg-blue-900/40 p-2 rounded">
+                          <span className="text-blue-400 font-semibold block">Marte</span>
+                          <span className="text-gray-400">47 dias</span>
+                        </div>
+                        <div className="bg-purple-900/40 p-2 rounded">
+                          <span className="text-purple-400 font-semibold block">Júpiter</span>
+                          <span className="text-gray-400">8.3 meses</span>
+                        </div>
+                        <div className="bg-red-900/40 p-2 rounded">
+                          <span className="text-red-400 font-semibold block">Sistema α-Cen</span>
+                          <span className="text-gray-400">127 anos</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Simulação Visual dos Cristais */}
+              <div className="bg-gradient-to-br from-violet-900/20 to-purple-900/20 p-6 rounded-xl border border-violet-500/20 mb-8">
+                <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                  <Gem className="text-violet-400" />
+                  Visualização do Cristal Quântico BNF
+                </h3>
+                
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="bg-violet-900/20 p-4 rounded-lg">
+                    <h4 className="font-semibold text-violet-400 mb-3">Estrutura Atômica</h4>
+                    <div className="relative h-32 bg-black/20 rounded-lg border border-violet-500/20 overflow-hidden">
+                      {/* Simulação visual simples da estrutura cristalina */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="grid grid-cols-3 gap-2">
+                          <div className="w-4 h-4 rounded-full bg-blue-400 animate-pulse"></div>
+                          <div className="w-4 h-4 rounded-full bg-purple-400 animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                          <div className="w-4 h-4 rounded-full bg-green-400 animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                          <div className="w-4 h-4 rounded-full bg-purple-400 animate-pulse" style={{animationDelay: '0.6s'}}></div>
+                          <div className="w-4 h-4 rounded-full bg-green-400 animate-pulse" style={{animationDelay: '0.8s'}}></div>
+                          <div className="w-4 h-4 rounded-full bg-blue-400 animate-pulse" style={{animationDelay: '1.0s'}}></div>
+                          <div className="w-4 h-4 rounded-full bg-green-400 animate-pulse" style={{animationDelay: '1.2s'}}></div>
+                          <div className="w-4 h-4 rounded-full bg-blue-400 animate-pulse" style={{animationDelay: '1.4s'}}></div>
+                          <div className="w-4 h-4 rounded-full bg-purple-400 animate-pulse" style={{animationDelay: '1.6s'}}></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-3 text-sm text-gray-400">
+                      <p>• B (azul) - Camada base</p>
+                      <p>• N (roxo) - Camada intermediária</p>
+                      <p>• F (verde) - Camada superior</p>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-violet-900/20 p-4 rounded-lg">
+                    <h4 className="font-semibold text-violet-400 mb-3">Campos Eletromagnéticos</h4>
+                    <div className="relative h-32 bg-black/20 rounded-lg border border-violet-500/20 overflow-hidden">
+                      <div className="absolute inset-0">
+                        {/* Linhas de campo representando o laser */}
+                        {[...Array(8)].map((_, i) => (
+                          <div 
+                            key={i}
+                            className="absolute h-0.5 bg-gradient-to-r from-cyan-400 to-transparent rounded-full animate-pulse"
+                            style={{
+                              top: `${10 + i * 10}%`,
+                              left: '0%',
+                              width: '100%',
+                              animationDelay: `${i * 0.1}s`
+                            }}
+                          ></div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="mt-3 text-sm text-gray-400">
+                      <p>• Laser 17kV pulsado</p>
+                      <p>• Frequência: 3.29×10¹⁵ Hz</p>
+                      <p>• Penetração: 91.2 nm</p>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-violet-900/20 p-4 rounded-lg">
+                    <h4 className="font-semibold text-violet-400 mb-3">Vetores de Thrust</h4>
+                    <div className="relative h-32 bg-black/20 rounded-lg border border-violet-500/20 overflow-hidden">
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        {/* Setas representando os vetores de thrust */}
+                        <div className="relative">
+                          {/* Vetor X */}
+                          <div className="absolute w-8 h-0.5 bg-indigo-400 transform -translate-y-2" style={{left: '0px'}}>
+                            <div className="absolute right-0 top-0 w-0 h-0 border-l-2 border-l-indigo-400 border-t border-b border-transparent" style={{transform: 'translateY(-1px)'}}></div>
+                          </div>
+                          {/* Vetor Y */}
+                          <div className="absolute h-8 w-0.5 bg-purple-400 transform -translate-x-1" style={{top: '-16px'}}>
+                            <div className="absolute top-0 left-0 w-0 h-0 border-b-2 border-b-purple-400 border-l border-r border-transparent" style={{transform: 'translateX(-1px)'}}></div>
+                          </div>
+                          {/* Vetor Z (diagonal) */}
+                          <div className="absolute w-6 h-0.5 bg-green-400 transform rotate-45 translate-x-1 translate-y-1">
+                            <div className="absolute right-0 top-0 w-0 h-0 border-l-2 border-l-green-400 border-t border-b border-transparent" style={{transform: 'translateY(-1px) rotate(-45deg)'}}></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-3 text-sm text-gray-400">
+                      <p>• X: 78% (Boro dominante)</p>
+                      <p>• Y: 63% (Nitrogênio ativo)</p>
+                      <p>• Z: 85% (Flúor máximo)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Controles de Simulação */}
+              <div className="bg-gradient-to-br from-gray-900/20 to-slate-900/20 p-6 rounded-xl border border-gray-500/20 mb-8">
+                <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                  <Settings className="text-gray-400" />
+                  Controles da Simulação Quântica
+                </h3>
+                
+                <div className="grid md:grid-cols-4 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Intensidade Laser (kV)
+                    </label>
+                    <input
+                      type="range"
+                      min="10"
+                      max="25"
+                      value="17"
+                      className="w-full h-2 bg-gray-900 rounded-lg appearance-none cursor-pointer"
+                    />
+                    <div className="text-right text-cyan-400 mt-1 font-mono">17.0 kV</div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Concentração Boro (%)
+                    </label>
+                    <input
+                      type="range"
+                      min="20"
+                      max="60"
+                      value="47"
+                      className="w-full h-2 bg-gray-900 rounded-lg appearance-none cursor-pointer"
+                    />
+                    <div className="text-right text-blue-400 mt-1 font-mono">47.3%</div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Concentração Nitrogênio (%)
+                    </label>
+                    <input
+                      type="range"
+                      min="15"
+                      max="45"
+                      value="32"
+                      className="w-full h-2 bg-gray-900 rounded-lg appearance-none cursor-pointer"
+                    />
+                    <div className="text-right text-purple-400 mt-1 font-mono">31.7%</div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Concentração Flúor (%)
+                    </label>
+                    <input
+                      type="range"
+                      min="10"
+                      max="35"
+                      value="21"
+                      className="w-full h-2 bg-gray-900 rounded-lg appearance-none cursor-pointer"
+                    />
+                    <div className="text-right text-green-400 mt-1 font-mono">21.0%</div>
+                  </div>
+                </div>
+                
+                <div className="grid md:grid-cols-3 gap-6 mt-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Frequência Laser (×10¹⁵ Hz)
+                    </label>
+                    <input
+                      type="range"
+                      min="2.5"
+                      max="4.0"
+                      step="0.1"
+                      value="3.29"
+                      className="w-full h-2 bg-gray-900 rounded-lg appearance-none cursor-pointer"
+                    />
+                    <div className="text-right text-cyan-400 mt-1 font-mono">3.29×10¹⁵ Hz</div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Orientação Cristal (°)
+                    </label>
+                    <input
+                      type="range"
+                      min="0"
+                      max="360"
+                      value="120"
+                      className="w-full h-2 bg-gray-900 rounded-lg appearance-none cursor-pointer"
+                    />
+                    <div className="text-right text-violet-400 mt-1 font-mono">120°</div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Coerência Quântica (%)
+                    </label>
+                    <input
+                      type="range"
+                      min="75"
+                      max="99"
+                      value="97"
+                      className="w-full h-2 bg-gray-900 rounded-lg appearance-none cursor-pointer"
+                    />
+                    <div className="text-right text-green-400 mt-1 font-mono">97.3%</div>
+                  </div>
+                </div>
+                
+                <div className="mt-6 flex gap-4">
+                  <button className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-cyan-700 hover:to-blue-700 transition-all">
+                    Iniciar Simulação
+                  </button>
+                  <button className="bg-gradient-to-r from-purple-600 to-violet-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-purple-700 hover:to-violet-700 transition-all">
+                    Calibrar Sistema
+                  </button>
+                  <button className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-green-700 hover:to-emerald-700 transition-all">
+                    Teste de Thrust
+                  </button>
+                  <button className="bg-gradient-to-r from-red-600 to-pink-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-red-700 hover:to-pink-700 transition-all">
+                    Parada de Emergência
+                  </button>
+                </div>
+              </div>
+              
+              {/* Aplicações e Considerações */}
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-gradient-to-br from-indigo-900/20 to-purple-900/20 p-6 rounded-xl border border-indigo-500/20">
+                  <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <Rocket className="text-indigo-400" />
+                    Vantagens da Propulsão Quântica
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-indigo-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-indigo-400 mb-2">Eficiência Superior</h4>
+                      <ul className="space-y-1 text-sm text-gray-300">
+                        <li>• Impulso específico 50x maior que químico</li>
+                        <li>• Não requer massa de reação convencional</li>
+                        <li>• Eficiência energética de 84.7%</li>
+                        <li>• Operação contínua por anos</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="bg-indigo-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-indigo-400 mb-2">Controle Tridimensional</h4>
+                      <ul className="space-y-1 text-sm text-gray-300">
+                        <li>• Vetor thrust ajustável em tempo real</li>
+                        <li>• Precisão sub-miligrau em orientação</li>
+                        <li>• Resposta instantânea a comandos</li>
+                        <li>• Estabilização automática de atitude</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="bg-indigo-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-indigo-400 mb-2">Escalabilidade</h4>
+                      <ul className="space-y-1 text-sm text-gray-300">
+                        <li>• Módulos de cristais podem ser combinados</li>
+                        <li>• Potência escalável com arrays de laser</li>
+                        <li>• Aplicável desde nano-sats até naves grandes</li>
+                        <li>• Manutenção mínima necessária</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-gradient-to-br from-red-900/20 to-orange-900/20 p-6 rounded-xl border border-red-500/20">
+                  <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <AlertTriangle className="text-red-400" />
+                    Desafios e Limitações
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-red-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-red-400 mb-2">Desafios Técnicos</h4>
+                      <ul className="space-y-1 text-sm text-gray-300">
+                        <li>• Manutenção da coerência quântica</li>
+                         <li>• Controle preciso de temperatura (∆T &lt; 1 mK)</li>
+                        <li>• Isolamento de vibrações externas</li>
+                        <li>• Sincronização de múltiplos lasers</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="bg-red-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-red-400 mb-2">Limitações Físicas</h4>
+                      <ul className="space-y-1 text-sm text-gray-300">
+                        <li>• Força máxima limitada por decoerência</li>
+                        <li>• Dependente de qualidade dos cristais</li>
+                        <li>• Consumo energético alto (850 MW)</li>
+                        <li>• Degradação gradual dos elementos BNF</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="bg-red-900/20 p-4 rounded-lg">
+                      <h4 className="font-semibold text-red-400 mb-2">Considerações de Segurança</h4>
+                      <ul className="space-y-1 text-sm text-gray-300">
+                        <li>• Radiação laser de alta potência</li>
+                        <li>• Campos eletromagnéticos intensos</li>
+                        <li>• Risco de descontrole quântico</li>
+                        <li>• Blindagem necessária para tripulação</li>
+                      </ul>
                     </div>
                   </div>
                 </div>
