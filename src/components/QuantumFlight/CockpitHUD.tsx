@@ -158,54 +158,216 @@ const CockpitHUD: React.FC<CockpitHUDProps> = ({
         <Crosshair size={40} strokeWidth={1} />
       </div>
 
-      {/* Bottom Cockpit Frame Simulation */}
-      <div className="absolute bottom-0 left-0 right-0 h-[30%] border-t-4 border-l-4 border-r-4 border-gray-600 bg-gradient-to-t from-gray-800/90 via-gray-800/80 to-transparent rounded-t-lg p-3 flex justify-between items-stretch gap-3">
+      {/* Bottom Cockpit Frame Simulation - More prominent */}
+      <div className="absolute bottom-0 left-0 right-0 h-[35%] border-t-4 border-l-4 border-r-4 border-[#00b4ff]/50 bg-gradient-to-t from-black/90 via-black/80 to-transparent rounded-t-lg p-3 flex justify-between items-stretch gap-3"
+        style={{ 
+          boxShadow: '0 -5px 20px rgba(0, 180, 255, 0.3)',
+          backdropFilter: 'blur(4px)'
+        }}>
         
         {/* Left Panel: MFD (Multi-Function Display) */}
-        <div className="w-1/3 p-2 bg-black/50 border border-cyan-600/40 rounded flex flex-col">
-          <p className="text-sm font-bold mb-1 text-center border-b border-cyan-800 pb-1">{mfdTitle}</p>
+        <div className="w-1/3 p-2 bg-black/60 border-2 border-[#00b4ff]/60 rounded-lg flex flex-col"
+          style={{ boxShadow: '0 0 10px rgba(0, 180, 255, 0.3)' }}>
+          <p className="text-base font-bold mb-2 text-center border-b-2 border-[#00b4ff]/50 pb-1 text-[#00b4ff]">{mfdTitle}</p>
           <div className="flex-grow overflow-hidden">
-            {mfdContent || <div className="p-2 text-gray-500">Select system below</div>}
+            {mfdContent || <div className="p-2 text-gray-400 flex items-center justify-center h-full">Select system below</div>}
           </div>
-          {/* System Select Buttons */}
-          <div className="flex justify-around gap-1 mt-2 pt-2 border-t border-cyan-800 pointer-events-auto"> {/* Enable pointer events */} 
-            <button onClick={() => { setShowChat(!showChat); setShowTempPanel(false); setShowShieldPanel(false); setShowEnginePanel(false); }} className={`p-1 rounded ${showChat ? 'bg-cyan-600 text-black' : 'bg-cyan-900/70 hover:bg-cyan-700/70'}`} title="AI Comms"><Bot size={16}/></button>
-            <button onClick={() => { setShowTempPanel(!showTempPanel); setShowChat(false); setShowShieldPanel(false); setShowEnginePanel(false); }} className={`p-1 rounded ${showTempPanel ? 'bg-cyan-600 text-black' : 'bg-cyan-900/70 hover:bg-cyan-700/70'}`} title="Temperature"><Thermometer size={16}/></button>
-            <button onClick={() => { setShowShieldPanel(!showShieldPanel); setShowChat(false); setShowTempPanel(false); setShowEnginePanel(false); }} className={`p-1 rounded ${showShieldPanel ? 'bg-cyan-600 text-black' : 'bg-cyan-900/70 hover:bg-cyan-700/70'}`} title="Shields"><Shield size={16}/></button>
-            <button onClick={() => { setShowEnginePanel(!showEnginePanel); setShowChat(false); setShowTempPanel(false); setShowShieldPanel(false); }} className={`p-1 rounded ${showEnginePanel ? 'bg-cyan-600 text-black' : 'bg-cyan-900/70 hover:bg-cyan-700/70'}`} title="Engine"><Gauge size={16}/></button>
+          {/* System Select Buttons - Roblox style */}
+          <div className="flex justify-around gap-1 mt-3 pt-2 border-t-2 border-[#00b4ff]/50 pointer-events-auto"> {/* Enable pointer events */} 
+            <button 
+              onClick={() => { setShowChat(!showChat); setShowTempPanel(false); setShowShieldPanel(false); setShowEnginePanel(false); }} 
+              className={`p-2 rounded-md ${showChat ? 'bg-[#00b4ff] text-black' : 'bg-black/70 hover:bg-[#00b4ff]/30'} border border-[#00b4ff]/60 transition-all duration-200`} 
+              title="AI Comms"
+              style={{ boxShadow: showChat ? '0 0 8px #00b4ff' : 'none' }}
+            >
+              <Bot size={20}/>
+            </button>
+            <button 
+              onClick={() => { setShowTempPanel(!showTempPanel); setShowChat(false); setShowShieldPanel(false); setShowEnginePanel(false); }} 
+              className={`p-2 rounded-md ${showTempPanel ? 'bg-[#00b4ff] text-black' : 'bg-black/70 hover:bg-[#00b4ff]/30'} border border-[#00b4ff]/60 transition-all duration-200`} 
+              title="Temperature"
+              style={{ boxShadow: showTempPanel ? '0 0 8px #00b4ff' : 'none' }}
+            >
+              <Thermometer size={20}/>
+            </button>
+            <button 
+              onClick={() => { setShowShieldPanel(!showShieldPanel); setShowChat(false); setShowTempPanel(false); setShowEnginePanel(false); }} 
+              className={`p-2 rounded-md ${showShieldPanel ? 'bg-[#00b4ff] text-black' : 'bg-black/70 hover:bg-[#00b4ff]/30'} border border-[#00b4ff]/60 transition-all duration-200`} 
+              title="Shields"
+              style={{ boxShadow: showShieldPanel ? '0 0 8px #00b4ff' : 'none' }}
+            >
+              <Shield size={20}/>
+            </button>
+            <button 
+              onClick={() => { setShowEnginePanel(!showEnginePanel); setShowChat(false); setShowTempPanel(false); setShowShieldPanel(false); }} 
+              className={`p-2 rounded-md ${showEnginePanel ? 'bg-[#00b4ff] text-black' : 'bg-black/70 hover:bg-[#00b4ff]/30'} border border-[#00b4ff]/60 transition-all duration-200`}
+              title="Engine"
+              style={{ boxShadow: showEnginePanel ? '0 0 8px #00b4ff' : 'none' }}
+            >
+              <Gauge size={20}/>
+            </button>
           </div>
         </div>
 
-        {/* Center Panel: Basic Status */}
-        <div className="w-1/3 flex flex-col items-center justify-center gap-2 p-2 bg-black/50 border border-cyan-600/40 rounded">
-           <div className={`flex items-center gap-1 ${speedColor}`}>
-              <Gauge size={14} />
-              <span>SPEED: {speed.toFixed(0)}</span>
+        {/* Center Panel: Basic Status - MS Flight Simulator style */}
+        <div className="w-1/3 flex flex-col items-center justify-center gap-3 p-3 bg-black/60 border-2 border-[#00b4ff]/60 rounded-lg"
+          style={{ boxShadow: '0 0 10px rgba(0, 180, 255, 0.3)' }}>
+          {/* Large speed indicator */}
+          <div className="w-full">
+            <div className="text-xs text-center text-[#00b4ff] mb-1 font-semibold">AIRSPEED</div>
+            <div className={`text-2xl text-center font-bold ${speed > 7 ? 'text-[#ff3366]' : speed > 3 ? 'text-[#ffcc00]' : 'text-[#00b4ff]'}`} 
+              style={{ textShadow: '0 0 5px currentColor' }}>
+              {speed.toFixed(0)}
             </div>
-            <div className={`flex items-center gap-1 ${energyColor}`}>
-              <Zap size={14} />
-              <span>ENERGY: {energy}%</span>
+            <div className="h-1.5 w-full bg-gray-800 rounded-full overflow-hidden">
+              <div 
+                className={`h-full ${speed > 7 ? 'bg-[#ff3366]' : speed > 3 ? 'bg-[#ffcc00]' : 'bg-[#00b4ff]'}`}
+                style={{ width: `${(speed/15)*100}%`, boxShadow: '0 0 8px currentColor' }}
+              ></div>
             </div>
-            <div className={`flex items-center gap-1 ${shieldColor}`}>
-              <Shield size={14} />
-              <span>SHIELDS: {shields}%</span>
+          </div>
+          
+          {/* Energy gauge */}
+          <div className="w-full flex items-center gap-3">
+            <Zap size={24} className={energy < 30 ? 'text-[#ff3366]' : energy < 60 ? 'text-[#ffcc00]' : 'text-[#00b4ff]'} />
+            <div className="flex-1">
+              <div className="flex justify-between text-xs mb-1">
+                <span>ENERGY</span>
+                <span className={energy < 30 ? 'text-[#ff3366]' : energy < 60 ? 'text-[#ffcc00]' : 'text-[#00b4ff]'}>
+                  {energy}%
+                </span>
+              </div>
+              <div className="h-3 w-full bg-gray-800 rounded-full overflow-hidden border border-gray-700">
+                <div 
+                  className={`h-full ${energy < 30 ? 'bg-[#ff3366]' : energy < 60 ? 'bg-[#ffcc00]' : 'bg-[#00b4ff]'}`}
+                  style={{ width: `${energy}%`, boxShadow: '0 0 5px currentColor' }}
+                ></div>
+              </div>
             </div>
-            {/* Add Radar or other central element here if desired */}
+          </div>
+          
+          {/* Shield gauge */}
+          <div className="w-full flex items-center gap-3">
+            <Shield size={24} className={shields < 30 ? 'text-[#ff3366]' : shields < 60 ? 'text-[#ffcc00]' : 'text-[#00b4ff]'} />
+            <div className="flex-1">
+              <div className="flex justify-between text-xs mb-1">
+                <span>SHIELDS</span>
+                <span className={shields < 30 ? 'text-[#ff3366]' : shields < 60 ? 'text-[#ffcc00]' : 'text-[#00b4ff]'}>
+                  {shields}%
+                </span>
+              </div>
+              <div className="h-3 w-full bg-gray-800 rounded-full overflow-hidden border border-gray-700">
+                <div 
+                  className={`h-full ${shields < 30 ? 'bg-[#ff3366]' : shields < 60 ? 'bg-[#ffcc00]' : 'bg-[#00b4ff]'}`}
+                  style={{ width: `${shields}%`, boxShadow: '0 0 5px currentColor' }}
+                ></div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Compass */}
+          <div className="w-full mt-1">
+            <div className="text-xs text-center text-[#00b4ff] mb-1 font-semibold">HEADING</div>
+            <div className="relative h-6 bg-gray-800 rounded-full overflow-hidden border border-gray-700">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute" style={{ left: `${(rotation.y / (Math.PI * 2) * 100) % 100}%` }}>
+                  {[...Array(36)].map((_, i) => (
+                    <span 
+                      key={i} 
+                      className="inline-block text-xs font-bold"
+                      style={{ 
+                        position: 'absolute', 
+                        left: `${i * 10}%`, 
+                        color: i % 9 === 0 ? '#ffcc00' : '#00b4ff',
+                        opacity: i % 3 === 0 ? 1 : 0.5
+                      }}
+                    >
+                      {i * 10}
+                    </span>
+                  ))}
+                </div>
+                <div className="absolute top-0 bottom-0 w-0.5 bg-[#ff3366]" style={{ left: '50%' }}></div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Right Panel: Targeting & Weapon */}
-        <div className="w-1/3 p-2 bg-black/50 border border-cyan-600/40 rounded">
-          <p className="text-sm font-bold mb-1 text-center border-b border-cyan-800 pb-1">TARGET / WEAPON</p>
-          <div className="flex items-center gap-2 mb-1">
-            <Target size={14} />
-            <span>Target: <span className="text-red-500">Dralthi</span></span> { /* Placeholder */}
+        {/* Right Panel: Targeting & Weapon - Roblox style */}
+        <div className="w-1/3 p-3 bg-black/60 border-2 border-[#ff3366]/60 rounded-lg"
+          style={{ boxShadow: '0 0 10px rgba(255, 51, 102, 0.3)' }}>
+          <p className="text-base font-bold mb-2 text-center border-b-2 border-[#ff3366]/50 pb-1 text-[#ff3366]">TARGET / WEAPON</p>
+          
+          {/* Target indicator with Roblox-style health bar */}
+          <div className="mb-3">
+            <div className="flex items-center gap-2 mb-1">
+              <Target size={18} className="text-[#ff3366]" />
+              <span className="font-bold">Target: <span className="text-[#ff3366]">Dralthi</span></span>
+            </div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-xs">Range: <span className="text-[#ffcc00] font-bold">1474 m</span></span>
+              <span className="text-xs">Class: <span className="text-[#00b4ff] font-bold">Fighter</span></span>
+            </div>
+            
+            {/* Roblox-style health bar */}
+            <div className="mt-1 relative">
+              <div className="text-xs mb-1 flex justify-between">
+                <span>HULL INTEGRITY</span>
+                <span className="font-bold text-[#ff3366]">76%</span>
+              </div>
+              <div className="h-4 w-full bg-gray-800 rounded-lg overflow-hidden border border-gray-700 relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-[#ff3366] to-[#ff3366]/70 w-[76%]"
+                  style={{ boxShadow: '0 0 8px #ff3366' }}></div>
+                {/* Health bar segments - Roblox style */}
+                {[...Array(10)].map((_, i) => (
+                  <div 
+                    key={i} 
+                    className="absolute top-0 bottom-0 w-px bg-black/50" 
+                    style={{ left: `${(i+1) * 10}%` }}
+                  ></div>
+                ))}
+              </div>
+            </div>
           </div>
-          <p>Range: <span className="text-yellow-400">1474 m</span></p> { /* Placeholder */}
-          <p className="mt-2">Weapon: <span className="text-green-400">Laser Cannon</span></p> { /* Placeholder */}
-          <p>Status: <span className="text-green-400">Ready</span></p> { /* Placeholder */}
-          {/* Placeholder for target schematic */}
-          <div className="w-full h-10 border border-cyan-500/50 bg-black/50 mt-2 flex items-center justify-center text-xs">
-            Target View
+          
+          {/* Weapon status - MS Flight Simulator style */}
+          <div className="mb-2">
+            <div className="flex justify-between items-center mb-1">
+              <span className="font-bold text-[#00b4ff]">Quantum Laser Cannon</span>
+              <span className="text-xs px-2 py-0.5 bg-[#00b4ff]/20 rounded-full text-[#00b4ff] border border-[#00b4ff]/50">READY</span>
+            </div>
+            
+            <div className="flex gap-2 mb-2">
+              <div className="flex-1">
+                <div className="text-xs mb-0.5">CHARGE</div>
+                <div className="h-2 bg-gray-800 rounded-full overflow-hidden">
+                  <div className="h-full bg-[#00b4ff] w-full" style={{ boxShadow: '0 0 5px #00b4ff' }}></div>
+                </div>
+              </div>
+              <div className="flex-1">
+                <div className="text-xs mb-0.5">HEAT</div>
+                <div className="h-2 bg-gray-800 rounded-full overflow-hidden">
+                  <div className="h-full bg-[#ffcc00] w-[30%]" style={{ boxShadow: '0 0 5px #ffcc00' }}></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Target view - improved */}
+          <div className="w-full h-20 border-2 border-[#ff3366]/50 bg-black/70 rounded-lg flex items-center justify-center overflow-hidden"
+            style={{ boxShadow: 'inset 0 0 10px rgba(255, 51, 102, 0.5)' }}>
+            <div className="relative w-16 h-16">
+              {/* Target schematic */}
+              <div className="absolute inset-2 border-2 border-[#ff3366] rounded-full opacity-70"></div>
+              <div className="absolute inset-5 border border-[#ff3366] rounded-full opacity-50"></div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-8 h-4 border border-[#ff3366] opacity-80"></div>
+              </div>
+              {/* Targeting brackets */}
+              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[#ff3366]"></div>
+              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[#ff3366]"></div>
+              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-[#ff3366]"></div>
+              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#ff3366]"></div>
+            </div>
           </div>
         </div>
 

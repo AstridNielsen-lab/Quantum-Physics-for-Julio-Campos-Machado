@@ -10,9 +10,10 @@ const Ship = () => {
   const shieldRef = useRef<THREE.Mesh>(null);
   const engineParticlesRef = useRef<THREE.Points>(null);
   const coreGlowRef = useRef<THREE.Mesh>(null);
+  const frontTriangleRef = useRef<THREE.Mesh>(null);
   
   useFrame((state, delta) => {
-    if (!engineGlowRef.current || !shieldRef.current || !engineParticlesRef.current || !coreGlowRef.current) return;
+    if (!engineGlowRef.current || !shieldRef.current || !engineParticlesRef.current || !coreGlowRef.current || !frontTriangleRef.current) return;
     
     const time = state.clock.getElapsedTime();
     
@@ -51,6 +52,13 @@ const Ship = () => {
       if (positions[i + 2] > 5) positions[i + 2] = -5;
     }
     engineParticlesRef.current.geometry.attributes.position.needsUpdate = true;
+    
+    // Front triangle pulsing
+    const triangleScale = 0.5 + Math.sin(time * 5) * 0.1;
+    frontTriangleRef.current.scale.set(triangleScale, triangleScale, triangleScale);
+    if (frontTriangleRef.current.material instanceof THREE.Material) {
+      frontTriangleRef.current.material.opacity = 0.8 + Math.sin(time * 3) * 0.2;
+    }
   });
 
   return (
@@ -84,6 +92,19 @@ const Ship = () => {
           color="#34495e"
           metalness={0.9}
           roughness={0.1}
+        />
+      </mesh>
+
+      {/* Navigation Triangle */}
+      <mesh ref={frontTriangleRef} position={[0, 0, -4.5]} rotation={[0, 0, 0]}>
+        <coneGeometry args={[0.3, 0.5, 3]} />
+        <meshBasicMaterial 
+          color="#22d3ee"
+          emissive="#22d3ee"
+          emissiveIntensity={1.5}
+          transparent
+          opacity={0.8}
+          blending={THREE.AdditiveBlending}
         />
       </mesh>
 

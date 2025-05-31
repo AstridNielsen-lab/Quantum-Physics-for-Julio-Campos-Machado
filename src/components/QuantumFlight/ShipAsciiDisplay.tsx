@@ -4,6 +4,8 @@ import { useGameStore } from '../../stores/gameStore';
 // ASCII art variations based on speed
 const shipAsciiIdle = `
       ▲
+      
+      ▲
      / \
     / _ \
    //   \\
@@ -19,6 +21,8 @@ const shipAsciiIdle = `
 
 const shipAsciiSlow = `
       ▲
+      
+      ▲
      / \
     / _ \
    //   \\
@@ -33,6 +37,8 @@ const shipAsciiSlow = `
 `; // Subtle change in engine
 
 const shipAsciiFast = `
+      ▲
+      
       ▲
      / \
     / _ \

@@ -45,24 +45,28 @@ const CockpitView = () => {
     <group ref={cockpitRef} position={position} rotation={rotation}>
       {/* Estrutura Principal da Nave (Vista do Cockpit) */}
       <group>
-        {/* Casco principal - mais visível */}
+        {/* Casco principal - mais visível, com cores do Roblox */}
         <mesh position={[0, 0, 5]}>
           <cylinderGeometry args={[1.5, 1.2, 8, 12]} />
           <meshStandardMaterial 
-            color="#1a365d"
+            color="#0f3460"
             metalness={0.9}
             roughness={0.1}
             envMapIntensity={1.5}
+            emissive="#00b4ff"
+            emissiveIntensity={0.1}
           />
         </mesh>
         
-        {/* Seção de comando elevada */}
+        {/* Seção de comando elevada - estilo cockpit de MS Flight Simulator */}
         <mesh position={[0, 0.5, 0]}>
           <cylinderGeometry args={[1.8, 1.5, 3, 12]} />
           <meshStandardMaterial 
-            color="#2d4a69"
+            color="#193366"
             metalness={0.8}
             roughness={0.2}
+            emissive="#00b4ff"
+            emissiveIntensity={0.05}
           />
         </mesh>
         
@@ -76,7 +80,7 @@ const CockpitView = () => {
           />
         </mesh>
         
-        {/* Janelas do cockpit iluminadas */}
+        {/* Janelas do cockpit iluminadas - estilo MS Flight Simulator com visibilidade melhorada */}
         {[...Array(6)].map((_, i) => {
           const angle = (i / 6) * Math.PI * 2;
           return (
@@ -89,17 +93,47 @@ const CockpitView = () => {
               ]}
               rotation={[0, 0, angle]}
             >
-              <cylinderGeometry args={[0.3, 0.3, 0.1, 16]} />
+              <cylinderGeometry args={[0.4, 0.4, 0.1, 16]} />
               <meshStandardMaterial 
-                color="#00ffff"
-                emissive="#00ffff"
-                emissiveIntensity={0.8}
+                color="#00b4ff"
+                emissive="#00b4ff"
+                emissiveIntensity={1.2}
                 transparent
                 opacity={0.9}
               />
             </mesh>
           );
         })}
+        
+        {/* Painel frontal do cockpit - visibilidade melhorada para MS Flight Simulator */}
+        <mesh position={[0, 0.8, -1.7]} rotation={[Math.PI * 0.15, 0, 0]}>
+          <boxGeometry args={[2.5, 0.8, 0.1]} />
+          <meshStandardMaterial 
+            color="#111827"
+            metalness={0.7}
+            roughness={0.3}
+          />
+        </mesh>
+        
+        {/* Detalhes do painel - monitores e controles */}
+        {[...Array(3)].map((_, i) => (
+          <mesh 
+            key={`monitor-${i}`} 
+            position={[
+              (i - 1) * 0.7,
+              0.8,
+              -1.65
+            ]}
+            rotation={[Math.PI * 0.15, 0, 0]}
+          >
+            <planeGeometry args={[0.6, 0.4]} />
+            <meshBasicMaterial 
+              color={i === 1 ? "#00b4ff" : i === 0 ? "#ff3366" : "#ffcc00"}
+              opacity={0.8}
+              transparent
+            />
+          </mesh>
+        ))}
         
         {/* Asas/painéis solares mais pronunciados */}
         {[-1, 1].map((side) => (
@@ -186,8 +220,8 @@ const CockpitView = () => {
               />
             </bufferGeometry>
             <pointsMaterial 
-              color="#00ffff"
-              size={0.05}
+              color="#00b4ff"
+              size={0.08}
               transparent
               opacity={0.8}
               blending={THREE.AdditiveBlending}
@@ -196,11 +230,34 @@ const CockpitView = () => {
           </points>
         </group>
         
-        {/* Campo de proteção quântico visível */}
+        {/* Controles interativos do cockpit - estilo MS Flight Simulator */}
+        <group position={[0, 0.4, -1.4]}>
+          {/* Joystick */}
+          <mesh position={[0, -0.3, 0]} rotation={[Math.PI * 0.05 * (rotation.x / 0.5), 0, Math.PI * 0.05 * (rotation.z / 0.5)]}>
+            <cylinderGeometry args={[0.05, 0.08, 0.3, 8]} />
+            <meshStandardMaterial color="#1a1a1a" metalness={0.7} roughness={0.3} />
+            <mesh position={[0, 0.2, 0]}>
+              <sphereGeometry args={[0.08, 16, 16]} />
+              <meshStandardMaterial color="#ff3366" emissive="#ff3366" emissiveIntensity={0.5} />
+            </mesh>
+          </mesh>
+          
+          {/* Throttle */}
+          <mesh position={[0.5, -0.2, 0]} rotation={[0, 0, Math.PI * 0.25 * (speed / 10)]}>
+            <boxGeometry args={[0.05, 0.25, 0.05]} />
+            <meshStandardMaterial color="#1a1a1a" metalness={0.7} roughness={0.3} />
+            <mesh position={[0, 0.15, 0]}>
+              <boxGeometry args={[0.08, 0.08, 0.08]} />
+              <meshStandardMaterial color="#ffcc00" emissive="#ffcc00" emissiveIntensity={0.5} />
+            </mesh>
+          </mesh>
+        </group>
+        
+        {/* Campo de proteção quântico visível - Estilo Roblox */}
         <mesh>
           <cylinderGeometry args={[2.5, 2.5, 10, 16]} />
           <meshPhysicalMaterial 
-            color="#67e8f9"
+            color="#00b4ff"
             transparent
             opacity={0.1 + (shields / 100) * 0.2}
             transmission={0.9}

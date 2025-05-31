@@ -1077,22 +1077,272 @@ const VoltageMultiplierPage = () => {
 
               <div className="bg-gradient-to-br from-violet-900/20 to-blue-900/20 p-6 rounded-xl border border-violet-500/20">
                 <h2 className="text-xl font-semibold mb-6">Diagrama do Circuito</h2>
-                <div className="relative h-[600px] w-full overflow-hidden rounded-lg">
-                  <img
-                    src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=2000"
-                    alt="Diagrama do circuito multiplicador de tensão"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <div className="text-sm text-gray-300 bg-[#020617]/80 p-3 rounded-lg backdrop-blur-sm">
-                      <p>Circuito multiplicador de tensão com configuração hexagonal</p>
-                      <ul className="mt-2 space-y-1 text-xs">
-                        <li>• Entrada: 5V/20A</li>
-                        <li>• Saída: 17kV</li>
-                        <li>• Configuração de 3 estágios com capacitores e diodos</li>
+                
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div className="relative h-[500px] w-full overflow-hidden rounded-lg bg-[#1a1a2e] flex items-center justify-center">
+                    <svg viewBox="0 0 800 600" className="w-full h-full max-w-[700px]">
+                      {/* Hexagonal Circuit Layout */}
+                      <g transform="translate(400, 300)">
+                        {/* Connection Lines */}
+                        <path d="M 0,-200 L 173,-100 L 173,100 L 0,200 L -173,100 L -173,-100 Z" 
+                              fill="none" stroke="#22d3ee" strokeWidth="3" />
+                        
+                        {/* Capacitors */}
+                        <g transform="translate(86.5, -150) rotate(30)">
+                          <line x1="-15" y1="0" x2="15" y2="0" stroke="#ec4899" strokeWidth="3" />
+                          <line x1="-15" y1="-10" x2="-15" y2="10" stroke="#ec4899" strokeWidth="3" />
+                          <line x1="15" y1="-10" x2="15" y2="10" stroke="#ec4899" strokeWidth="3" />
+                          <text x="0" y="-20" fill="#ffffff" fontSize="14" textAnchor="middle">C₁</text>
+                        </g>
+                        
+                        <g transform="translate(173, 0) rotate(90)">
+                          <line x1="-15" y1="0" x2="15" y2="0" stroke="#ec4899" strokeWidth="3" />
+                          <line x1="-15" y1="-10" x2="-15" y2="10" stroke="#ec4899" strokeWidth="3" />
+                          <line x1="15" y1="-10" x2="15" y2="10" stroke="#ec4899" strokeWidth="3" />
+                          <text x="0" y="-20" fill="#ffffff" fontSize="14" textAnchor="middle">C₂</text>
+                        </g>
+                        
+                        <g transform="translate(86.5, 150) rotate(150)">
+                          <line x1="-15" y1="0" x2="15" y2="0" stroke="#ec4899" strokeWidth="3" />
+                          <line x1="-15" y1="-10" x2="-15" y2="10" stroke="#ec4899" strokeWidth="3" />
+                          <line x1="15" y1="-10" x2="15" y2="10" stroke="#ec4899" strokeWidth="3" />
+                          <text x="0" y="-20" fill="#ffffff" fontSize="14" textAnchor="middle">C₃</text>
+                        </g>
+                        
+                        <g transform="translate(-86.5, 150) rotate(210)">
+                          <line x1="-15" y1="0" x2="15" y2="0" stroke="#ec4899" strokeWidth="3" />
+                          <line x1="-15" y1="-10" x2="-15" y2="10" stroke="#ec4899" strokeWidth="3" />
+                          <line x1="15" y1="-10" x2="15" y2="10" stroke="#ec4899" strokeWidth="3" />
+                          <text x="0" y="-20" fill="#ffffff" fontSize="14" textAnchor="middle">C₄</text>
+                        </g>
+                        
+                        <g transform="translate(-173, 0) rotate(270)">
+                          <line x1="-15" y1="0" x2="15" y2="0" stroke="#ec4899" strokeWidth="3" />
+                          <line x1="-15" y1="-10" x2="-15" y2="10" stroke="#ec4899" strokeWidth="3" />
+                          <line x1="15" y1="-10" x2="15" y2="10" stroke="#ec4899" strokeWidth="3" />
+                          <text x="0" y="-20" fill="#ffffff" fontSize="14" textAnchor="middle">C₅</text>
+                        </g>
+                        
+                        <g transform="translate(-86.5, -150) rotate(330)">
+                          <line x1="-15" y1="0" x2="15" y2="0" stroke="#ec4899" strokeWidth="3" />
+                          <line x1="-15" y1="-10" x2="-15" y2="10" stroke="#ec4899" strokeWidth="3" />
+                          <line x1="15" y1="-10" x2="15" y2="10" stroke="#ec4899" strokeWidth="3" />
+                          <text x="0" y="-20" fill="#ffffff" fontSize="14" textAnchor="middle">C₆</text>
+                        </g>
+                        
+                        {/* Diodes */}
+                        <g transform="translate(43.25, -175) rotate(30)">
+                          <polygon points="0,-10 15,0 0,10" fill="#a855f7" />
+                          <line x1="0" y1="-10" x2="0" y2="10" stroke="#a855f7" strokeWidth="2" />
+                          <text x="0" y="-20" fill="#ffffff" fontSize="14" textAnchor="middle">D₁</text>
+                        </g>
+                        
+                        <g transform="translate(130, -75) rotate(90)">
+                          <polygon points="0,-10 15,0 0,10" fill="#a855f7" />
+                          <line x1="0" y1="-10" x2="0" y2="10" stroke="#a855f7" strokeWidth="2" />
+                          <text x="0" y="-20" fill="#ffffff" fontSize="14" textAnchor="middle">D₂</text>
+                        </g>
+                        
+                        <g transform="translate(130, 75) rotate(150)">
+                          <polygon points="0,-10 15,0 0,10" fill="#a855f7" />
+                          <line x1="0" y1="-10" x2="0" y2="10" stroke="#a855f7" strokeWidth="2" />
+                          <text x="0" y="-20" fill="#ffffff" fontSize="14" textAnchor="middle">D₃</text>
+                        </g>
+                        
+                        <g transform="translate(43.25, 175) rotate(210)">
+                          <polygon points="0,-10 15,0 0,10" fill="#a855f7" />
+                          <line x1="0" y1="-10" x2="0" y2="10" stroke="#a855f7" strokeWidth="2" />
+                          <text x="0" y="-20" fill="#ffffff" fontSize="14" textAnchor="middle">D₄</text>
+                        </g>
+                        
+                        <g transform="translate(-43.25, 175) rotate(270)">
+                          <polygon points="0,-10 15,0 0,10" fill="#a855f7" />
+                          <line x1="0" y1="-10" x2="0" y2="10" stroke="#a855f7" strokeWidth="2" />
+                          <text x="0" y="-20" fill="#ffffff" fontSize="14" textAnchor="middle">D₅</text>
+                        </g>
+                        
+                        <g transform="translate(-130, 75) rotate(330)">
+                          <polygon points="0,-10 15,0 0,10" fill="#a855f7" />
+                          <line x1="0" y1="-10" x2="0" y2="10" stroke="#a855f7" strokeWidth="2" />
+                          <text x="0" y="-20" fill="#ffffff" fontSize="14" textAnchor="middle">D₆</text>
+                        </g>
+                        
+                        {/* Nodes */}
+                        <circle cx="0" cy="-200" r="10" fill="#22d3ee" />
+                        <circle cx="173" cy="-100" r="10" fill="#22d3ee" />
+                        <circle cx="173" cy="100" r="10" fill="#22d3ee" />
+                        <circle cx="0" cy="200" r="10" fill="#22d3ee" />
+                        <circle cx="-173" cy="100" r="10" fill="#22d3ee" />
+                        <circle cx="-173" cy="-100" r="10" fill="#22d3ee" />
+                        
+                        {/* Center Node */}
+                        <circle cx="0" cy="0" r="15" fill="#ec4899" />
+                        <text x="0" y="5" fill="#ffffff" fontSize="16" textAnchor="middle">V₀</text>
+                        
+                        {/* Node Labels */}
+                        <text x="0" y="-225" fill="#ffffff" fontSize="16" textAnchor="middle">V₁</text>
+                        <text x="198" y="-100" fill="#ffffff" fontSize="16" textAnchor="middle">V₂</text>
+                        <text x="198" y="100" fill="#ffffff" fontSize="16" textAnchor="middle">V₃</text>
+                        <text x="0" y="225" fill="#ffffff" fontSize="16" textAnchor="middle">V₄</text>
+                        <text x="-198" y="100" fill="#ffffff" fontSize="16" textAnchor="middle">V₅</text>
+                        <text x="-198" y="-100" fill="#ffffff" fontSize="16" textAnchor="middle">V₆</text>
+                        
+                        {/* Input/Output Labels */}
+                        <text x="-250" y="0" fill="#ffffff" fontSize="18" textAnchor="middle">Entrada: 5V/20A</text>
+                        <text x="250" y="0" fill="#ffffff" fontSize="18" textAnchor="middle">Saída: 17kV</text>
+                        
+                        {/* Current Flow Animation */}
+                        <g className="current-flow">
+                          <circle cx="0" cy="-150" r="5" fill="#a855f7">
+                            <animate attributeName="cx" values="0;86.5;130;86.5;0;-86.5;-130;-86.5;0" dur="3s" repeatCount="indefinite" />
+                            <animate attributeName="cy" values="-150;-75;0;75;150;75;0;-75;-150" dur="3s" repeatCount="indefinite" />
+                          </circle>
+                        </g>
+                      </g>
+                    </svg>
+                  </div>
+                  
+                  <div className="space-y-4 text-gray-300">
+                    <div className="bg-[#1a1a2e]/80 p-4 rounded-lg">
+                      <h3 className="text-lg font-medium mb-2 text-violet-400">Especificações do Circuito</h3>
+                      <ul className="space-y-2">
+                        <li className="flex items-start">
+                          <span className="text-violet-500 mr-2">•</span>
+                          <span><b>Entrada:</b> Tensão alternada de 5V a 20A (100W)</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-violet-500 mr-2">•</span>
+                          <span><b>Saída:</b> Tensão contínua de 17kV (alta tensão, baixa corrente)</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-violet-500 mr-2">•</span>
+                          <span><b>Configuração:</b> Multiplicador hexagonal de 3 estágios</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-violet-500 mr-2">•</span>
+                          <span><b>Componentes:</b> 6 capacitores de alta capacitância e 6 diodos retificadores de alta tensão</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-violet-500 mr-2">•</span>
+                          <span><b>Eficiência:</b> Aproximadamente 85% sob carga ideal</span>
+                        </li>
                       </ul>
                     </div>
+                    
+                    <div className="bg-[#1a1a2e]/80 p-4 rounded-lg">
+                      <h3 className="text-lg font-medium mb-2 text-cyan-400">Componentes</h3>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <h4 className="font-medium text-cyan-300">Capacitores</h4>
+                          <ul className="text-sm mt-1">
+                            <li>• C₁, C₆: 100μF/30V (Estágio 1)</li>
+                            <li>• C₂, C₅: 33μF/60V (Estágio 2)</li>
+                            <li>• C₃, C₄: 10μF/100V (Estágio 3)</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-cyan-300">Diodos</h4>
+                          <ul className="text-sm mt-1">
+                            <li>• D₁, D₆: 1N4007 (1kV/1A)</li>
+                            <li>• D₂, D₅: UF4007 (1kV/1A)</li>
+                            <li>• D₃, D₄: HER508 (5kV/3A)</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="mt-6 bg-[#1a1a2e]/80 p-4 rounded-lg">
+                  <h3 className="text-lg font-medium mb-3 text-pink-400">Princípio de Funcionamento</h3>
+                  <p className="text-gray-300 mb-4">
+                    O multiplicador de tensão hexagonal é uma evolução do clássico circuito Cockroft-Walton, utilizando uma configuração de 6 nós para obter maior estabilidade e eficiência. O processo de multiplicação ocorre em 3 estágios sequenciais:
+                  </p>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-start">
+                      <div className="bg-violet-500/30 text-violet-300 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold mr-3 flex-shrink-0">1</div>
+                      <div>
+                        <h4 className="font-medium text-violet-300">Estágio 1: Retificação Inicial</h4>
+                        <p className="text-sm text-gray-400 mt-1">
+                          Os diodos D₁ e D₆ retificam a tensão de entrada, permitindo apenas o fluxo positivo da corrente. Os capacitores C₁ e C₆ carregam até o pico de tensão da fonte (5V), mantendo esta carga mesmo quando a fonte alterna para o ciclo negativo.
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start">
+                      <div className="bg-cyan-500/30 text-cyan-300 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold mr-3 flex-shrink-0">2</div>
+                      <div>
+                        <h4 className="font-medium text-cyan-300">Estágio 2: Multiplicação Secundária</h4>
+                        <p className="text-sm text-gray-400 mt-1">
+                          Durante o ciclo negativo, os diodos D₂ e D₅ conduzem, permitindo que os capacitores C₂ e C₅ carreguem com a soma da tensão da fonte e a tensão armazenada em C₁ e C₆. Isso resulta em aproximadamente 10V por nó.
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start">
+                      <div className="bg-pink-500/30 text-pink-300 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold mr-3 flex-shrink-0">3</div>
+                      <div>
+                        <h4 className="font-medium text-pink-300">Estágio 3: Amplificação Final</h4>
+                        <p className="text-sm text-gray-400 mt-1">
+                          No terceiro estágio, os diodos D₃ e D₄ possibilitam que os capacitores C₃ e C₄ carreguem com a tensão acumulada dos estágios anteriores. A configuração hexagonal permite que as tensões se somem em série, resultando em uma amplificação exponencial até atingir 17kV na saída.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <div className="bg-[#1a1a2e]/80 p-4 rounded-lg">
+                    <h3 className="text-lg font-medium mb-2 text-cyan-400">Características de Desempenho</h3>
+                    <ul className="space-y-1 text-sm text-gray-300">
+                      <li className="flex items-start">
+                        <span className="text-cyan-500 mr-2">•</span>
+                        <span><b>Ripple:</b> &lt;2% em condições de carga nominal</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-cyan-500 mr-2">•</span>
+                        <span><b>Tempo de subida:</b> ~200ms para atingir tensão nominal</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-cyan-500 mr-2">•</span>
+                        <span><b>Regulação:</b> Queda de 5% a plena carga</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-cyan-500 mr-2">•</span>
+                        <span><b>Resposta transiente:</b> Recuperação em 50ms após variação de 50% na carga</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-cyan-500 mr-2">•</span>
+                        <span><b>Temperatura operacional:</b> -10°C a +60°C</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-[#1a1a2e]/80 p-4 rounded-lg">
+                    <h3 className="text-lg font-medium mb-2 text-pink-400">Aplicações Práticas</h3>
+                    <ul className="space-y-1 text-sm text-gray-300">
+                      <li className="flex items-start">
+                        <span className="text-pink-500 mr-2">•</span>
+                        <span><b>Aceleradores de partículas:</b> Geração de campo elétrico para aceleração de elétrons</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-pink-500 mr-2">•</span>
+                        <span><b>Sistemas de raios-X:</b> Alimentação de tubos de raios-X</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-pink-500 mr-2">•</span>
+                        <span><b>Lasers de alta potência:</b> Excitação de meios ativos</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-pink-500 mr-2">•</span>
+                        <span><b>Pesquisa em física quântica:</b> Geração de campos elétricos para manipulação de estados quânticos</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-pink-500 mr-2">•</span>
+                        <span><b>Espectroscopia:</b> Alimentação de lâmpadas de descarga para análise espectral</span>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>

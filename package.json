@@ -13,7 +13,7 @@
     "@react-spring/three": "^9.7.3",
     "@react-three/drei": "^9.102.3",
     "@react-three/fiber": "^8.15.19",
-    "@react-three/postprocessing": "^2.16.2",
+    "@react-three/postprocessing": "^2.19.1",
     "@types/d3": "^7.4.3",
     "axios": "^1.6.7",
     "better-react-mathjax": "^2.0.3",
