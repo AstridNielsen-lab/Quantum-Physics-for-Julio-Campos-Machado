@@ -34,6 +34,7 @@ import SEO from './components/SEO';
 import QuantumEngineDiagramPage from './pages/QuantumEngineDiagramPage';
 import QuantumPropulsionEngine from './pages/QuantumPropulsionEngine';
 import AbelianSymmetryPage from './pages/AbelianSymmetryPage';
+import RocketEngineSimulation from './pages/RocketEngineSimulation';
 
 function App() {
   const [showContent, setShowContent] = useState(false);
@@ -171,6 +172,13 @@ function App() {
                           >
                             <Cog className="w-5 h-5" />
                             Motor de Propulsão Quântica
+                          </a>
+                          <a
+                            href="/rocket-engine-simulation"
+                            className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 rounded-lg transition-colors text-white font-semibold w-full"
+                          >
+                            <Rocket className="w-5 h-5" />
+                            Simulação de Motor-Foguete H₂/He/O₂
                           </a>
                         </div>
 
@@ -339,6 +347,7 @@ function App() {
           <Route path="/thermodynamic-control" element={<ThermodynamicControlPanel />} />
           <Route path="/quantum-engine-diagram" element={<QuantumEngineDiagramPage />} />
           <Route path="/quantum-propulsion-engine" element={<QuantumPropulsionEngine />} />
+          <Route path="/rocket-engine-simulation" element={<RocketEngineSimulation />} />
         </Routes>
       </div>
     </>
