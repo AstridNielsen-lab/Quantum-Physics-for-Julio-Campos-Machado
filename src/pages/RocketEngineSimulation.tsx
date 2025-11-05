@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { ArrowLeft, Play, Pause, RotateCcw, Download, AlertCircle } from 'lucide-react';
 import { Line } from 'react-chartjs-2';
+import SEO from '../components/SEO';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -205,8 +206,15 @@ export default function RocketEngineSimulation() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020617] text-white py-8 px-4">
-      <div className="max-w-[1800px] mx-auto">
+    <>
+      <SEO 
+        title="Simulação de Motor-Foguete H₂/He/O₂ - Quantum Doors"
+        description="Simulação interativa avançada de motor-foguete com misturas H₂/He/O₂. Explore termodinâmica de propulsão, cálculos de Isp, temperatura adiabática e visualização 3D em tempo real. Ferramenta educacional para física de foguetes e propulsão espacial."
+        image="https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?q=80&w=2000"
+        path="/rocket-engine-simulation"
+      />
+      <div className="min-h-screen bg-[#020617] text-white py-8 px-4">
+        <div className="max-w-[1800px] mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
@@ -591,7 +599,7 @@ export default function RocketEngineSimulation() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
